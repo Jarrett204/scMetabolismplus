@@ -26,7 +26,7 @@ sc.metabolism.Seurat <- function(obj, method = "AUCell", imputation = F,Cancer="
 
 
   if (metabolism.type == "KEGG")  {gmtFile<-signatures_KEGG_metab; cat("Your choice is: KEGG\n")}
-  if (metabolism.type == "REACTOME")  {gmtFile<-signatures_REACTOME_metab; cat("Your choice is: REACTOME\n")}
+  if (metabolism.type == "Reactome")  {gmtFile<-signatures_REACTOME_metab; cat("Your choice is: REACTOME\n")}
   if (metabolism.type == "GO")  {gmtFile<-signatures_GO_metab; cat("Your choice is: GO\n")}
   if (metabolism.type == "Hallmark")  {gmtFile<-signatures_HALLMARK_metab; cat("Your choice is: Hallmark\n")}
   if (metabolism.type == "HMDB")  {gmtFile<-signatures_HMDB_metab; cat("Your choice is: HMDB\n")}
