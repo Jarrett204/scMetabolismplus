@@ -1,7 +1,7 @@
 #' scMetabolism
 #'
 #' scMetabolism
-#' @param obj objective 
+#' @param obj objective
 #' @param pathway objective pathway
 #' @param phenotype phenotype
 #' @keywords scMetabolism
@@ -17,9 +17,10 @@
 library(ggplot2)
 library(wesanderson)
 library(data.table)
+library(rsvd)
 
 DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", dimention.reduction.run = T, size= 1){
-  
+
   cat("\nPlease Cite: \nYingcheng Wu, Qiang Gao, et al. Cancer Discovery. 2021. \nhttps://pubmed.ncbi.nlm.nih.gov/34417225/   \n\n")
 
   #umap
