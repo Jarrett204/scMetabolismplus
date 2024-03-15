@@ -10,7 +10,7 @@
 
 
 sc.metabolism.Seurat <- function(obj, method = "AUCell", imputation = F,Cancer="BRCA", metabolism.type = "KEGG") {
-
+  library(GSEABase)
   countexp<-obj@assays$RNA@counts
 
   countexp<-data.frame(as.matrix(countexp))
@@ -18,11 +18,11 @@ sc.metabolism.Seurat <- function(obj, method = "AUCell", imputation = F,Cancer="
   #signatures_KEGG_metab <- "./data/KEGG_metabolism_nc.gmt"
   #signatures_REACTOME_metab <- "./data/REACTOME_metabolism.gmt"
 
-  signatures_KEGG_metab <- system.file("extdata/KEGG/", paste0(Cancer,".gmt"), package = "scMetabolismplus")
-  signatures_REACTOME_metab <- system.file("extdata/Reactome/", paste0(Cancer,".gmt"), package = "scMetabolismplus")
-  signatures_GO_metab <- system.file("extdata/GO/", paste0(Cancer,".gmt"), package = "scMetabolismplus")
-  signatures_HALLMARK_metab <- system.file("extdata/Hallmark/", paste0(Cancer,".gmt"), package = "scMetabolismplus")
-  signatures_HMDB_metab <- system.file("extdata/HMDB/", paste0(Cancer,".gmt"), package = "scMetabolismplus")
+  signatures_KEGG_metab <- system.file("extdata/KEGG", paste0(Cancer,".gmt"), package = "scMetabolismplus")
+  signatures_REACTOME_metab <- system.file("extdata/Reactome", paste0(Cancer,".gmt"), package = "scMetabolismplus")
+  signatures_GO_metab <- system.file("extdata/GO", paste0(Cancer,".gmt"), package = "scMetabolismplus")
+  signatures_HALLMARK_metab <- system.file("extdata/Hallmark", paste0(Cancer,".gmt"), package = "scMetabolismplus")
+  signatures_HMDB_metab <- system.file("extdata/HMDB", paste0(Cancer,".gmt"), package = "scMetabolismplus")
 
 
   if (metabolism.type == "KEGG")  {gmtFile<-signatures_KEGG_metab; cat("Your choice is: KEGG\n")}
