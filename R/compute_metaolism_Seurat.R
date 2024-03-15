@@ -22,12 +22,14 @@ sc.metabolism.Seurat <- function(obj, method = "AUCell", imputation = F,Cancer="
   signatures_REACTOME_metab <- system.file("data/Reactome/", paste0(Cancer,".gmt"), package = "scMetabolismplus")
   signatures_GO_metab <- system.file("data/GO/", paste0(Cancer,".gmt"), package = "scMetabolismplus")
   signatures_HALLMARK_metab <- system.file("data/Hallmark/", paste0(Cancer,".gmt"), package = "scMetabolismplus")
+  signatures_HMDB_metab <- system.file("data/HMDB/", paste0(Cancer,".gmt"), package = "scMetabolismplus")
 
 
   if (metabolism.type == "KEGG")  {gmtFile<-signatures_KEGG_metab; cat("Your choice is: KEGG\n")}
   if (metabolism.type == "REACTOME")  {gmtFile<-signatures_REACTOME_metab; cat("Your choice is: REACTOME\n")}
   if (metabolism.type == "GO")  {gmtFile<-signatures_GO_metab; cat("Your choice is: GO\n")}
   if (metabolism.type == "Hallmark")  {gmtFile<-signatures_HALLMARK_metab; cat("Your choice is: Hallmark\n")}
+  if (metabolism.type == "HMDB")  {gmtFile<-signatures_HMDB_metab; cat("Your choice is: HMDB\n")}
 
   #imputation
   if (imputation == F) {
