@@ -1,0 +1,67 @@
+5-methylcytosine catabolic process	TET1
+DNA methylation	DNMT3A
+DNA repair	ATRX	SMC1A	TRRAP	UBR5
+DNA topological change	TOP1
+RNA polymerase I core promoter sequence-specific DNA binding	SMARCA4
+RNA splicing	CDK12
+Wnt receptor catabolic process	RNF43
+alternative mRNA splicing, via spliceosome	DDX5
+apoptotic DNA fragmentation	FOXL2
+base-excision repair	WRN
+cellular lipid metabolic process	FAM135B
+collagen biosynthetic process	COL1A1
+dephosphorylation	PTPRB
+double-strand break repair	TP53
+double-strand break repair via homologous recombination	CHD4	ERCC4	PALB2
+gene expression	CHD2	GRM3	KRAS	TCF12
+glucose metabolic process	PIK3CA
+glycogen biosynthetic process	AKT2
+glycosphingolipid metabolic process	KIT
+histone H3-K27 demethylation	KDM6A
+histone acetylation	KAT6A	KAT6B
+homologous recombination	BRCA1
+isotype switching to IgE isotypes	STAT6
+lipid ubiquitination	RNF213
+mRNA export from nucleus	NUP214
+mRNA transcription by RNA polymerase II	NCOA2
+maintenance of DNA repeat elements	MSH6
+membrane protein ectodomain proteolysis	MYH9
+methylation	KMT2C	KMT2D	NSD1	PRDM1	PRDM16
+mismatch repair	SETD2
+mitotic recombination-dependent replication fork processing	BRCA2
+norepinephrine biosynthetic process	GATA3
+nuclear-transcribed mRNA catabolic process	THRAP3
+nuclear-transcribed mRNA poly(A) tail shortening	CNOT3
+peptidyl-lysine butyrylation	EP300
+peptidyl-serine phosphorylation	ATR	LATS1	PRKCB
+peptidyl-tyrosine autophosphorylation	ALK
+peptidyl-tyrosine dephosphorylation	PTPN13
+peptidyl-tyrosine dephosphorylation involved in inactivation of protein kinase activity	PTPRT
+peptidyl-tyrosine phosphorylation	ABL2	DDR2	JAK3	KDR
+phosphate-containing compound metabolic process	PTPRD
+phosphatidylinositol biosynthetic process	PTEN
+phosphatidylinositol phosphate biosynthetic process	PIK3CB
+phosphorylation	ERBB3	ITK
+proteasome-mediated ubiquitin-dependent protein catabolic process	APC	FBXW7
+protein K33-linked deubiquitination	TNFAIP3
+protein acetylation	CREBBP
+protein autophosphorylation	ATM	MTOR	NTRK1	PDGFRA
+protein dephosphorylation	PPP2R1A	PTPRC	PTPRK
+protein folding	RANBP2
+protein modification process	KMT2A
+protein phosphorylation	BIRC6	EPHA3	EPHA7	FES	MAP3K1	RET	ROS1
+protein processing	PTCH1
+protein ubiquitination	MED12	ZBTB16
+proteoglycan metabolic process	COL2A1
+proteolysis	NUP98
+rRNA processing	DROSHA
+replication fork processing	POLQ
+serotonin metabolic process	GRIN2A
+somatic recombination of immunoglobulin gene segments	PMS2
+tRNA catabolic process	DICER1
+telomere maintenance	CCNE1
+transcription by RNA polymerase II	AR	BCL9L	LEF1	RB1	SMAD4	TRIP11
+transcription initiation-coupled chromatin remodeling	ARID1A	ARID1B
+transforming growth factor beta1 production	COL3A1
+translation	EGFR
+trehalose metabolism in response to stress	BRAF

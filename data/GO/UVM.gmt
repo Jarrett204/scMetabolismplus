@@ -1,0 +1,43 @@
+DNA biosynthetic process	POLD1
+DNA metabolic process	N4BP2
+DNA repair	FANCA	SMC1A	UBR5
+I-kappaB phosphorylation	ERC1
+RNA polymerase I core promoter sequence-specific DNA binding	SMARCA4
+RNA polymerase II preinitiation complex assembly	ESR1
+RNA splicing	FUS	SRSF2
+Wnt receptor catabolic process	RNF43
+dephosphorylation	PTPRB
+double-strand break repair involved in meiotic recombination	FANCD2
+electron transport chain	ALDH2
+histone H3-K27 demethylation	KDM6A
+histone acetylation	KAT6A
+lipid ubiquitination	RNF213
+mRNA processing	QKI
+mRNA transcription by RNA polymerase II	NCOA2
+methylation	KMT2D	NSD1
+mismatch repair	SETD2
+mitochondrial transcription	FOXO3
+mitotic recombination-dependent replication fork processing	BRCA2
+peptidyl-lysine butyrylation	EP300
+peptidyl-serine phosphorylation	PRKCB
+peptidyl-tyrosine phosphorylation	DDR2	ERBB4
+phosphate-containing compound metabolic process	PTPRD
+phosphorylation	CIITA
+proteasomal ubiquitin-independent protein catabolic process	NFE2L2
+proteasome-mediated ubiquitin-dependent protein catabolic process	APC	FBXW7
+protein autophosphorylation	FGFR2	FGFR4	MTOR	PDGFRA
+protein dephosphorylation	PPP2R1A
+protein folding	FKBP9
+protein linear deubiquitination	CYLD
+protein phosphorylation	FES	JAK1	LATS2	RET	ROS1
+protein ubiquitination	CBL	MED12
+proteoglycan metabolic process	COL2A1
+rRNA processing	DROSHA
+serotonin metabolic process	GRIN2A
+spliceosomal complex assembly	SF3B1
+t-circle formation	NBN
+tRNA splicing, via endonucleolytic cleavage and ligation	CLP1
+transcription initiation-coupled chromatin remodeling	ARID1B	MEN1
+translation	CPEB3
+translational initiation	EIF1AX
+ubiquitin-dependent protein catabolic process	BAP1

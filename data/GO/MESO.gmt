@@ -1,0 +1,64 @@
+5-methylcytosine catabolic process	TET1
+DNA methylation	CTCF	DNMT3A	EZH2
+DNA repair	FANCA
+DNA replication	SET
+DNA topological change	ERCC3
+DNA-templated transcription	TBX3
+RNA polymerase I core promoter sequence-specific DNA binding	SMARCA4
+RNA secondary structure unwinding	DDX3X
+RNA splicing	WT1
+autophagy	CLTC
+base-excision repair, gap-filling	POLE
+cellular lipid metabolic process	FAM135B
+dephosphorylation	PTPRB
+diphosphate metabolic process	FGFR1
+double-strand break repair	TP53
+gene expression	CHD2	FOXO1	KRAS	MYD88	SMO
+glucose metabolic process	PIK3CA
+glycosphingolipid metabolic process	KIT
+heparin biosynthetic process	EXT2
+histone acetylation	KAT6A	KAT6B
+lipid metabolic process	JAZF1
+lipid ubiquitination	RNF213
+mRNA catabolic process	SND1
+mRNA splicing, via spliceosome	RBM10
+mRNA transcription by RNA polymerase II	RARA
+maintenance of DNA repeat elements	MSH6
+meiotic DNA double-strand break processing involved in reciprocal meiotic recombination	BRIP1
+membrane protein ectodomain proteolysis	MYH9
+methylation	KMT2C	MECOM	NSD1	NSD3	PRDM1	SETDB1
+mismatch repair	SETD2
+nuclear-transcribed mRNA catabolic process	THRAP3
+nuclear-transcribed mRNA poly(A) tail shortening	CNOT3
+peptidyl-lysine butyrylation	EP300
+peptidyl-serine autophosphorylation	MAP2K2
+peptidyl-serine phosphorylation	LATS1	SGK1
+phosphate-containing compound metabolic process	PTPRD
+phosphatidylinositol biosynthetic process	PTEN
+phosphorylation	FGFR3
+postreplication repair	MSH2
+proteasome-mediated ubiquitin-dependent protein catabolic process	AXIN2
+protein K29-linked ubiquitination	TRAF7
+protein K63-linked deubiquitination	USP8
+protein N-linked glycosylation via asparagine	RPN1
+protein acetylation	CREBBP
+protein autophosphorylation	ATM	CSF1R
+protein folding	RANBP2
+protein modification process	ARAF	KMT2A
+protein phosphorylation	AKT3	BIRC6	EPHA3	EPHA7	ERG	FES	LATS2	ROS1	TGFBR2
+protein processing	PTCH1
+protein ubiquitination	MED12
+proteoglycan biosynthetic process	CANT1
+proton motive force-driven mitochondrial ATP synthesis	SDHD
+rRNA processing	DROSHA
+replication-born double-strand break repair via sister chromatid exchange	RAD21
+serotonin metabolic process	GRIN2A
+siRNA transcription	TERT
+somatic recombination of immunoglobulin gene segments	PMS2
+spliceosomal complex assembly	SF3B1
+telomere maintenance	TFPT
+transcription by RNA polymerase II	BCL9	CTNNB1	MAF	PAX5
+transcription elongation by RNA polymerase II	PBRM1
+transcription initiation-coupled chromatin remodeling	ARID1A
+trehalose metabolism in response to stress	BRAF
+ubiquitin-dependent protein catabolic process	BAP1

@@ -1,0 +1,197 @@
+'de novo' XMP biosynthetic process	ATIC
+2-oxoglutarate metabolic process	IDH1
+3-keto-sphinganine metabolic process	KDSR
+5-methylcytosine catabolic process	TET1	TET2
+ATP-dependent protein folding chaperone	HSP90AB1	HSPA4
+CAAX-box protein maturation	RAP1GDS1
+DNA biosynthetic process	POLD1
+DNA metabolic process	N4BP2
+DNA methylation	CTCF	DNMT3A	EZH2
+DNA repair	ATRX	BARD1	FANCA	FOXM1	MGMT	NPM1	PTTG1	RAD17	SMC1A	SMC3	TRRAP	UBR5
+DNA replication	RECQL4	SET
+DNA replication initiation	CDC6
+DNA topological change	ERCC3	TOP1
+DNA-templated DNA replication	BAZ1A
+DNA-templated transcription	CBFA2T3	HOXA9	MLF1	RUNX1T1	TBX3
+G-quadruplex DNA formation	CNBP
+I-kappaB phosphorylation	ERC1
+IkappaB kinase activity	IKBKB
+Mo-molybdopterin cofactor biosynthetic process	GPHN
+RNA methylation	RBM15
+RNA polymerase I core promoter sequence-specific DNA binding	SMARCA4
+RNA polymerase I preinitiation complex assembly	SMARCB1
+RNA polymerase II preinitiation complex assembly	ESR1
+RNA secondary structure unwinding	DDX3X
+RNA splicing	CDK12	FUS	NONO	SRSF2	TAF15	WT1	ZNF638
+Wnt receptor catabolic process	RNF43
+allantoin metabolic process	NT5C2
+alternative mRNA splicing, via spliceosome	DDX5
+apoptotic DNA fragmentation	FOXL2
+autophagosome maturation	PIK3R4
+autophagy	CLTC	TFEB
+base-excision repair	WRN
+base-excision repair, gap-filling	POLE
+carbamoyl phosphate biosynthetic process	CPS1
+cellular lipid metabolic process	FAM135B
+cellular respiration	NR4A3
+cellular senescence	CDKN1B	MAP2K1
+chiasma assembly	CCNB1IP1
+cold-induced thermogenesis	IGF2BP2
+collagen biosynthetic process	COL1A1
+collagen metabolic process	COL1A2
+cysteinyl-tRNA aminoacylation	CARS1
+cytidine to uridine editing	A1CF	APOBEC3B
+dephosphorylation	PTPRB
+depurination	MUTYH
+depyrimidination	NTHL1
+diphosphate metabolic process	FGFR1
+double-strand break repair	NSD2	PLK1	TP53
+double-strand break repair involved in meiotic recombination	FANCD2
+double-strand break repair via homologous recombination	CHD4	ERCC4	PALB2	RAD51B	SFPQ	UHRF1
+double-strand break repair via nonhomologous end joining	TP53BP1
+double-stranded DNA exodeoxyribonuclease activity	FEN1
+elastin metabolic process	HIF1A
+electron transport chain	ALDH2
+fatty acid metabolic process	C3
+formation of cytoplasmic translation initiation complex	EIF3E
+fumarate metabolic process	FH
+gene expression	CHD2	FOXO1	GATA6	GRM3	IL7R	KRAS	MLLT3	MYD88	NFIB	SIX1	SMO	TCF12	ZIC1
+generation of precursor metabolites and energy	COX6C
+gluconeogenesis	ATF3
+glucose metabolic process	PIK3CA
+glutamine metabolic process	GMPS
+glycogen biosynthetic process	AKT2
+glycogen metabolic process	IL6ST
+glycolate metabolic process	IGF1
+glycosphingolipid metabolic process	BAX	KIT
+guanylate kinase activity	CARD11
+heparin biosynthetic process	EXT2
+histone H3-K27 demethylation	KDM6A
+histone acetylation	KAT6A	KAT6B
+homologous recombination	BRCA1
+hormone metabolic process	FOXA1	PTPN11
+hydrogen peroxide catabolic process	PXDN
+immunoglobulin V(D)J recombination	TCF3
+interstrand cross-link repair	FANCF	FANCG
+isotype switching to IgE isotypes	BCL6	STAT6
+lipid catabolic process	CRTC3	PAFAH1B2
+lipid metabolic process	JAZF1	PPARG
+lipid ubiquitination	RNF213
+long-chain fatty acid metabolic process	ACSL6
+mRNA 5'-splice site recognition	PSIP1
+mRNA catabolic process	SND1
+mRNA export from nucleus	HNRNPA2B1	NUP133	NUP214	SRSF3	TPR	XPO1
+mRNA polyadenylation	PABPC1
+mRNA processing	FIP1L1	PRKACA	QKI
+mRNA splicing, via spliceosome	CRNKL1	PRPF40B	RBM10	SNRPA	ZRSR2
+mRNA transcription by RNA polymerase II	NCOA1	NCOA2	RARA	STAT3
+maintenance of DNA repeat elements	MSH6	TCF7L2
+meiotic DNA double-strand break processing involved in reciprocal meiotic recombination	BRIP1
+melanin metabolic process	BCL2
+membrane protein ectodomain proteolysis	MYH9
+methylation	KMT2C	KMT2D	MECOM	NSD1	NSD3	PRDM1	PRDM16	PRDM2	SETDB1
+mismatch repair	MLH1	PMS1	SETD2	TP73
+mitochondrial DNA replication	POLG
+mitochondrial electron transport, succinate to ubiquinone	SDHC
+mitochondrial transcription	FOXO3
+mitotic recombination-dependent replication fork processing	BRCA2
+ncRNA processing	ZCCHC8
+ncRNA transcription	NFATC2
+norepinephrine biosynthetic process	GATA3
+norepinephrine metabolic process	EPAS1
+nuclear protein quality control by the ubiquitin-proteasome system	CUL3
+nuclear-transcribed mRNA catabolic process	THRAP3
+nuclear-transcribed mRNA catabolic process, nonsense-mediated decay	SMG5
+nuclear-transcribed mRNA poly(A) tail shortening	CNOT1	CNOT3
+nucleotide-excision repair	ERCC2	USP44	XPA
+oncogene-induced cell senescence	CDKN1A	HRAS
+organic acid metabolic process	CYP2C8
+palmitoyl-CoA ligase activity	ACSL3
+peptidyl-lysine butyrylation	EP300
+peptidyl-serine autophosphorylation	MAP2K2
+peptidyl-serine phosphorylation	ATR	LATS1	MAP3K13	MAPK1	MAST3	PRKCB	SGK1
+peptidyl-tyrosine autophosphorylation	ABL1	ALK
+peptidyl-tyrosine dephosphorylation	DUSP16	PTPN13
+peptidyl-tyrosine dephosphorylation involved in inactivation of protein kinase activity	PTPRT
+peptidyl-tyrosine phosphorylation	ABL2	BTK	DDR2	ERBB4	JAK3	KDR	PDGFB	SRC
+phosphate-containing compound metabolic process	PTPRD
+phosphatidylinositol biosynthetic process	PTEN
+phosphatidylinositol metabolic process	PDGFRB	PLCG1
+phosphatidylinositol phosphate biosynthetic process	PIK3CB	PIK3R1
+phosphorylation	ACVR1	ACVR2A	AKT1	BMPR1A	BUB1B	CIITA	ERBB3	ETNK1	FGFR3	ITK	MAP2K4	MET	NTRK3	TRIO
+poly(A)+ mRNA export from nucleus	NUP93
+post-translational protein modification	JAK2
+postreplication repair	MSH2
+primary miRNA processing	DGCR8	SMAD2	SMAD3
+prostaglandin biosynthetic process	CD74
+proteasomal ubiquitin-independent protein catabolic process	NFE2L2
+proteasome-mediated ubiquitin-dependent protein catabolic process	APC	AXIN2	FBXW7	PBK	PML	PRAME	TBL1XR1	VHL
+protein K29-linked ubiquitination	TRAF7
+protein K33-linked deubiquitination	TNFAIP3
+protein K63-linked deubiquitination	USP13	USP8
+protein N-linked glycosylation via asparagine	RPN1
+protein O-linked mannosylation	TMTC3
+protein acetylation	CREBBP	NAT10
+protein autophosphorylation	ATM	CSF1R	EPHB4	FGFR2	FGFR4	FLT3	FLT4	MTOR	NTRK1	PDGFRA	PIM1	PTK6
+protein autoubiquitination	ITCH
+protein catabolic process	CASP3	EXT1	NOTCH1
+protein demethylation	KDM2A
+protein dephosphorylation	PPM1D	PPP2R1A	PPP6C	PTPN6	PTPRC	PTPRK	SDHAF2
+protein deubiquitination	USP25	USP5
+protein folding	CRYAB	FKBP9	RANBP2
+protein folding chaperone	CALR
+protein linear deubiquitination	CYLD
+protein maturation	CASP8	CASP9
+protein metabolic process	SLC34A2
+protein modification process	ARAF	HDAC2	KMT2A	USP6
+protein monoubiquitination	FANCE
+protein phosphorylation	AKT3	BCR	BIRC6	CDK1	CDK4	CDK6	CHEK2	CREB1	EPHA3	EPHA7	ERBB2	ERG	FES	FYN	JAK1	LATS2	LCK	MAP3K1	MYOD1	PRKCI	RAF1	RET	ROS1	STK11	SYK	TEC	TGFBR2	WNK2
+protein polyubiquitination	AXIN1	CBFB	DDB2	SPOP
+protein processing	GLI3	MAFB	PTCH1
+protein refolding	B2M	HSP90AA1
+protein sumoylation	BCL11A	MDM2	TRIM27
+protein ubiquitination	CBL	CBLB	FBXO11	LZTR1	MDM4	MED12	RBBP6	TRIM23	TRIM24	TRIM33	WWTR1	ZBTB16
+proteoglycan biosynthetic process	CANT1	CHST11
+proteoglycan metabolic process	COL2A1
+proteolysis	ADAM18	ESPL1	KLK2	LCN1	MMP11	NUP98	TMPRSS2
+proteolysis involved in protein catabolic process	MALT1
+proton motive force-driven mitochondrial ATP synthesis	SDHD
+purine nucleotide metabolic process	FHIT
+pyrimidine dimer repair by nucleotide-excision repair	XPC
+rRNA processing	CHD7	DDX10	DROSHA	NOP58	SBDS
+reactive oxygen species metabolic process	VAV1
+removal of superoxide radicals	FANCC
+replication fork processing	BLM	POLQ	RFWD3
+replication-born double-strand break repair via sister chromatid exchange	NIPBL	RAD21
+replicative senescence	CDKN2A
+respiratory burst	RAC1
+respiratory electron transport chain	PLEC
+retrograde protein transport, ER to cytosol	HERPUD1
+serotonin metabolic process	GRIN2A
+siRNA transcription	TERT
+snRNA transcription by RNA polymerase III	ELL
+somatic recombination of immunoglobulin gene segments	PMS2
+spliceosomal complex assembly	SF3B1
+steroid biosynthetic process	PBX1
+succinate metabolic process	SDHA
+sulfur compound metabolic process	PAX8
+t-circle formation	NBN
+tRNA catabolic process	DICER1
+tRNA splicing, via endonucleolytic cleavage and ligation	CLP1
+taurine metabolic process	STAT5B
+telomere maintenance	CCNE1	TFPT
+telomere maintenance via telomerase	POT1
+transcription by RNA polymerase II	AR	BCL11B	BCL9	BCL9L	CD28	CTNNB1	DEK	ETV1	GATA1	GATA2	GTF2I	HOXA13	HOXD13	IL2	KLF4	LEF1	MAF	PAX1	PAX5	PRRX1	RB1	RREB1	SMAD4	TCEA1	TP63	TRIP11
+transcription elongation by RNA polymerase II	CDC73	PBRM1
+transcription initiation-coupled chromatin remodeling	ARID1A	ARID1B	KAT7	MEN1	SMARCD1
+transforming growth factor beta production	ITGAV
+transforming growth factor beta1 production	COL3A1
+translation	CPEB3	EGFR	RPL10	RPL22	RPL5
+translation initiation factor activity	EIF4A2
+translational elongation	EEF2
+translational initiation	EIF1AX
+trehalose metabolism in response to stress	BRAF
+tricarboxylic acid cycle	IDH2	SDHB
+tubulin deacetylation	FLNA
+ubiquitin-dependent protein catabolic process	BAP1	CBLC	KEAP1	ZNRF3
+viral RNA genome replication	PCBP1
