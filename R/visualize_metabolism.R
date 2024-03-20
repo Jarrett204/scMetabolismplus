@@ -179,8 +179,9 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
     #theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
     NULL
   }
-
-
+  cat("\ U can paste pathways here for boxplot
+      and so on \ \n\n")
+  print(gg_table_median_norm$X2%>%unique())
 
 }
 
