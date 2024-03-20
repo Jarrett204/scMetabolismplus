@@ -21,7 +21,7 @@ library(rsvd)
 
 DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", dimention.reduction.run = T, size= 1){
 
-  cat("\nPlease Cite: \nYingcheng Wu, Qiang Gao, et al. Cancer Discovery. 2021. \nhttps://pubmed.ncbi.nlm.nih.gov/34417225/   \n\n")
+  cat("\ Thanks to:XUDONG,WANGQI,MENGDI,YILIN,RENHE,JIANYU \n\n")
 
   #umap
   if (dimention.reduction.type == "umap"){
@@ -96,7 +96,9 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
   metadata<-obj@meta.data
   metabolism.matrix <- obj@assays$METABOLISM$score
 
-  cat("\nPlease Cite: \nYingcheng Wu, Qiang Gao, et al. Cancer Discovery. 2021. \nhttps://pubmed.ncbi.nlm.nih.gov/34417225/   \n\n")
+  cat("\ Let's do some Dotplot
+  Note: We are not responsible if there is no pahtways
+      \ \n\n")
 
 
   metadata[,input.parameter]<-as.character(metadata[,input.parameter])
@@ -155,14 +157,17 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
 
   gg_table_median_norm<-data.frame(gg_table_median_norm)
   gg_table_median_norm[,3]<-as.numeric(as.character(gg_table_median_norm[,3]))
-
+  gg_table_median_norm <- dplyr::filter(gg_table_median_norm,!is.na(X3))
 
 
 
   library(wesanderson)
-  pal <- wes_palette("Zissou1", 100, type = "continuous")
+  pal <-   colorRampPalette(c("#34568B", "#88D8B0", "#FFAD05", "#D11141"))(100)
+  if(length(gg_table_median_norm$X1) == 0){
+    cat("\ Sorry Bro: No pathway qualified \ \n\n")
 
-  ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+  }else{
+    ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
     geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
     #theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
     ylab("Metabolic Pathway")+ xlab(input.parameter)+
@@ -173,8 +178,11 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
     #facet_wrap(~tissueunique, ncol = 1) +
     #theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
     NULL
-}
+  }
 
+
+
+}
 
 BoxPlot.metabolism <- function(obj, pathway, phenotype, ncol = 1){
   input.pathway<-pathway
