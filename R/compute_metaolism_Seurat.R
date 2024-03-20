@@ -39,10 +39,6 @@ sc.metabolism.Seurat <- function(obj, method = "AUCell", imputation = F,Cancer="
 
     cat("Start imputation...\n")
 
-    #Citation: George C. Linderman, Jun Zhao, Yuval Kluger. Zero-preserving imputation of scRNA-seq data using low-rank approximation. bioRxiv. doi: https://doi.org/10.1101/397588
-    #Github: https://github.com/KlugerLab/ALRA
-
-    cat("Citation: George C. Linderman, Jun Zhao, Yuval Kluger. Zero-preserving imputation of scRNA-seq data using low-rank approximation. bioRxiv. doi: https://doi.org/10.1101/397588 \n")
 
 
     result.completed <- alra(as.matrix(countexp))
@@ -50,7 +46,7 @@ sc.metabolism.Seurat <- function(obj, method = "AUCell", imputation = F,Cancer="
   }
 
   #signature method
-  cat("Start quantify the metabolism activity...\n")
+  cat("HaHa! XUDONG Start quantify the metabolism activity...\n")
 
   #VISION 暂时看不好使
   #if (method == "VISION") {
@@ -94,7 +90,9 @@ sc.metabolism.Seurat <- function(obj, method = "AUCell", imputation = F,Cancer="
     signature_exp<-data.frame(gsva_es)
   }
 
-  cat("\nPlease Cite: \nYingcheng Wu, Qiang Gao, et al. Cancer Discovery. 2021. \nhttps://pubmed.ncbi.nlm.nih.gov/34417225/   \n\n")
+  cat("\ Thanks to:XUDONG,MENGDI,YILIN,WANGQI,RENHE,JIANYU\
+      You guys are brilliant!
+      \n\n")
 
   obj@assays$METABOLISM$score<-signature_exp
   obj
