@@ -11,7 +11,6 @@
 #' BoxPlot.metabolism()
 #' @export DimPlot.metabolism
 #' @export DotPlot.metabolism
-#' @export BoxPlot.metabol <- m
 
 
 library(ggplot2)
