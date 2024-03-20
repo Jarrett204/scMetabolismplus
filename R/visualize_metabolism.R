@@ -167,7 +167,7 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
     cat("\ Sorry Bro: No pathway qualified \ \n\n")
 
   }else{
-    ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+    plot_dot <- ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
     geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
     #theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
     ylab("Metabolic Pathway")+ xlab(input.parameter)+
@@ -182,7 +182,7 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
   cat("\ U can paste pathways here for boxplot
       and so on \ \n\n")
   print(gg_table_median_norm$X2%>%unique())
-
+  plot_dot
 }
 
 BoxPlot.metabolism <- function(obj, pathway, phenotype, ncol = 1){
@@ -213,7 +213,7 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype, ncol = 1){
   library(wesanderson)
   pal <- wes_palette("Zissou1", 100, type = "continuous")
 
-  ggplot(data=gg_table, aes(x=gg_table[,1], y=gg_table[,3], fill = gg_table[,1])) +
+  plot_box <- ggplot(data=gg_table, aes(x=gg_table[,1], y=gg_table[,3], fill = gg_table[,1])) +
     geom_boxplot(outlier.shape=NA)+
     ylab("Metabolic Pathway")+
     xlab(input.parameter)+
@@ -224,6 +224,8 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype, ncol = 1){
     labs(fill = input.parameter) +
     #theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
     NULL
+
+  plot_box
 }
 
 
