@@ -11,7 +11,7 @@
 #' BoxPlot.metabolism()
 #' @export DimPlot.metabolism
 #' @export DotPlot.metabolism
-#' @export BoxPlot.metabolism
+#' @export BoxPlot.metabol <- m
 
 
 library(ggplot2)
@@ -97,7 +97,7 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
   metabolism.matrix <- obj@assays$METABOLISM$score
 
   cat("\ Let's do some Dotplot
-  Note: We are not responsible if there is no pahtways
+  Note: We are not responsible if there are no pahtways
       \ \n\n")
 
 
@@ -189,7 +189,9 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype, ncol = 1){
   input.pathway<-pathway
   input.parameter<-phenotype
 
-  cat("\nPlease Cite: \nYingcheng Wu, Qiang Gao, et al. Cancer Discovery. 2021. \nhttps://pubmed.ncbi.nlm.nih.gov/34417225/   \n\n")
+  cat("\ Thanks to:XUDONG,MENGDI,YILIN,WANGQI,RENHE,JIANYU\
+      You guys are brilliant!
+      \n\n")
 
   metadata<-obj@meta.data
   metabolism.matrix <- obj@assays$METABOLISM$score
