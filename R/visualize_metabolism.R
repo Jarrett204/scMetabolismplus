@@ -97,7 +97,7 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
   metabolism.matrix <- obj@assays$METABOLISM$score
 
   cat("\ Let's do some Dotplot
-  Note: We are not responsible if there are no pahtways
+  Note: We are not responsible if there are no pahtways v3.21
       \ \n\n")
 
 
@@ -178,11 +178,21 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
     #facet_wrap(~tissueunique, ncol = 1) +
     #theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
     NULL
-  }
-  cat("\ U can paste pathways here for boxplot
+
+    cat("\ U can paste pathways here for boxplot
       and so on \ \n\n")
-  print(gg_table_median_norm$X2%>%unique())
-  plot_dot
+    print(gg_table_median_norm$X2%>%unique())
+    print(plot_dot)
+    result <- list(
+      plot = plot_dot, # 记录绘图命令以便之后重新绘制
+      pathway = gg_table_median_norm$X2%>%unique())
+    return(result)
+
+
+
+
+    }
+
 }
 
 BoxPlot.metabolism <- function(obj, pathway, phenotype, ncol = 1){
