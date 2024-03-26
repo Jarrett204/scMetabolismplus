@@ -90,7 +90,7 @@ sc.metabolism.Seurat <- function(obj, method = "AUCell", imputation = F,Cancer="
     signature_exp<-data.frame(gsva_es)
   }
 
-  cat("\ Thanks to:XUDONG,MENGDI,YILIN,WANGQI,RENHE,JIANYU\
+  cat("\ Thanks to:XUDONG,MENGDI,YILIN,WANGQI,RENHE,JIANYU3.26.1\
       You guys are brilliant!
       \n\n")
 

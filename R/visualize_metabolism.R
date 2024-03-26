@@ -19,10 +19,14 @@ library(wesanderson)
 library(data.table)
 library(rsvd)
 
-DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", dimention.reduction.run = T, size= 1){
+DimPlot.metabolism <- function(obj, pathway,dimention.reduction.type = "umap", dimention.reduction.run = T, size= 0.5){
 
   cat("\ Thanks to:XUDONG,WANGQI,MENGDI,YILIN,RENHE,JIANYU \n\n")
-
+  library(wesanderson)
+  library(ggplot2)
+  base_colors <- c("#4D457E", "#CD506B", "#E9DF45")
+  # 创建渐变色调色板函数
+  pal <- colorRampPalette(base_colors)(100)
   #umap
   if (dimention.reduction.type == "umap"){
 
@@ -32,26 +36,24 @@ DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", 
     row.names(umap.loc)<-colnames(obj)
     signature_exp<-obj@assays$METABOLISM$score
 
-    input.pathway <- pathway
+    signature_ggplot2 <- data.frame()
+    for (input.pathway in pathway) {
+    signature_ggplot <- data.frame(umap.loc, Pathway = input.pathway, Score = unlist(signature_exp[input.pathway, ,drop=T]))
+    if(input.pathway==pathway[1]){
+    signature_ggplot2 <-signature_ggplot}else{
+    signature_ggplot2 <- rbind(signature_ggplot2,signature_ggplot)
+    }
 
-    signature_ggplot<-data.frame(umap.loc, t(signature_exp[input.pathway,]))
-
-    library(wesanderson)
-    pal <- wes_palette("Zissou1", 100, type = "continuous")
-
-
-    library(ggplot2)
-    plot <- ggplot(data=signature_ggplot, aes(x=UMAP_1, y=UMAP_2, color = signature_ggplot[,3])) +  #this plot is great
+     print(head(signature_ggplot2,c(3,10)))
+    plot <- ggplot(data = signature_ggplot2, aes(x = UMAP_1, y = UMAP_2, color = Score)) +
       geom_point(size = size) +
-      scale_fill_gradientn(colours = pal) +
       scale_color_gradientn(colours = pal) +
-      labs(color = input.pathway) +
-      #xlim(0, 2)+ ylim(0, 2)+
-      xlab("UMAP 1") +ylab("UMAP 2") +
-      theme(aspect.ratio=1)+
-      #theme_bw()
-      theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-            panel.background = element_blank(), axis.line = element_line(colour = "black"))
+      xlab("UMAP 1") + ylab("UMAP 2") +
+      theme_bw() +
+      facet_wrap(~Pathway, scales = "free") # 根据Pathway分面
+
+    print(plot) # 打印或保存plot
+    }
   }
 
   #tsne
@@ -63,25 +65,25 @@ DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", 
     signature_exp<-obj@assays$METABOLISM$score
 
     input.pathway <- pathway
+    gg_table<-c()
+    for (i in 1:length(input.pathway)){
+      gg_table<-rbind(gg_table, cbind(metadata[,input.parameter], input.pathway[i], metabolism.matrix_sub[,i]))
+    }
+    gg_table<-data.frame(gg_table)
 
     signature_ggplot<-data.frame(tsne.loc, t(signature_exp[input.pathway,]))
-
-    pal <- wes_palette("Zissou1", 100, type = "continuous")
-
 
     library(ggplot2)
     plot <- ggplot(data=signature_ggplot, aes(x=tSNE_1, y=tSNE_2, color = signature_ggplot[,3])) +  #this plot is great
       geom_point(size = size) +
       scale_fill_gradientn(colours = pal) +
-      scale_color_gradientn(colours = pal) +
-      labs(color = input.pathway) +
+      scale_color_gradientn(colours = pal, color = "value") +
+      labs(title = input.pathway) +
       #xlim(0, 2)+ ylim(0, 2)+
       xlab("tSNE 1") +ylab("tSNE 2") +
-      theme(aspect.ratio=1)+
-      #theme_bw()
-      theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-            panel.background = element_blank(), axis.line = element_line(colour = "black"))
-
+      theme_bw()+
+      facet_wrap(~gg_table[,2], ncol = ncol, scales = "free") +
+      labs(fill = input.parameter)   # 使用经典主题
 
   }
   plot
@@ -89,9 +91,14 @@ DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", 
 
 
 DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
+  library(viridis)
   input.norm = norm
   input.pathway <- pathway
   input.parameter<-phenotype
+  #base_colors <- c("#F8F6E6", "#78B4AC", "#303375")
+  # 创建渐变色调色板函数
+  #pal <- colorRampPalette(base_colors)(100)
+  pal <- viridis::viridis(100)
 
   metadata<-obj@meta.data
   metabolism.matrix <- obj@assays$METABOLISM$score
@@ -162,7 +169,6 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
 
 
   library(wesanderson)
-  pal <-   colorRampPalette(c("#34568B", "#88D8B0", "#FFAD05", "#D11141"))(100)
   if(length(gg_table_median_norm$X1) == 0){
     cat("\ Sorry Bro: No pathway qualified \ \n\n")
 
@@ -221,19 +227,24 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype, ncol = 1){
 
 
   library(wesanderson)
-  pal <- wes_palette("Zissou1", 100, type = "continuous")
+  library(RColorBrewer)
 
-  plot_box <- ggplot(data=gg_table, aes(x=gg_table[,1], y=gg_table[,3], fill = gg_table[,1])) +
-    geom_boxplot(outlier.shape=NA)+
-    ylab("Metabolic Pathway")+
-    xlab(input.parameter)+
-    theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
-                     panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
-    #scale_color_gradientn(colours = pal) +
-    facet_wrap(~gg_table[,2], ncol = ncol, scales = "free") +
+  # 手动组合多个色板
+  colors <- c(brewer.pal(8, "Set2"),brewer.pal(8, "Set1"),  brewer.pal(8, "Set3"))
+
+  # 如果需要更多颜色，可以继续添加其他色板或重复现有色板
+
+  plot_box <- ggplot(data = gg_table, aes(x = gg_table[, 1], y = gg_table[, 3], fill = gg_table[, 1])) +
+    geom_boxplot(outlier.shape = NA) +
+    ylab("Metabolic Pathway") +
+    xlab(input.parameter) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+          panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+    facet_wrap(~gg_table[, 2], ncol = ncol, scales = "free") +
     labs(fill = input.parameter) +
-    #theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-    NULL
+    scale_fill_manual(values = colors)  # 使用自定义颜色
+
 
   plot_box
 }
