@@ -23,11 +23,9 @@ sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,
   signatures_GO_metab <- system.file("extdata/GO_path", paste0(Cancer,".gmt"), package = "scMetabolismplus")
 
 
-  if (metabolism.type == "KEGG")  {gmtFile<-signatures_KEGG; cat("Your choice is: KEGG\n")}
-  if (metabolism.type == "Reactome")  {gmtFile<-signatures_REACTOME; cat("Your choice is: REACTOME\n")}
-  if (metabolism.type == "GO")  {gmtFile<-signatures_GO; cat("Your choice is: GO\n")}
-  if (metabolism.type == "Hallmark")  {gmtFile<-signatures_HALLMARK; cat("Your choice is: Hallmark\n")}
-  if (metabolism.type == "HMDB")  {gmtFile<-signatures_HMDB; cat("Your choice is: HMDB\n")}
+  if (metabolism.type == "KEGG")  {gmtFile<-signatures_KEGG_metab; cat("Your choice is: KEGG\n")}
+  if (metabolism.type == "Reactome")  {gmtFile<-signatures_REACTOME_metab; cat("Your choice is: REACTOME\n")}
+  if (metabolism.type == "GO")  {gmtFile<-signatures_GO_metab; cat("Your choice is: GO\n")}
   file.exists(gmtFile)
   #imputation
   if (imputation == F) {
