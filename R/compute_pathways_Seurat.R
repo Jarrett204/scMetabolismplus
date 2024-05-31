@@ -9,7 +9,7 @@
 #' @export sc.metabolism.Seurat.pathway
 
 
-sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,Cancer="BRCA", metabolism.type = "KEGG") {
+sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,Cancer="BRCA", metabolism.type = "KEGG",ncore=20) {
   library(GSEABase)
   countexp<-obj@assays$RNA@counts
 
@@ -21,42 +21,43 @@ sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,
   signatures_KEGG_metab <- system.file("extdata/KEGG_path", paste0(Cancer,".gmt"), package = "scMetabolismplus")
   signatures_REACTOME_metab <- system.file("extdata/Reactome_path", paste0(Cancer,".gmt"), package = "scMetabolismplus")
   signatures_GO_metab <- system.file("extdata/GO_path", paste0(Cancer,".gmt"), package = "scMetabolismplus")
+  signatures_HMDB_metab <- system.file("extdata/HMDB_path", paste0(Cancer,".gmt"), package = "scMetabolismplus")
+  signatures__metab <- system.file("extdata/GO_path", paste0(Cancer,".gmt"), package = "scMetabolismplus")
 
 
   if (metabolism.type == "KEGG")  {gmtFile<-signatures_KEGG_metab; cat("Your choice is: KEGG\n")}
   if (metabolism.type == "Reactome")  {gmtFile<-signatures_REACTOME_metab; cat("Your choice is: REACTOME\n")}
   if (metabolism.type == "GO")  {gmtFile<-signatures_GO_metab; cat("Your choice is: GO\n")}
+  if (metabolism.type == "HMDB")  {gmtFile<-signatures_HMDB_metab; cat("Your choice is: HMDB\n")}
+  if (metabolism.type == "GO")  {gmtFile<-signatures_GO_metab; cat("Your choice is: GO\n")}
+
   file.exists(gmtFile)
   #imputation
   if (imputation == F) {
     countexp2<-countexp
   }
   if (imputation == T) {
-
     cat("Start imputation...\n")
-
-
-
     result.completed <- alra(as.matrix(countexp))
     countexp2 <- result.completed[[3]]; row.names(countexp2) <- row.names(countexp)
   }
 
   #signature method
-  cat("HaHa! XUDONG Start quantify the path activity...\n")
+  cat("Start quantify the path activity...\n")
 
   #VISION 暂时看不好使
-  #if (method == "VISION") {
-  #  library(VISION)
-  #  n.umi <- colSums(countexp2)
-  #  scaled_counts <- t(t(countexp2) / n.umi) * median(n.umi)
-  #  vis <- Vision(scaled_counts, signatures = gmtFile)
+  if (method == "VISION") {
+   library(VISION)
+  n.umi <- colSums(countexp2)
+  scaled_counts <- t(t(countexp2) / n.umi) * median(n.umi)
+  vis <- Vision(scaled_counts, signatures = gmtFile)
+  # 检查数据中NA和零值的数量
+  options(mc.cores = 1)
 
-  #  options(mc.cores = ncores)
+  vis <- analyze(vis)
 
-  #  vis <- analyze(vis)
-
-  # signature_exp<-data.frame(t(vis@SigScores))
-  #}
+  signature_exp<-data.frame(t(vis@SigScores))
+  }
 
   #AUCell
   if (method == "AUCell") {
@@ -89,7 +90,8 @@ sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,
   cat("\ Thanks to:XUDONG,MENGDI,YILIN,WANGQI,RENHE,JIANYU3.26.1\
       You guys are brilliant!
       \n\n")
-
+  obj@meta.data$Cancer <- Cancer
+  obj@meta.data$dataset <- metabolism.type
   obj@assays$METABOLISM$score<-signature_exp
   obj
 }

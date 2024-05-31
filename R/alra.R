@@ -101,7 +101,7 @@ choose_k <- function (A_norm,K=100, thresh=6, noise_start=80,q=2,use.mkl=F, mkl.
   k <- max (which(num_of_sds > thresh))
   return (list( k=k,num_of_sds = num_of_sds,d=rsvd_out$d))
 }
-alra <- function( A_norm, k=0,q=10, quantile.prob = 0.001, use.mkl = F, mkl.seed=-1) {
+alra <- function(A_norm, k=0,q=10, quantile.prob = 0.001, use.mkl = F, mkl.seed=-1) {
   # Computes the k-rank approximation to A_norm and adjusts it according to the
   # error distribution learned from the negative values.
   #
@@ -130,8 +130,8 @@ alra <- function( A_norm, k=0,q=10, quantile.prob = 0.001, use.mkl = F, mkl.seed
   #     A_norm_rank15_cor <- result.completed[[3]] # The actual adjusted, completed matrix
 
   cat(sprintf("Read matrix with %d cells and %d genes\n", nrow(A_norm), ncol(A_norm)))
-  if (class(A_norm) != 'matrix') {
-    stop(sprintf("A_norm is of class %s, but it should be of class matrix. Did you forget to run as.matrix()?",class(A_norm)))
+  if (!inherits(A_norm, 'matrix')) {
+    stop(sprintf("A_norm is of class %s, but it should be of class matrix. Did you forget to run as.matrix()?", class(A_norm)))
   }
 
   if (k ==0 ) {

@@ -9,7 +9,8 @@ sc.metabolism.Seurat.pathway(
   method = "AUCell",
   imputation = F,
   Cancer = "BRCA",
-  metabolism.type = "KEGG"
+  metabolism.type = "KEGG",
+  ncore = 20
 )
 }
 \arguments{

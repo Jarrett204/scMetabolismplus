@@ -3,6 +3,7 @@
 export(BoxPlot.metabolism)
 export(DimPlot.metabolism)
 export(DotPlot.metabolism)
+export(PathUmp.metabolism)
 export(alra)
 export(choose_k)
 export(normalize_data)
