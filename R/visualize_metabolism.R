@@ -230,7 +230,7 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
   }
 }
 
-BoxPlot.metabolism <- function(obj, pathway, phenotype, ncol = 1){
+BoxPlot.metabolism <- function(obj, pathway, phenotype){
   library(wesanderson)
   library(RColorBrewer)
   library(ggsci)
@@ -265,7 +265,7 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype, ncol = 1){
   print(head(gg_table))
 
   # Combine multiple color palettes manually
-  colors <- c(pal_jama()(10),pal_aaas()(10),pal_frontiers()(10))
+  colors <- c(pal_jama()(10),pal_npg()(10),pal_jco()(10))
   output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Boxplot")
   dir.create(output_dir, showWarnings = FALSE)
 
