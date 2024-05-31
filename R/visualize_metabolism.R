@@ -302,7 +302,7 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype, ncol = 1){
   plot_box
 }
 
-PathUmp.metabolism <- function(obj, threshold = 3, top_n = 5) {
+PathUmp.metabolism <- function(obj, phenotype,threshold = 3, top_n = 5) {
   library(progress)
   library(dplyr)
   library(ggplot2)
@@ -327,7 +327,7 @@ PathUmp.metabolism <- function(obj, threshold = 3, top_n = 5) {
   umap_df$pathway <- colnames(seurat_path)
 
   # 获取 cluster 信息
-  phenotype = "seurat_clusters"
+  phenotype = phenotype
   metadata <- obj@meta.data
   metabolism.matrix <- obj@assays$METABOLISM$score
   metadata[, phenotype] <- as.character(metadata[, phenotype])
