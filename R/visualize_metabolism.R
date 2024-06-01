@@ -198,8 +198,25 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
   gg_table_median_norm <- data.frame(gg_table_median_norm)
   gg_table_median_norm[,3] <- as.numeric(as.character(gg_table_median_norm[,3]))
   gg_table_median_norm <- dplyr::filter(gg_table_median_norm, !is.na(X3))
+  library(pheatmap)
+  # 使用 pheatmap 进行行聚类
+  # 将长格式数据转换为宽格式
+  wide_format <- gg_table_median_norm%>%
+    pivot_wider(names_from = X2, values_from = X3)%>%t()
+  colnames(wide_format) <- wide_format[1,]
+  wide_format <- wide_format[-1,]
+  wide_matirx <- apply(wide_format, 2, as.numeric)%>%as.data.frame()
+  rownames(wide_matirx) <- rownames(wide_format)
+  clustering <- pheatmap(as.matrix(wide_matirx), silent = TRUE)
+  row_order <- rownames(wide_matirx)[clustering$tree_row$order]
+  gg_table_median_norm$X2 <- factor(gg_table_median_norm$X2,levels=row_order)
+  gg_table_median_norm$X1 <- as.factor(gg_table_median_norm$X1)
+  output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Dotplot")
+  dir.create(output_dir, showWarnings = FALSE)
 
-  if(length(gg_table_median_norm$X1) == 0){
+  write.csv(wide_matirx,paste0(output_dir, "/", "wide_matrix", ".csv"),row.names = T)
+
+   if(length(gg_table_median_norm$X1) == 0){
     cat("No pathway qualified\n\n")
   } else {
     plot_dot <- ggplot(data = gg_table_median_norm, aes(x = gg_table_median_norm[,1], y = gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
@@ -207,8 +224,8 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
       ylab("Metabolic Pathway") + xlab(input.parameter) +
       theme_bw() +
       theme(axis.text.x = element_text(angle = 45, hjust = 1),
-            panel.grid.minor = element_line(color = "gray", size = 0.5),
-            panel.grid.major = element_line(color = "gray", size = 0.8)) +
+            panel.grid.minor = element_line(color = "gray", size = 0.2),
+            panel.grid.major = element_line(color = "gray", size = 0.2)) +
       scale_color_gradientn(colours = pal) +
       labs(color = "Value", size = "Value") +
       NULL
@@ -218,10 +235,7 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
     print(plot_dot)
 
     # Create output directory and save plot
-    output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Dotplot")
-    dir.create(output_dir, showWarnings = FALSE)
-    ggsave(filename = paste0(output_dir, "/", "plot_Dot", ".pdf"), plot = plot_dot, width = 6, height = 5)
-
+    ggsave(filename = paste0(output_dir, "/", "plot_Dot", ".pdf"), plot = plot_dot, width = 6, height = 5,limitsize = FALSE)
     result <- list(
       plot = plot_dot,
       pathway = gg_table_median_norm$X2 %>% unique()
@@ -295,14 +309,15 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype){
             panel.grid.major = element_line()) +
       labs(fill = "Input Parameter") +
       scale_fill_manual(values = colors)
+    # Calculate dynamic height based on the number of pathways
 
-    ggsave(filename = paste0(output_dir, "/", "plot_", select.pathway, ".pdf"), plot = plot_box, width = 6, height = 5)
+    ggsave(filename = paste0(output_dir, "/", "plot_", select.pathway, ".pdf"), plot = plot_box, width = 6, height = 4)
     pb$tick()  # Update progress bar after plotting
   }
   plot_box
 }
 
-PathUmp.metabolism <- function(obj, phenotype,threshold = 3, top_n = 5) {
+PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n = 5,size=5) {
   library(progress)
   library(dplyr)
   library(ggplot2)
@@ -319,7 +334,7 @@ PathUmp.metabolism <- function(obj, phenotype,threshold = 3, top_n = 5) {
   # 提取通路得分矩阵
   pathway_scores <- obj@assays$METABOLISM$score %>% t()
   seurat_path <- CreateSeuratObject(counts = pathway_scores)
-  seurat_path <- RunUMAP(seurat_path, assay = "RNA", features = rownames(seurat_path), n.neighbors = 5)
+  seurat_path <- RunUMAP(seurat_path, assay = "RNA", features = rownames(seurat_path), n.neighbors = n.neighbors)
   seurat_path@meta.data$Pathway <- colnames(seurat_path)
   seurat_path <- SetIdent(seurat_path, value = 'Pathway')
   umap_coords <- Embeddings(seurat_path, "umap")
@@ -354,7 +369,6 @@ PathUmp.metabolism <- function(obj, phenotype,threshold = 3, top_n = 5) {
   # 计算每个 cluster 中每个 pathway 的平均分数
   pb$tick()  # Update progress bar after calculating means
 
-  # 定义一个函数来计算 t 检验的 t-score
   t_test_t_score <- function(data, cluster_id, pathway_id) {
     current_cluster_scores <- data %>%
       filter(cluster == cluster_id & Pathway == pathway_id) %>%
@@ -362,9 +376,23 @@ PathUmp.metabolism <- function(obj, phenotype,threshold = 3, top_n = 5) {
     other_cluster_scores <- data %>%
       filter(cluster != cluster_id & Pathway == pathway_id) %>%
       pull(Score)
+
+    # 检查每组的观察值数量是否足够
+    if (length(current_cluster_scores) < 2) {
+      message(paste("Cluster", cluster_id, "and Pathway", pathway_id, "has less than 2 current cluster scores."))
+      return(NA)  # 如果任一组的观察值少于2，则返回NA
+    }
+
+    if (length(other_cluster_scores) < 2) {
+      message(paste("Cluster", cluster_id, "and Pathway", pathway_id, "has less than 2 other cluster scores."))
+      return(NA)  # 如果任一组的观察值少于2，则返回NA
+    }
+
+    # 进行t检验并返回t检验统计量
     t_test_result <- t.test(current_cluster_scores, other_cluster_scores)
     return(t_test_result$statistic)
   }
+
 
   # 计算每个 cluster 和 pathway 的 t-score
   t_test_results <- cluster_pathway_means %>%
@@ -387,19 +415,36 @@ PathUmp.metabolism <- function(obj, phenotype,threshold = 3, top_n = 5) {
   expand_factor <- 0.2
 
   # 生成总的 UMAP 图
+  library(ggplot2)
+  library(ggrepel)
+  library(viridis)
+
+  # 生成总的 UMAP 图
   total_plot <- ggplot(umap_df, aes(x = UMAP_1, y = UMAP_2)) +
-    geom_point(aes(color = pathway), alpha = 0.6, size = 4) +
-    geom_text_repel(aes(label = pathway), size = 3, color = "black", alpha = 0.6) +
-    scale_color_lancet() +
-    ggtitle("UMAP") +
+    geom_point(alpha = 0.25, size = size, color = "4DBBD5FF",stroke = 1.5) +
+    geom_text_repel(aes(label = pathway), size = size/2, color = "black", alpha = 0.6,
+                    box.padding = 0.5, point.padding = 0.5,
+                    min.segment.length = 0, max.overlaps = Inf) +
+    scale_color_viridis(discrete = TRUE) +  # 使用 viridis 调色板
     theme_bw() +
-    theme(legend.position = "none") +
+    theme(
+      legend.position = "none",  # 移除图例
+      panel.grid.major = element_blank(),  # 移除主网格线
+      panel.grid.minor = element_blank(),  # 移除次网格线
+      panel.border = element_blank(),  # 移除面板边框
+      axis.line = element_blank(),  # 移除坐标轴线
+      axis.ticks = element_blank(),  # 移除坐标轴刻度
+      axis.text = element_blank(),  # 移除坐标轴文字
+      axis.title = element_blank()  # 移除坐标轴标题
+    ) +
     expand_limits(x = c(x_limits[1] - x_range * expand_factor, x_limits[2] + x_range * expand_factor),
                   y = c(y_limits[1] - y_range * expand_factor, y_limits[2] + y_range * expand_factor))  # 扩展网格边界
 
+  print(total_plot)
   # 保存总的 UMAP 图
   ggsave(filename = file.path(output_dir, "total_umap_plot.pdf"), plot = total_plot, width = 5, height = 5)
   write.csv(cluster_pathway_means, file.path(output_dir, "Pathscore.csv"))
+  write.csv(umap_df, file.path(output_dir, "Pathloc.csv"))
 
   # 生成每个 cluster 的 UMAP 图
   for (selelct_cluster in cluster_present) {
@@ -412,20 +457,29 @@ PathUmp.metabolism <- function(obj, phenotype,threshold = 3, top_n = 5) {
     center_y <- mean(umap_df %>% filter(is_selected == "selected") %>% pull(UMAP_2))
 
     p <- ggplot(umap_df, aes(x = UMAP_1, y = UMAP_2)) +
-      geom_point(aes(color = is_selected), alpha = 0.6, size = 4) +
+      geom_point(aes(color = is_selected), alpha = 0.25, size = size,stroke = 1.5) +
       geom_mark_ellipse(data = umap_df %>% filter(is_selected == "selected"),
                         aes(x = UMAP_1, y = UMAP_2), expand = unit(0.5, "cm"), label.fill = NA) +  # 画圈
       geom_text_repel(data = umap_df %>% filter(is_selected == "selected"),
-                      aes(label = pathway), size = 3, color = "black", alpha = 0.7) +
+                      aes(label = pathway), size = 2*size/3, color = "black", alpha = 0.7) +
       annotate("text", x = center_x, y = center_y, label = paste("UMAP - Cluster", selelct_cluster),
-               size = 6, color = scales::alpha("#4DBBD5FF", 0.35), fontface = "bold") +  # 中心标签
+               size = size, color = scales::alpha("#4DBBD5FF", 0.35), fontface = "bold") +  # 中心标签
       scale_color_manual(values = c("selected" = "#E64B35FF", "not_selected" = "grey")) +
-      ggtitle(paste("UMAP - Cluster", selelct_cluster)) +
       theme_bw() +
-      theme(legend.position = "none") +
+      theme(
+        legend.position = "none",  # 移除图例
+        panel.grid.major = element_blank(),  # 移除主网格线
+        panel.grid.minor = element_blank(),  # 移除次网格线
+        panel.border = element_blank(),  # 移除面板边框
+        axis.line = element_blank(),  # 移除坐标轴线
+        axis.ticks = element_blank(),  # 移除坐标轴刻度
+        axis.text = element_blank(),  # 移除坐标轴文字
+        axis.title = element_blank()  # 移除坐标轴标题
+      ) +
       expand_limits(x = c(x_limits[1] - x_range * expand_factor, x_limits[2] + x_range * expand_factor),
                     y = c(y_limits[1] - y_range * expand_factor, y_limits[2] + y_range * expand_factor))  # 扩展网格边界
 
+    print(p)
     # 保存每个 cluster 的 UMAP 图
     ggsave(filename = file.path(output_dir, paste0("umap_plot_cluster_", selelct_cluster, ".pdf")), plot = p, width = 5, height = 5)
     pb$tick()  # Update progress bar after plotting

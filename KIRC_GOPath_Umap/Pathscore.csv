@@ -1,0 +1,309 @@
+"","cluster","Pathway","mean_score"
+"1","0","DNA biosynthetic process",0.0594325070169428
+"2","0","DNA methylation",0.0653780718204401
+"3","0","DNA repair",0.0629534544717633
+"4","0","DNA unwinding involved in DNA replication",0.0651941115006206
+"5","0","RNA splicing",0.0606714766085547
+"6","0","autophagy",0.0590295968554142
+"7","0","dephosphorylation",0.0611581545103762
+"8","0","elastin metabolic process",0.0582182758327164
+"9","0","fatty acid oxidation",0.0550123897866541
+"10","0","gene expression",0.0627761804262824
+"11","0","gluconeogenesis",0.0587456179124255
+"12","0","glucose metabolic process",0.0575982858119557
+"13","0","glycogen metabolic process",0.0549308696883494
+"14","0","glycosphingolipid metabolic process",0.0564884267619486
+"15","0","guanylate kinase activity",0.0586299011508254
+"16","0","histone acetylation",0.0571580431139537
+"17","0","hormone metabolic process",0.0593536155272984
+"18","0","lipoprotein metabolic process",0.0541815417420792
+"19","0","mRNA export from nucleus",0.0531484235797094
+"20","0","methylation",0.0581393333516015
+"21","0","mismatch repair",0.0629707013233211
+"22","0","phosphatidylinositol biosynthetic process",0.0654616684553376
+"23","0","phosphorylation",0.0617510221733204
+"24","0","postreplication repair",0.0593176243923726
+"25","0","protein autophosphorylation",0.0610048283882302
+"26","0","protein catabolic process",0.0636469845121319
+"27","0","protein dephosphorylation",0.0604865692157054
+"28","0","protein folding",0.064384259353441
+"29","0","protein modification process",0.0597714709011435
+"30","0","protein phosphorylation",0.0640851113928633
+"31","0","protein processing",0.0601617832591619
+"32","0","protein refolding",0.0605882866924112
+"33","0","proteoglycan metabolic process",0.0638748541786112
+"34","0","proteolysis",0.0629662129294565
+"35","0","reactive oxygen species metabolic process",0.0636570202061794
+"36","0","replication fork processing",0.0660316712255294
+"37","0","respiratory electron transport chain",0.0625161359003474
+"38","0","retinol metabolic process",0.0626554077900912
+"39","0","self proteolysis",0.0628580882506983
+"40","0","serotonin metabolic process",0.066909347095518
+"41","0","steroid biosynthetic process",0.0711360936780046
+"42","0","transcription by RNA polymerase II",0.0673441724975836
+"43","0","transforming growth factor beta1 production",0.0636863398022128
+"44","0","translation",0.0641635899512348
+"45","1","DNA biosynthetic process",0.0486960774488368
+"46","1","DNA methylation",0.030348900547576
+"47","1","DNA repair",0.056570526615414
+"48","1","DNA unwinding involved in DNA replication",0.0290500952362767
+"49","1","RNA splicing",0.0418239872710071
+"50","1","autophagy",0.0380676442762535
+"51","1","dephosphorylation",0.0475417060532522
+"52","1","elastin metabolic process",0.0367725265904074
+"53","1","fatty acid oxidation",0.0431474079959059
+"54","1","gene expression",0.0460628582203108
+"55","1","gluconeogenesis",0.0427563108160423
+"56","1","glucose metabolic process",0.0395612941142742
+"57","1","glycogen metabolic process",0.0448616143203335
+"58","1","glycosphingolipid metabolic process",0.0415522413427587
+"59","1","guanylate kinase activity",0.0559821681708316
+"60","1","histone acetylation",0.0615949888822802
+"61","1","hormone metabolic process",0.0375961129789524
+"62","1","lipoprotein metabolic process",0.041045029964097
+"63","1","mRNA export from nucleus",0.0432234847576963
+"64","1","methylation",0.0523613640117552
+"65","1","mismatch repair",0.0506088711800809
+"66","1","phosphatidylinositol biosynthetic process",0.0584025115952238
+"67","1","phosphorylation",0.0459307996084442
+"68","1","postreplication repair",0.0455487264247494
+"69","1","protein autophosphorylation",0.0543085211191889
+"70","1","protein catabolic process",0.0266506120810757
+"71","1","protein dephosphorylation",0.0411518959202829
+"72","1","protein folding",0.0492457013704879
+"73","1","protein modification process",0.0377854727321668
+"74","1","protein phosphorylation",0.0447936572118987
+"75","1","protein processing",0.0444936446879572
+"76","1","protein refolding",0.0385510736504114
+"77","1","proteoglycan metabolic process",0.0375222183997018
+"78","1","proteolysis",0.0409085491849142
+"79","1","reactive oxygen species metabolic process",0.0389473128516354
+"80","1","replication fork processing",0.0336555435915916
+"81","1","respiratory electron transport chain",0.0425319051430634
+"82","1","retinol metabolic process",0.0418934434284806
+"83","1","self proteolysis",0.0436664225217652
+"84","1","serotonin metabolic process",0.0399050288273923
+"85","1","steroid biosynthetic process",0.038362870660802
+"86","1","transcription by RNA polymerase II",0.0429186851974373
+"87","1","transforming growth factor beta1 production",0.0461554277561229
+"88","1","translation",0.0453433214930798
+"89","2","DNA biosynthetic process",0.0658357902610798
+"90","2","DNA methylation",0.0568412590604633
+"91","2","DNA repair",0.0675416127158466
+"92","2","DNA unwinding involved in DNA replication",0.0604087326766283
+"93","2","RNA splicing",0.0657222155069954
+"94","2","autophagy",0.0709308852089062
+"95","2","dephosphorylation",0.0682545125898363
+"96","2","elastin metabolic process",0.0683541663690057
+"97","2","fatty acid oxidation",0.0649446279056794
+"98","2","gene expression",0.0643104022795527
+"99","2","gluconeogenesis",0.0604428011822938
+"100","2","glucose metabolic process",0.0652194863284336
+"101","2","glycogen metabolic process",0.0659195611495213
+"102","2","glycosphingolipid metabolic process",0.0605190445317154
+"103","2","guanylate kinase activity",0.0806478419779618
+"104","2","histone acetylation",0.0588465589355921
+"105","2","hormone metabolic process",0.0655148001835641
+"106","2","lipoprotein metabolic process",0.0675273111588433
+"107","2","mRNA export from nucleus",0.0684853226947989
+"108","2","methylation",0.0681842097685274
+"109","2","mismatch repair",0.0581831837673473
+"110","2","phosphatidylinositol biosynthetic process",0.0597018231207031
+"111","2","phosphorylation",0.0559151897525508
+"112","2","postreplication repair",0.0624829936498356
+"113","2","protein autophosphorylation",0.0590545504659842
+"114","2","protein catabolic process",0.0638533361488975
+"115","2","protein dephosphorylation",0.066820622144511
+"116","2","protein folding",0.059705988372755
+"117","2","protein modification process",0.0593075556750991
+"118","2","protein phosphorylation",0.0597536499474037
+"119","2","protein processing",0.0597471976012699
+"120","2","protein refolding",0.0567916492069232
+"121","2","proteoglycan metabolic process",0.0490917617957758
+"122","2","proteolysis",0.0527500373643722
+"123","2","reactive oxygen species metabolic process",0.0571880411089779
+"124","2","replication fork processing",0.0494030426102775
+"125","2","respiratory electron transport chain",0.0547738622665239
+"126","2","retinol metabolic process",0.0453759038775182
+"127","2","self proteolysis",0.05315411446138
+"128","2","serotonin metabolic process",0.0482458811668118
+"129","2","steroid biosynthetic process",0.0487123521255953
+"130","2","transcription by RNA polymerase II",0.0495317879915237
+"131","2","transforming growth factor beta1 production",0.0558010166285549
+"132","2","translation",0.0531553243267894
+"133","4","DNA biosynthetic process",0.0566925223519071
+"134","4","DNA methylation",0.0649079514229908
+"135","4","DNA repair",0.06611195166513
+"136","4","DNA unwinding involved in DNA replication",0.0698418837855382
+"137","4","RNA splicing",0.0628324736336711
+"138","4","autophagy",0.0636391330473393
+"139","4","dephosphorylation",0.0622301271657229
+"140","4","elastin metabolic process",0.0613941213427991
+"141","4","fatty acid oxidation",0.0659931165517416
+"142","4","gene expression",0.064234603141644
+"143","4","gluconeogenesis",0.0733448139744489
+"144","4","glucose metabolic process",0.0658755493763325
+"145","4","glycogen metabolic process",0.061533707163009
+"146","4","glycosphingolipid metabolic process",0.0626397881125058
+"147","4","guanylate kinase activity",0.0737159664417525
+"148","4","histone acetylation",0.0533770034746793
+"149","4","hormone metabolic process",0.0542913710204287
+"150","4","lipoprotein metabolic process",0.0681363048323726
+"151","4","mRNA export from nucleus",0.0593995915764689
+"152","4","methylation",0.0659295844408982
+"153","4","mismatch repair",0.0699339911550546
+"154","4","phosphatidylinositol biosynthetic process",0.0733716665201918
+"155","4","phosphorylation",0.0717548147624896
+"156","4","postreplication repair",0.0619445840417345
+"157","4","protein autophosphorylation",0.0628417193202168
+"158","4","protein catabolic process",0.0649083456281911
+"159","4","protein dephosphorylation",0.0614678584172219
+"160","4","protein folding",0.0612080664828361
+"161","4","protein modification process",0.0699202790165821
+"162","4","protein phosphorylation",0.0745117453534541
+"163","4","protein processing",0.0563197534722717
+"164","4","protein refolding",0.0644076524260992
+"165","4","proteoglycan metabolic process",0.0615476533131778
+"166","4","proteolysis",0.0563489699755936
+"167","4","reactive oxygen species metabolic process",0.0633861786991852
+"168","4","replication fork processing",0.067303711069604
+"169","4","respiratory electron transport chain",0.0806270724810805
+"170","4","retinol metabolic process",0.0836224412018505
+"171","4","self proteolysis",0.0794433924162337
+"172","4","serotonin metabolic process",0.073835239646606
+"173","4","steroid biosynthetic process",0.0720727655465667
+"174","4","transcription by RNA polymerase II",0.0973664314687512
+"175","4","transforming growth factor beta1 production",0.0831362290328213
+"176","4","translation",0.0910473662044168
+"177","5","DNA biosynthetic process",0.0135552339604438
+"178","5","DNA methylation",0.0150024119633382
+"179","5","DNA repair",0.0281958514230584
+"180","5","DNA unwinding involved in DNA replication",0.00542691751085383
+"181","5","RNA splicing",0.0336227689339122
+"182","5","autophagy",0.0085383502170767
+"183","5","dephosphorylation",0.0342257597684515
+"184","5","elastin metabolic process",0.00583695127834057
+"185","5","fatty acid oxidation",0.00477568740955137
+"186","5","gene expression",0.00344910757356488
+"187","5","gluconeogenesis",0.0286782440906898
+"188","5","glucose metabolic process",0.0423781958514231
+"189","5","glycogen metabolic process",0.0224071394114809
+"190","5","glycosphingolipid metabolic process",0.0279787747226242
+"191","5","guanylate kinase activity",0.0113362276893391
+"192","5","histone acetylation",0.000434153400868307
+"193","5","hormone metabolic process",0.00110950313555234
+"194","5","lipoprotein metabolic process",0
+"195","5","mRNA export from nucleus",0.00253256150506512
+"196","5","methylation",0.0195369030390738
+"197","5","mismatch repair",0.0137964302942595
+"198","5","phosphatidylinositol biosynthetic process",0.000144717800289436
+"199","5","phosphorylation",0
+"200","5","postreplication repair",0.0125422093584178
+"201","5","protein autophosphorylation",0.0336468885672938
+"202","5","protein catabolic process",0.0108055957549445
+"203","5","protein dephosphorylation",0
+"204","5","protein folding",0
+"205","5","protein modification process",0.0221659430776652
+"206","5","protein phosphorylation",0.0109985528219971
+"207","5","protein processing",0.0315967197298601
+"208","5","protein refolding",0.00318379160636758
+"209","5","proteoglycan metabolic process",0.014785335262904
+"210","5","proteolysis",0.00795947901591896
+"211","5","reactive oxygen species metabolic process",0.00885190545103714
+"212","5","replication fork processing",0.0175108538350217
+"213","5","respiratory electron transport chain",0.0027255185721177
+"214","5","retinol metabolic process",0.0120839363241679
+"215","5","self proteolysis",0.0295947901591896
+"216","5","serotonin metabolic process",0.0161601543656536
+"217","5","steroid biosynthetic process",0.00846599131693198
+"218","5","transcription by RNA polymerase II",0.0315967197298601
+"219","5","transforming growth factor beta1 production",0
+"220","5","translation",0
+"221","6","DNA biosynthetic process",0.126678370651318
+"222","6","DNA methylation",0.086466847899954
+"223","6","DNA repair",0.0979549651053127
+"224","6","DNA unwinding involved in DNA replication",0.0742855486503813
+"225","6","RNA splicing",0.120210158329453
+"226","6","autophagy",0.139770501744247
+"227","6","dephosphorylation",0.0710844818694397
+"228","6","elastin metabolic process",0.093535243032325
+"229","6","fatty acid oxidation",0.0971859616230756
+"230","6","gene expression",0.103923076169097
+"231","6","gluconeogenesis",0.0625913417971233
+"232","6","glucose metabolic process",0.099098347314228
+"233","6","glycogen metabolic process",0.0992801369383445
+"234","6","glycosphingolipid metabolic process",0.0866681069164011
+"235","6","guanylate kinase activity",0.0858721669966853
+"236","6","histone acetylation",0.105335605645766
+"237","6","hormone metabolic process",0.124269936100611
+"238","6","lipoprotein metabolic process",0.0866109431139029
+"239","6","mRNA export from nucleus",0.0530249347106476
+"240","6","methylation",0.0896145909590183
+"241","6","mismatch repair",0.103999365345063
+"242","6","phosphatidylinositol biosynthetic process",0.0725789165701418
+"243","6","phosphorylation",0.0878999187349224
+"244","6","postreplication repair",0.111291804557568
+"245","6","protein autophosphorylation",0.125659500123192
+"246","6","protein catabolic process",0.116286420462823
+"247","6","protein dephosphorylation",0.0833319907817631
+"248","6","protein folding",0.134286968785788
+"249","6","protein modification process",0.125328441433
+"250","6","protein phosphorylation",0.105910113155227
+"251","6","protein processing",0.116067238143458
+"252","6","protein refolding",0.113092024933976
+"253","6","proteoglycan metabolic process",0.0929838501006214
+"254","6","proteolysis",0.0765534684215327
+"255","6","reactive oxygen species metabolic process",0.0805673291772537
+"256","6","replication fork processing",0.0918940355794733
+"257","6","respiratory electron transport chain",0.0827878052497752
+"258","6","retinol metabolic process",0.0816051002397361
+"259","6","self proteolysis",0.0742073423401419
+"260","6","serotonin metabolic process",0.101494861290854
+"261","6","steroid biosynthetic process",0.0875019111020874
+"262","6","transcription by RNA polymerase II",0.0578229111684206
+"263","6","transforming growth factor beta1 production",0.0931486731992135
+"264","6","translation",0.076401632171244
+"265","7","DNA biosynthetic process",0.0201052142454114
+"266","7","DNA methylation",0.0205283945700156
+"267","7","DNA repair",0.0191177934880016
+"268","7","DNA unwinding involved in DNA replication",0.0235155498025158
+"269","7","RNA splicing",0.02979687344419
+"270","7","autophagy",0.0223123900560921
+"271","7","dephosphorylation",0.021482624713731
+"272","7","elastin metabolic process",0.0186282319360085
+"273","7","fatty acid oxidation",0.0164874373527167
+"274","7","gene expression",0.0271748149623287
+"275","7","gluconeogenesis",0.0152676822994457
+"276","7","glucose metabolic process",0.0224451525108699
+"277","7","glycogen metabolic process",0.0184539812141126
+"278","7","glycosphingolipid metabolic process",0.0165621162335292
+"279","7","guanylate kinase activity",0.0264446214610508
+"280","7","histone acetylation",0.0134753891599456
+"281","7","hormone metabolic process",0
+"282","7","lipoprotein metabolic process",0.00994058880148694
+"283","7","mRNA export from nucleus",0.0155581001692721
+"284","7","methylation",0.0207358359056059
+"285","7","mismatch repair",0.0212005044973282
+"286","7","phosphatidylinositol biosynthetic process",0.0281456404128912
+"287","7","phosphorylation",0.00814829566198679
+"288","7","postreplication repair",0.0285605230840718
+"289","7","protein autophosphorylation",0.0140396295927512
+"290","7","protein catabolic process",0.00812340270171595
+"291","7","protein dephosphorylation",0.0113760828437718
+"292","7","protein folding",0.025606558465266
+"293","7","protein modification process",0.0187361014305155
+"294","7","protein phosphorylation",0.00797404494009094
+"295","7","protein processing",0.0237727770586478
+"296","7","protein refolding",0.0185618507086196
+"297","7","proteoglycan metabolic process",0.0222045205615852
+"298","7","proteolysis",0.0242623386106409
+"299","7","reactive oxygen species metabolic process",0.0260629294035647
+"300","7","replication fork processing",0.0170931660526403
+"301","7","respiratory electron transport chain",0.0135168774270636
+"302","7","retinol metabolic process",0.00994888645491055
+"303","7","self proteolysis",0.0107620564904245
+"304","7","serotonin metabolic process",0.0086461548674035
+"305","7","steroid biosynthetic process",0.0146951442132165
+"306","7","transcription by RNA polymerase II",0.0190597099140363
+"307","7","transforming growth factor beta1 production",0.0047130671446115
+"308","7","translation",0.0340535696505028
