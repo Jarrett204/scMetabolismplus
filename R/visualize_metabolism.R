@@ -269,6 +269,7 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype){
 
   # Arrange large table
   gg_table <- c()
+  input.pathway <- as.character(input.pathway)
   for (i in 1:length(input.pathway)){
     gg_table <- rbind(gg_table, cbind(metadata[,input.parameter], input.pathway[i], metabolism.matrix_sub[,i]))
     pb$tick()  # Update progress bar after data processing
@@ -312,7 +313,7 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype){
     # Calculate dynamic height based on the number of pathways
 
     ggsave(filename = paste0(output_dir, "/", "plot_", select.pathway, ".pdf"), plot = plot_box, width = 6, height = 4)
-    pb$tick()  # Update progress bar after plotting
+    pb$tick()  # Update p rogress bar after plotting
   }
   plot_box
 }
@@ -421,7 +422,7 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
 
   # 生成总的 UMAP 图
   total_plot <- ggplot(umap_df, aes(x = UMAP_1, y = UMAP_2)) +
-    geom_point(alpha = 0.25, size = size, color = "4DBBD5FF",stroke = 1.5) +
+    geom_point(alpha = 0.4, size = size, color = "4DBBD5FF",stroke = 1.5) +
     geom_text_repel(aes(label = pathway), size = size/2, color = "black", alpha = 0.6,
                     box.padding = 0.5, point.padding = 0.5,
                     min.segment.length = 0, max.overlaps = Inf) +
@@ -457,13 +458,13 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
     center_y <- mean(umap_df %>% filter(is_selected == "selected") %>% pull(UMAP_2))
 
     p <- ggplot(umap_df, aes(x = UMAP_1, y = UMAP_2)) +
-      geom_point(aes(color = is_selected), alpha = 0.25, size = size,stroke = 1.5) +
+      geom_point(aes(color = is_selected), alpha = 0.4, size = size,stroke = 1.5) +
       geom_mark_ellipse(data = umap_df %>% filter(is_selected == "selected"),
                         aes(x = UMAP_1, y = UMAP_2), expand = unit(0.5, "cm"), label.fill = NA) +  # 画圈
       geom_text_repel(data = umap_df %>% filter(is_selected == "selected"),
                       aes(label = pathway), size = 2*size/3, color = "black", alpha = 0.7) +
       annotate("text", x = center_x, y = center_y, label = paste("UMAP - Cluster", selelct_cluster),
-               size = size, color = scales::alpha("#4DBBD5FF", 0.35), fontface = "bold") +  # 中心标签
+               size = size, color = scales::alpha("#4DBBD5FF", 0.4), fontface = "bold") +  # 中心标签
       scale_color_manual(values = c("selected" = "#E64B35FF", "not_selected" = "grey")) +
       theme_bw() +
       theme(
