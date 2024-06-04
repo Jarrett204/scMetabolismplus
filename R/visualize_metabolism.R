@@ -19,7 +19,7 @@ library(data.table)
 library(rsvd)
 library(dplyr)
 
-DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", dimention.reduction.run = T, size= 1.5){
+DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", dimention.reduction.run = T, size= 1.5,Width=6,Height=5){
 
   cat("Establishing connection\n\n")
   library(wesanderson)
@@ -40,7 +40,7 @@ DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", 
   # umap
   if (dimention.reduction.type == "umap"){
 
-    if (dimention.reduction.run == T) obj <- Seurat::RunUMAP(obj, reduction = "pca", dims = 1:40,Width=6,Height=5)
+    if (dimention.reduction.run == T) obj <- Seurat::RunUMAP(obj, reduction = "pca", dims = 1:40)
     umap.loc <- obj@reductions$umap@cell.embeddings
 
     row.names(umap.loc) <- colnames(obj)
