@@ -40,7 +40,7 @@ DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", 
   # umap
   if (dimention.reduction.type == "umap"){
 
-    if (dimention.reduction.run == T) obj <- Seurat::RunUMAP(obj, reduction = "pca", dims = 1:40)
+    if (dimention.reduction.run == T) obj <- Seurat::RunUMAP(obj, reduction = "pca", dims = 1:40,Width=6,Height=5)
     umap.loc <- obj@reductions$umap@cell.embeddings
 
     row.names(umap.loc) <- colnames(obj)
@@ -67,7 +67,7 @@ DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", 
         xlab("UMAP 1") + ylab("UMAP 2") +
         ggtitle(paste("Pathway:", input.pathway)) +
         theme_bw()
-      ggsave(filename = paste0(output_dir, "/", "plot_", input.pathway, ".png"), plot = plot, width = 6, height = 5)
+      ggsave(filename = paste0(output_dir, "/", "plot_", input.pathway, ".png"), plot = plot, width = Width, height = Height)
       pb$tick()  # Update progress bar after plotting
     }
     print(plot)  # 打印或保存plot
@@ -102,14 +102,14 @@ DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", 
         xlab("UMAP 1") + ylab("UMAP 2") +
         ggtitle(paste("Pathway:", input.pathway)) +
         theme_bw()
-      ggsave(filename = paste0(output_dir, "/", "plot_", input.pathway, ".png"), plot = plot, width = 6, height = 5)
+      ggsave(filename = paste0(output_dir, "/", "plot_", input.pathway, ".png"), plot = plot, width = Width, height = Height)
       pb$tick()  # Update progress bar after plotting
     }
   }
   plot
 }
 
-DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
+DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y",Width=6,Height=4){
   library(viridis)
   library(progress)
   library(dplyr)
@@ -235,7 +235,7 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
     print(plot_dot)
 
     # Create output directory and save plot
-    ggsave(filename = paste0(output_dir, "/", "plot_Dot", ".pdf"), plot = plot_dot, width = 6, height = 5,limitsize = FALSE)
+    ggsave(filename = paste0(output_dir, "/", "plot_Dot", ".pdf"), plot = plot_dot, width =Width, height = Height,limitsize = FALSE)
     result <- list(
       plot = plot_dot,
       pathway = gg_table_median_norm$X2 %>% unique()
@@ -244,7 +244,7 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
   }
 }
 
-BoxPlot.metabolism <- function(obj, pathway, phenotype){
+BoxPlot.metabolism <- function(obj, pathway, phenotype,Width=6,Height=4){
   library(wesanderson)
   library(RColorBrewer)
   library(ggsci)
@@ -312,13 +312,13 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype){
       scale_fill_manual(values = colors)
     # Calculate dynamic height based on the number of pathways
 
-    ggsave(filename = paste0(output_dir, "/", "plot_", select.pathway, ".pdf"), plot = plot_box, width = 6, height = 4)
+    ggsave(filename = paste0(output_dir, "/", "plot_", select.pathway, ".pdf"), plot = plot_box, width = Width, height = Height)
     pb$tick()  # Update p rogress bar after plotting
   }
   plot_box
 }
 
-PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n = 5,size=5) {
+PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n = 5,size=5,Width=5,Height=5) {
   library(progress)
   library(dplyr)
   library(ggplot2)
@@ -443,7 +443,7 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
 
   print(total_plot)
   # 保存总的 UMAP 图
-  ggsave(filename = file.path(output_dir, "total_umap_plot.pdf"), plot = total_plot, width = 5, height = 5)
+  ggsave(filename = file.path(output_dir, "total_umap_plot.pdf"), plot = total_plot, width = Width, height = Height)
   write.csv(cluster_pathway_means, file.path(output_dir, "Pathscore.csv"))
   write.csv(umap_df, file.path(output_dir, "Pathloc.csv"))
 
@@ -482,7 +482,7 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
 
     print(p)
     # 保存每个 cluster 的 UMAP 图
-    ggsave(filename = file.path(output_dir, paste0("umap_plot_cluster_", selelct_cluster, ".pdf")), plot = p, width = 5, height = 5)
+    ggsave(filename = file.path(output_dir, paste0("umap_plot_cluster_", selelct_cluster, ".pdf")), plot = p, width = Width, height = Height)
     pb$tick()  # Update progress bar after plotting
   }
 }
