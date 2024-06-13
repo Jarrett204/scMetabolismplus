@@ -1,9 +1,9 @@
-#' scMetabolism
+#' scMetabolismplus
 #' @param A
 #' @param K
 #' @param q
 #' @param A_norm
-#' @keywords scMetabolism
+#' @keywords scMetabolismplus
 #' @examples
 #' randomized.svd()
 #' normalize_data()
