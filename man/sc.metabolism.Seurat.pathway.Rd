@@ -10,13 +10,15 @@ sc.metabolism.Seurat.pathway(
   imputation = F,
   Cancer = "BRCA",
   metabolism.type = "KEGG",
-  ncore = 20
+  ncores = 20
 )
 }
 \arguments{
 \item{obj}{seruat 对象}
 
 \item{Cancer}{数据属于的癌种 对象}
+
+\item{ncores}{使用的核心数量，默认为 20}
 }
 \description{
 scMetabolism

@@ -3,13 +3,14 @@
 #' scMetabolism
 #' @param obj seruat 对象
 #' @param Cancer 数据属于的癌种 对象
-#' @param ncore 使用的核心数量，默认为 20
+#' @param ncores
+#'  使用的核心数量，默认为 20
 #' @keywords scMetabolismplus
 #' @examples
 #' sc.metabolism.Seurat.pathway()
 #' @export sc.metabolism.Seurat.pathway
 
-sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,Cancer="BRCA", metabolism.type = "KEGG",ncore=20) {
+sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,Cancer="BRCA", metabolism.type = "KEGG",ncores=20) {
   library(GSEABase)
   countexp<-obj@assays$RNA@counts
 
@@ -56,7 +57,7 @@ sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,
   scaled_counts <- t(t(countexp2) / n.umi) * median(n.umi)
   vis <- Vision(scaled_counts, signatures = gmtFile)
   # 检查数据中NA和零值的数量
-  options(mc.cores =ncore)
+  options(mc.cores =ncores)
   vis <- analyze(vis)
   signature_exp<-data.frame(t(vis@SigScores))
   }
@@ -76,7 +77,10 @@ sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,
     library(GSVA)
     library(GSEABase)
     geneSets <- getGmt(gmtFile) #signature read
-    gsva_es <- gsva(as.matrix(countexp2), geneSets, method=c("ssgsea"), kcdf=c("Poisson"), parallel.sz=ncores) #
+    bpparam <- MulticoreParam(workers = 20)
+
+    gsva_es <- gsva(as.matrix(countexp2), geneSets, BPPARAM = bpparam) #
+
     signature_exp<-data.frame(gsva_es)
   }
 
