@@ -57,7 +57,9 @@ DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", 
       pb$tick()  # Update progress bar after data processing
     }
     output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Dimplot")
-    dir.create(output_dir, showWarnings = FALSE)
+    if (!dir.exists(output_dir)) {
+      dir.create(output_dir)
+    }
 
     for (input.pathway in pathway) {
       pathway_data <- subset(signature_ggplot2, Pathway == input.pathway)
@@ -67,7 +69,7 @@ DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", 
         xlab("UMAP 1") + ylab("UMAP 2") +
         ggtitle(paste("Pathway:", input.pathway)) +
         theme_bw()
-      ggsave(filename = paste0(output_dir, "/", "plot_", input.pathway, ".png"), plot = plot, width = Width, height = Height)
+      ggsave(filename = paste0(output_dir,"/",input.pathway, ".png"), plot = plot, width = Width, height = Height)
       pb$tick()  # Update progress bar after plotting
     }
     print(plot)  # 打印或保存plot
@@ -92,8 +94,9 @@ DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", 
       pb$tick()  # Update progress bar after data processing
     }
     output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Dimplot")
-    dir.create(output_dir, showWarnings = FALSE)
-
+    if (!dir.exists(output_dir)) {
+      dir.create(output_dir)
+    }
     for (input.pathway in pathway) {
       pathway_data <- subset(signature_ggplot2, Pathway == input.pathway)
       plot <- ggplot(data = pathway_data, aes(x = UMAP_1, y = UMAP_2, color = Score)) +
@@ -212,7 +215,9 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y",Width=6,Heigh
   gg_table_median_norm$X2 <- factor(gg_table_median_norm$X2,levels=row_order)
   gg_table_median_norm$X1 <- as.factor(gg_table_median_norm$X1)
   output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Dotplot")
-  dir.create(output_dir, showWarnings = FALSE)
+  if (!dir.exists(output_dir)) {
+    dir.create(output_dir)
+  }
 
   write.csv(wide_matirx,paste0(output_dir, "/", "wide_matrix", ".csv"),row.names = T)
 
@@ -280,9 +285,11 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype,Width=6,Height=4){
   print(head(gg_table))
 
   # Combine multiple color palettes manually
-  colors <- c(pal_jama()(10),pal_npg()(10),pal_jco()(10))
+  colors <- c(pal_jama()(4),pal_npg()(5),pal_jco()(5),pal_aaas()(5),pal_lancet()(5))
   output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Boxplot")
-  dir.create(output_dir, showWarnings = FALSE)
+  if (!dir.exists(output_dir)) {
+    dir.create(output_dir)
+  }
 
   for (select.pathway in input.pathway) {
     pathway_data <- subset(gg_table, Pathway == select.pathway)
@@ -312,7 +319,7 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype,Width=6,Height=4){
       scale_fill_manual(values = colors)
     # Calculate dynamic height based on the number of pathways
 
-    ggsave(filename = paste0(output_dir, "/", "plot_", select.pathway, ".pdf"), plot = plot_box, width = Width, height = Height)
+    ggsave(filename = paste0(output_dir, "/",select.pathway, ".png"), plot = plot_box, width = Width, height = Height)
     pb$tick()  # Update p rogress bar after plotting
   }
   plot_box
@@ -482,7 +489,7 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
 
     print(p)
     # 保存每个 cluster 的 UMAP 图
-    ggsave(filename = file.path(output_dir, paste0("umap_plot_cluster_", selelct_cluster, ".pdf")), plot = p, width = Width, height = Height)
+    ggsave(filename = file.path(output_dir, paste0(selelct_cluster, ".png")), plot = p, width = Width, height = Height)
     pb$tick()  # Update progress bar after plotting
   }
 }

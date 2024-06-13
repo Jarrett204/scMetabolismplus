@@ -22,14 +22,14 @@ sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,
   signatures_REACTOME_metab <- system.file("extdata/Reactome_path", paste0(Cancer,".gmt"), package = "scMetabolismplus")
   signatures_GO_metab <- system.file("extdata/GO_path", paste0(Cancer,".gmt"), package = "scMetabolismplus")
   signatures_HMDB_metab <- system.file("extdata/HMDB_path", paste0(Cancer,".gmt"), package = "scMetabolismplus")
-  signatures__metab <- system.file("extdata/GO_path", paste0(Cancer,".gmt"), package = "scMetabolismplus")
+  signatures_Hallmark_metab <- system.file("extdata/Hallmark_path", paste0(Cancer,".gmt"), package = "scMetabolismplus")
 
 
   if (metabolism.type == "KEGG")  {gmtFile<-signatures_KEGG_metab; cat("Your choice is: KEGG\n")}
   if (metabolism.type == "Reactome")  {gmtFile<-signatures_REACTOME_metab; cat("Your choice is: REACTOME\n")}
   if (metabolism.type == "GO")  {gmtFile<-signatures_GO_metab; cat("Your choice is: GO\n")}
   if (metabolism.type == "HMDB")  {gmtFile<-signatures_HMDB_metab; cat("Your choice is: HMDB\n")}
-  if (metabolism.type == "GO")  {gmtFile<-signatures_GO_metab; cat("Your choice is: GO\n")}
+  if (metabolism.type == "Hallmark")  {gmtFile<-signatures_Hallmark_metab; cat("Your choice is: Hallmark\n")}
 
   file.exists(gmtFile)
   #imputation
@@ -45,7 +45,7 @@ sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,
   #signature method
   cat("Start quantify the path activity...\n")
 
-  #VISION 暂时看不好使
+  #VISION
   if (method == "VISION") {
    library(VISION)
   n.umi <- colSums(countexp2)
@@ -78,17 +78,8 @@ sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,
     signature_exp<-data.frame(gsva_es)
   }
 
-  #GSVA
-  if (method == "ssGSEA") {
-    library(GSVA)
-    library(GSEABase)
-    geneSets <- getGmt(gmtFile) #signature read
-    gsva_es <- gsva(as.matrix(countexp2), geneSets, method=c("gsva"), kcdf=c("Poisson"), parallel.sz=ncores) #
-    signature_exp<-data.frame(gsva_es)
-  }
 
-  cat("\ Thanks to:XUDONG,MENGDI,YILIN,WANGQI,RENHE,JIANYU3.26.1\
-      You guys are brilliant!
+  cat("\ Prceeding!
       \n\n")
   obj@meta.data$Cancer <- Cancer
   obj@meta.data$dataset <- metabolism.type
