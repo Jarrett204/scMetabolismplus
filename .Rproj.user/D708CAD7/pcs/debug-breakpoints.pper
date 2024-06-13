@@ -120,6 +120,21 @@
                 "type": 1,
                 "is_package_breakpoint": false,
                 "package_name": ""
+            },
+            {
+                "id": 82,
+                "path": "D:/NAR/scMetabolismplus/R/alra.R",
+                "line_number": 140,
+                "function_steps": "",
+                "function_name": "alra",
+                "state": 2,
+                "editor_state": 2,
+                "editor_line_number": 140,
+                "is_pending_debug_completion": false,
+                "needs_updated_steps": true,
+                "type": 0,
+                "is_package_breakpoint": true,
+                "package_name": "scMetabolismplus"
             }
         ]
     }

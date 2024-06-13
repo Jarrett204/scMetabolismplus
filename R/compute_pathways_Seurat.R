@@ -6,7 +6,7 @@
 #' @keywords scMetabolismplus
 #' @examples
 #' sc.metabolism.Seurat.pathway()
-#' @export 
+#' @export
 sc.metabolism.Seurat.pathway
 
 
@@ -52,9 +52,10 @@ sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,
 
   #VISION
   if (method == "VISION") {
-   library(VISION)
+    library(VISION)
   n.umi <- colSums(countexp2)
   scaled_counts <- t(t(countexp2) / n.umi) * median(n.umi)
+    # 获取最小维度
   vis <- Vision(scaled_counts, signatures = gmtFile)
   # 检查数据中NA和零值的数量
   options(mc.cores =20)

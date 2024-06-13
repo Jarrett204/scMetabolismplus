@@ -83,10 +83,13 @@ choose_k <- function (A_norm,K=100, thresh=6, noise_start=80,q=2,use.mkl=F, mkl.
   #       3) Singular values of the matrix A_norm
 
   if (K > min(dim(A_norm))) {
-    stop("For an m by n matrix, K must be smaller than the min(m,n).\n")
+    K <- min(dim(A_norm)) - 1
+    cat(sprintf("Adjusted K to %d\n", K))
   }
-  if (noise_start >K-5) {
-    stop("There need to be at least 5 singular values considered noise.\n")
+  # 确保 noise_start 合理
+  if (noise_start > K - 5) {
+    noise_start <- max(1, K - 5)
+    cat(sprintf("Adjusted noise_start to %d\n", noise_start))
   }
   noise_svals <- noise_start:K
   if (!use.mkl) {
@@ -139,7 +142,11 @@ alra <- function(A_norm, k=0,q=10, quantile.prob = 0.001, use.mkl = F, mkl.seed=
     k <-  k_choice$k
     cat(sprintf("Chose k=%d\n",k))
   }
-
+  # 确保 k 小于矩阵的最小维度
+  if (k >= min(dim(A_norm))) {
+    k <- min(dim(A_norm)) - 1
+    cat(sprintf("Adjusted k to %d\n", k))
+  }
   cat("Getting nonzeros\n")
   originally_nonzero <- A_norm >0
 
