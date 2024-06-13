@@ -6,7 +6,8 @@
 #' @keywords scMetabolismplus
 #' @examples
 #' sc.metabolism.Seurat.pathway()
-#' @export sc.metabolism.Seurat.pathway
+#' @export 
+sc.metabolism.Seurat.pathway
 
 
 sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,Cancer="BRCA", metabolism.type = "KEGG",ncore=20) {
@@ -25,21 +26,25 @@ sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,
   signatures_Hallmark_metab <- system.file("extdata/Hallmark_path", paste0(Cancer,".gmt"), package = "scMetabolismplus")
 
 
-  if (metabolism.type == "KEGG")  {gmtFile<-signatures_KEGG_metab; cat("Your choice is: KEGG\n")}
-  if (metabolism.type == "Reactome")  {gmtFile<-signatures_REACTOME_metab; cat("Your choice is: REACTOME\n")}
-  if (metabolism.type == "GO")  {gmtFile<-signatures_GO_metab; cat("Your choice is: GO\n")}
-  if (metabolism.type == "HMDB")  {gmtFile<-signatures_HMDB_metab; cat("Your choice is: HMDB\n")}
-  if (metabolism.type == "Hallmark")  {gmtFile<-signatures_Hallmark_metab; cat("Your choice is: Hallmark\n")}
+  # 选择代谢类型
+  gmtFile <- switch(metabolism.type,
+                    "KEGG" = signatures_KEGG_metab,
+                    "Reactome" = signatures_REACTOME_metab,
+                    "GO" = signatures_GO_metab,
+                    "HMDB" = signatures_HMDB_metab,
+                    "Hallmark" = signatures_Hallmark_metab,
+                    stop("Invalid metabolism type"))
+  cat("Your choice is:", metabolism.type, "\n")
 
   file.exists(gmtFile)
   #imputation
-  if (imputation == F) {
-    countexp2<-countexp
-  }
-  if (imputation == T) {
+  if (imputation) {
     cat("Start imputation...\n")
     result.completed <- alra(as.matrix(countexp))
-    countexp2 <- result.completed[[3]]; row.names(countexp2) <- row.names(countexp)
+    countexp2 <- result.completed[[3]]
+    row.names(countexp2) <- row.names(countexp)
+  } else {
+    countexp2 <- countexp
   }
 
   #signature method
@@ -52,10 +57,8 @@ sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,
   scaled_counts <- t(t(countexp2) / n.umi) * median(n.umi)
   vis <- Vision(scaled_counts, signatures = gmtFile)
   # 检查数据中NA和零值的数量
-  options(mc.cores = 1)
-
+  options(mc.cores =20)
   vis <- analyze(vis)
-
   signature_exp<-data.frame(t(vis@SigScores))
   }
 
