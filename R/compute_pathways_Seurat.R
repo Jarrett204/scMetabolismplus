@@ -76,11 +76,14 @@ sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,
   if (method == "ssGSEA") {
     library(GSVA)
     library(GSEABase)
-    geneSets <- getGmt(gmtFile) #signature read
+    # 设置并行计算参数
     bpparam <- MulticoreParam(workers = 20)
+    geneSets <- getGmt(gmtFile) #signature read
+    # 创建 ssgseaParam 参数对象
+    ssgsea_param <- ssgseaParam(expr = as.matrix(countexp2), geneSets = geneSets)
 
-    gsva_es <- gsva(as.matrix(countexp2), geneSets, BPPARAM = bpparam) #
-
+    # 计算 GSVA 富集分数
+    gsva_es <- gsva(ssgsea_param, BPPARAM = bpparam)
     signature_exp<-data.frame(gsva_es)
   }
 
