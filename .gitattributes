@@ -1,1 +1,4 @@
 *.csv filter=lfs diff=lfs merge=lfs -text
+*.gmt filter=lfs diff=lfs merge=lfs -text
+data/GO_ALL.csv filter=lfs diff=lfs merge=lfs -text
+data/KEGG_ALL.csv filter=lfs diff=lfs merge=lfs -text
