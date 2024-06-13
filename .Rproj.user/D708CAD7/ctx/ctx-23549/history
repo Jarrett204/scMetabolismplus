@@ -1,0 +1,512 @@
+for (y in 1:length(input.group.y)){
+gg_table_sub<-subset(gg_table, gg_table[,1] == input.group.x[x] & gg_table[,2] == input.group.y[y])
+gg_table_median<-rbind(gg_table_median, cbind(input.group.x[x], input.group.y[y], median(as.numeric(as.character(gg_table_sub[,3])))))
+}
+}
+gg_table_median<-data.frame(gg_table_median)
+gg_table_median[,3]<-as.numeric(as.character(gg_table_median[,3]))
+#normalize
+gg_table_median_norm<-c()
+input.group.x<-unique(as.character(gg_table[,1]))
+input.group.y<-unique(as.character(gg_table[,2]))
+range01 <- function(x){(x-min(x))/(max(x)-min(x))}
+if (input.norm == "y")
+for (y in 1:length(input.group.y)){
+gg_table_median_sub<-subset(gg_table_median, gg_table_median[,2] == input.group.y[y])
+norm_value<- range01(as.numeric(as.character(gg_table_median_sub[,3])))
+gg_table_median_sub[,3]<-norm_value
+gg_table_median_norm<-rbind(gg_table_median_norm, gg_table_median_sub)
+}
+if (input.norm == "x")
+for (x in 1:length(input.group.x)){
+gg_table_median_sub<-subset(gg_table_median, gg_table_median[,1] == input.group.x[x])
+norm_value<- range01(as.numeric(as.character(gg_table_median_sub[,3])))
+gg_table_median_sub[,3]<-norm_value
+gg_table_median_norm<-rbind(gg_table_median_norm, gg_table_median_sub)
+}
+if (input.norm == "na") gg_table_median_norm<-gg_table_median
+gg_table_median_norm<-data.frame(gg_table_median_norm)
+gg_table_median_norm[,3]<-as.numeric(as.character(gg_table_median_norm[,3]))
+library(wesanderson)
+pal <- wes_palette("Zissou1", 100, type = "continuous")
+gg_table_median_norm
+ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
+#theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
+ylab("Metabolic Pathway")+ xlab(input.parameter)+
+theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
+panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+scale_color_gradientn(colours = pal) +
+labs(color = "Value", size = "Value") +
+#facet_wrap(~tissueunique, ncol = 1) +
+#theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+NULL
+library(ggplot2)
+ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
+#theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
+ylab("Metabolic Pathway")+ xlab(input.parameter)+
+theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
+panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+scale_color_gradientn(colours = pal) +
+labs(color = "Value", size = "Value") +
+#facet_wrap(~tissueunique, ncol = 1) +
+#theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+NULL
+gg_table_median_norm
+gg_table_median_norm <- dplyr::filter(gg_table_median_norm,is.na(X3))
+gg_table_median_norm
+gg_table_median_norm <- dplyr::filter(gg_table_median_norm,!is.na(X3))
+gg_table_median_norm
+ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
+#theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
+ylab("Metabolic Pathway")+ xlab(input.parameter)+
+theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
+panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+scale_color_gradientn(colours = pal) +
+labs(color = "Value", size = "Value") +
+#facet_wrap(~tissueunique, ncol = 1) +
+#theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+NULL
+gg_table_median_norm
+gg_table_median_norm$X1
+length(gg_table_median_norm$X1) == 0
+if(length(gg_table_median_norm$X1) == 0){
+cat("\ Sorry Bro: No pathway qualified \ \n\n")
+}
+countexp<-obj@assays$RNA@counts
+countexp<-data.frame(as.matrix(countexp))
+signatures_KEGG_metab <- system.file("extdata/KEGG", paste0(Cancer,".gmt"), package = "scMetabolismplus")
+signatures_GO_metab <- system.file("extdata/GO", paste0(Cancer,".gmt"), package = "scMetabolismplus")
+if (metabolism.type == "GO")  {gmtFile<-signatures_GO_metab; cat("Your choice is: GO\n")}
+devtools::build("D:/NAR/scMetabolismplus/")
+devtools::check("D:/NAR/scMetabolismplus/")
+library(scMetabolismplus)
+Singlecell <- readRDS('../AB.rds')
+input_pathway=read.csv('./data/KEGG_ALL.csv')$Pathway%>%unique()
+#单细胞加载
+kk <- scMetabolismplus::sc.metabolism.Seurat(Singlecell2, method = "AUCell",metabolism.type = "KEGG",Cancer = "KIRC")
+kk <- scMetabolismplus::sc.metabolism.Seurat(Singlecell2, method = "AUCell",metabolism.type = "KEGG",Cancer = "KIRC")
+#单细胞加载
+kk <- scMetabolismplus::sc.metabolism.Seurat(Singlecell2, method = "AUCell",metabolism.type = "KEGG",Cancer = "KIRC")
+#单细胞加载
+kk <- scMetabolismplus::sc.metabolism.Seurat(Singlecell2, method = "AUCell",metabolism.type = "KEGG",Cancer = "KIRC")
+#单细胞代谢绘制
+DotPlot.metabolism(kk,pathway=input_pathway,phenotype = "seurat_clusters", norm = "y")
+gg_table_median_norm
+metabolism.type = "KEGG"
+Cancer = "KIRC"
+countexp<-obj@assays$RNA@counts
+countexp<-data.frame(as.matrix(countexp))
+signatures_KEGG_metab <- system.file("extdata/KEGG", paste0(Cancer,".gmt"), package = "scMetabolismplus")
+if (metabolism.type == "KEGG")  {gmtFile<-signatures_KEGG_metab; cat("Your choice is: KEGG\n")}
+file.exists(gmtFile)
+#signature method
+cat("HAHA XUDONG Start quantify the metabolism activity...\n")
+#signature method
+cat("HaHa XUDONG Start quantify the metabolism activity...\n")
+#signature method
+cat("HaHa! XUDONG Start quantify the metabolism activity...\n")
+#AUCell
+if (method == "AUCell") {
+library(AUCell)
+library(GSEABase)
+cells_rankings <- AUCell_buildRankings(as.matrix(countexp2), plotStats=F) #rank
+geneSets <- getGmt(gmtFile) #signature read
+cells_AUC <- AUCell_calcAUC(geneSets, cells_rankings) #calc
+signature_exp <- data.frame(getAUC(cells_AUC))
+}
+library(AUCell)
+library(GSEABase)
+cells_rankings <- AUCell_buildRankings(as.matrix(countexp2), plotStats=F) #rank
+geneSets <- getGmt(gmtFile) #signature read
+cells_AUC <- AUCell_calcAUC(geneSets, cells_rankings) #calc
+signature_exp <- data.frame(getAUC(cells_AUC))
+obj@assays$METABOLISM$score<-signature_exp
+obj
+obj
+cat("\ Thanks to:XUDONG,MENGDI,YILIN,WANGQI,RENHE,JIANYU\
+You guys are brilliant!
+\n\n")
+obj@assays$METABOLISM$score<-signature_exp
+obj
+input.pathway <- input_pathway
+metadata<-obj@meta.data
+metabolism.matrix <- obj@assays$METABOLISM$score
+cat("\ Thanks to:XUDONG,WANGQI,MENGDI,YILIN,RENHE,JIANYU\ \n\n")
+metadata[,input.parameter]<-as.character(metadata[,input.parameter])
+metabolism.matrix_sub<-t(metabolism.matrix[input.pathway,])
+#arrange large table
+gg_table<-c()
+for (i in 1:length(input.pathway)){
+gg_table<-rbind(gg_table, cbind(metadata[,input.parameter], input.pathway[i], metabolism.matrix_sub[,i]))
+}
+gg_table<-data.frame(gg_table)
+#get median value
+gg_table_median<-c()
+input.group.x<-unique(as.character(gg_table[,1]))
+input.group.y<-unique(as.character(gg_table[,2]))
+for (x in 1:length(input.group.x)){
+for (y in 1:length(input.group.y)){
+gg_table_sub<-subset(gg_table, gg_table[,1] == input.group.x[x] & gg_table[,2] == input.group.y[y])
+gg_table_median<-rbind(gg_table_median, cbind(input.group.x[x], input.group.y[y], median(as.numeric(as.character(gg_table_sub[,3])))))
+}
+}
+gg_table_median<-data.frame(gg_table_median)
+gg_table_median[,3]<-as.numeric(as.character(gg_table_median[,3]))
+#normalize
+gg_table_median_norm<-c()
+input.group.x<-unique(as.character(gg_table[,1]))
+input.group.y<-unique(as.character(gg_table[,2]))
+range01 <- function(x){(x-min(x))/(max(x)-min(x))}
+if (input.norm == "y")
+for (y in 1:length(input.group.y)){
+gg_table_median_sub<-subset(gg_table_median, gg_table_median[,2] == input.group.y[y])
+norm_value<- range01(as.numeric(as.character(gg_table_median_sub[,3])))
+gg_table_median_sub[,3]<-norm_value
+gg_table_median_norm<-rbind(gg_table_median_norm, gg_table_median_sub)
+}
+if (input.norm == "x")
+for (x in 1:length(input.group.x)){
+gg_table_median_sub<-subset(gg_table_median, gg_table_median[,1] == input.group.x[x])
+norm_value<- range01(as.numeric(as.character(gg_table_median_sub[,3])))
+gg_table_median_sub[,3]<-norm_value
+gg_table_median_norm<-rbind(gg_table_median_norm, gg_table_median_sub)
+}
+if (input.norm == "na") gg_table_median_norm<-gg_table_median
+gg_table_median_norm<-data.frame(gg_table_median_norm)
+gg_table_median_norm[,3]<-as.numeric(as.character(gg_table_median_norm[,3]))
+gg_table_median_norm <- dplyr::filter(gg_table_median_norm,!is.na(X3))
+library(wesanderson)
+pal <- wes_palette("Zissou1", 100, type = "continuous")
+if(length(gg_table_median_norm$X1) == 0){
+cat("\ Sorry Bro: No pathway qualified \ \n\n")
+}else{
+ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
+#theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
+ylab("Metabolic Pathway")+ xlab(input.parameter)+
+theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
+panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+scale_color_gradientn(colours = pal) +
+labs(color = "Value", size = "Value") +
+#facet_wrap(~tissueunique, ncol = 1) +
+#theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+NULL
+}
+names(wes_palettes)
+pal <- wes_palette("Moonrise2", 100, type = "continuous")
+if(length(gg_table_median_norm$X1) == 0){
+cat("\ Sorry Bro: No pathway qualified \ \n\n")
+}else{
+ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
+#theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
+ylab("Metabolic Pathway")+ xlab(input.parameter)+
+theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
+panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+scale_color_gradientn(colours = pal) +
+labs(color = "Value", size = "Value") +
+#facet_wrap(~tissueunique, ncol = 1) +
+#theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+NULL
+}
+pal <- wes_palette("GrandBudapest1", 100, type = "continuous")
+if(length(gg_table_median_norm$X1) == 0){
+cat("\ Sorry Bro: No pathway qualified \ \n\n")
+}else{
+ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
+#theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
+ylab("Metabolic Pathway")+ xlab(input.parameter)+
+theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
+panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+scale_color_gradientn(colours = pal) +
+labs(color = "Value", size = "Value") +
+#facet_wrap(~tissueunique, ncol = 1) +
+#theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+NULL
+}
+pal <- wes_palette("BottleRocket2", 100, type = "continuous")
+if(length(gg_table_median_norm$X1) == 0){
+cat("\ Sorry Bro: No pathway qualified \ \n\n")
+}else{
+ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
+#theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
+ylab("Metabolic Pathway")+ xlab(input.parameter)+
+theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
+panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+scale_color_gradientn(colours = pal) +
+labs(color = "Value", size = "Value") +
+#facet_wrap(~tissueunique, ncol = 1) +
+#theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+NULL
+}
+DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y"){
+input.norm = norm
+input.pathway <- pathway
+input.parameter<-phenotype
+metadata<-obj@meta.data
+metabolism.matrix <- obj@assays$METABOLISM$score
+cat("\ Let's do some Dotplot
+Note: We are not responsible if there is no pahtways
+\ \n\n")
+metadata[,input.parameter]<-as.character(metadata[,input.parameter])
+metabolism.matrix_sub<-t(metabolism.matrix[input.pathway,])
+#arrange large table
+gg_table<-c()
+for (i in 1:length(input.pathway)){
+gg_table<-rbind(gg_table, cbind(metadata[,input.parameter], input.pathway[i], metabolism.matrix_sub[,i]))
+}
+gg_table<-data.frame(gg_table)
+#get median value
+gg_table_median<-c()
+input.group.x<-unique(as.character(gg_table[,1]))
+input.group.y<-unique(as.character(gg_table[,2]))
+for (x in 1:length(input.group.x)){
+for (y in 1:length(input.group.y)){
+gg_table_sub<-subset(gg_table, gg_table[,1] == input.group.x[x] & gg_table[,2] == input.group.y[y])
+gg_table_median<-rbind(gg_table_median, cbind(input.group.x[x], input.group.y[y], median(as.numeric(as.character(gg_table_sub[,3])))))
+}
+}
+gg_table_median<-data.frame(gg_table_median)
+gg_table_median[,3]<-as.numeric(as.character(gg_table_median[,3]))
+#normalize
+gg_table_median_norm<-c()
+input.group.x<-unique(as.character(gg_table[,1]))
+input.group.y<-unique(as.character(gg_table[,2]))
+range01 <- function(x){(x-min(x))/(max(x)-min(x))}
+if (input.norm == "y")
+for (y in 1:length(input.group.y)){
+gg_table_median_sub<-subset(gg_table_median, gg_table_median[,2] == input.group.y[y])
+norm_value<- range01(as.numeric(as.character(gg_table_median_sub[,3])))
+gg_table_median_sub[,3]<-norm_value
+gg_table_median_norm<-rbind(gg_table_median_norm, gg_table_median_sub)
+}
+if (input.norm == "x")
+for (x in 1:length(input.group.x)){
+gg_table_median_sub<-subset(gg_table_median, gg_table_median[,1] == input.group.x[x])
+norm_value<- range01(as.numeric(as.character(gg_table_median_sub[,3])))
+gg_table_median_sub[,3]<-norm_value
+gg_table_median_norm<-rbind(gg_table_median_norm, gg_table_median_sub)
+}
+if (input.norm == "na") gg_table_median_norm<-gg_table_median
+gg_table_median_norm<-data.frame(gg_table_median_norm)
+gg_table_median_norm[,3]<-as.numeric(as.character(gg_table_median_norm[,3]))
+gg_table_median_norm <- dplyr::filter(gg_table_median_norm,!is.na(X3))
+library(wesanderson)
+pal <- wes_palette("BottleRocket2", 100, type = "continuous")
+if(length(gg_table_median_norm$X1) == 0){
+cat("\ Sorry Bro: No pathway qualified \ \n\n")
+}else{
+ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
+#theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
+ylab("Metabolic Pathway")+ xlab(input.parameter)+
+theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
+panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+scale_color_gradientn(colours = pal) +
+labs(color = "Value", size = "Value") +
+#facet_wrap(~tissueunique, ncol = 1) +
+#theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+NULL
+}
+}
+pal <- wes_palette("GrandBudapest1", 100, type = "continuous")
+if(length(gg_table_median_norm$X1) == 0){
+cat("\ Sorry Bro: No pathway qualified \ \n\n")
+}else{
+ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
+#theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
+ylab("Metabolic Pathway")+ xlab(input.parameter)+
+theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
+panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+scale_color_gradientn(colours = pal) +
+labs(color = "Value", size = "Value") +
+#facet_wrap(~tissueunique, ncol = 1) +
+#theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+NULL
+}
+pal <- wes_palette("AsteroidCity1", 100, type = "continuous")
+if(length(gg_table_median_norm$X1) == 0){
+cat("\ Sorry Bro: No pathway qualified \ \n\n")
+}else{
+ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
+#theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
+ylab("Metabolic Pathway")+ xlab(input.parameter)+
+theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
+panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+scale_color_gradientn(colours = pal) +
+labs(color = "Value", size = "Value") +
+#facet_wrap(~tissueunique, ncol = 1) +
+#theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+NULL
+}
+pal <- wes_palette("IsleofDogs1", 100, type = "continuous")
+if(length(gg_table_median_norm$X1) == 0){
+cat("\ Sorry Bro: No pathway qualified \ \n\n")
+}else{
+ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
+#theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
+ylab("Metabolic Pathway")+ xlab(input.parameter)+
+theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
+panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+scale_color_gradientn(colours = pal) +
+labs(color = "Value", size = "Value") +
+#facet_wrap(~tissueunique, ncol = 1) +
+#theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+NULL
+}
+pal <- wes_palette("FrenchDispatch", 100, type = "continuous")
+if(length(gg_table_median_norm$X1) == 0){
+cat("\ Sorry Bro: No pathway qualified \ \n\n")
+}else{
+ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
+#theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
+ylab("Metabolic Pathway")+ xlab(input.parameter)+
+theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
+panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+scale_color_gradientn(colours = pal) +
+labs(color = "Value", size = "Value") +
+#facet_wrap(~tissueunique, ncol = 1) +
+#theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+NULL
+}
+pal <-  colorRampPalette(c("blue", "cyan", "green", "yellow", "red"))(100)
+if(length(gg_table_median_norm$X1) == 0){
+cat("\ Sorry Bro: No pathway qualified \ \n\n")
+}else{
+ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
+#theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
+ylab("Metabolic Pathway")+ xlab(input.parameter)+
+theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
+panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+scale_color_gradientn(colours = pal) +
+labs(color = "Value", size = "Value") +
+#facet_wrap(~tissueunique, ncol = 1) +
+#theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+NULL
+}
+pal <-   colorRampPalette(c("#34568B", "#88D8B0", "#FFAD05", "#D11141"))(100)
+if(length(gg_table_median_norm$X1) == 0){
+cat("\ Sorry Bro: No pathway qualified \ \n\n")
+}else{
+ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
+#theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
+ylab("Metabolic Pathway")+ xlab(input.parameter)+
+theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
+panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+scale_color_gradientn(colours = pal) +
+labs(color = "Value", size = "Value") +
+#facet_wrap(~tissueunique, ncol = 1) +
+#theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+NULL
+}
+gg_table_median_norm
+gg_table_median_norm$X2
+print(gg_table_median_norm$X2)
+print(gg_table_median_norm$X2%>%unique())
+devtools::build("D:/NAR/scMetabolismplus/")
+#单细胞加载
+kk <- scMetabolismplus::sc.metabolism.Seurat(Singlecell2, method = "AUCell",metabolism.type = "KEGG",Cancer = "KIRC")
+#单细胞代谢绘制
+DotPlot.metabolism(kk,pathway=input_pathway,phenotype = "seurat_clusters", norm = "y")
+pal <-   colorRampPalette(c("#34568B", "#88D8B0", "#FFAD05", "#D11141"))(100)
+if(length(gg_table_median_norm$X1) == 0){
+cat("\ Sorry Bro: No pathway qualified \ \n\n")
+}else{
+ggplot(data=gg_table_median_norm, aes(x=gg_table_median_norm[,1], y=gg_table_median_norm[,2], color = gg_table_median_norm[,3])) +
+geom_point(data=gg_table_median_norm, aes(size = gg_table_median_norm[,3])) + #geom_line() +
+#theme_bw()+theme(aspect.ratio=0.5, axis.text.x = element_text(angle = 45, hjust = 1)) +
+ylab("Metabolic Pathway")+ xlab(input.parameter)+
+theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1), #aspect.ratio=1,
+panel.grid.minor = element_blank(), panel.grid.major = element_blank()) +
+scale_color_gradientn(colours = pal) +
+labs(color = "Value", size = "Value") +
+#facet_wrap(~tissueunique, ncol = 1) +
+#theme_bw()+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+NULL
+}
+devtools::build("D:/NAR/scMetabolismplus/")
+library(scMetabolismplus)
+#单细胞加载
+kk <- scMetabolismplus::sc.metabolism.Seurat(Singlecell2, method = "AUCell",metabolism.type = "KEGG",Cancer = "KIRC")
+#单细胞代谢绘制
+DotPlot.metabolism(kk,pathway=input_pathway,phenotype = "seurat_clusters", norm = "y")
+devtools::build("D:/NAR/scMetabolismplus/")
+kk <- scMetabolismplus::sc.metabolism.Seurat(Singlecell2, method = "AUCell",metabolism.type = "Reactome",Cancer = "BRCA")
+#单细胞加载
+kk <- scMetabolismplus::sc.metabolism.Seurat(Singlecell2, method = "AUCell",metabolism.type = "KEGG",Cancer = "KIRC")
+input_pathway=read.csv('./data/KEGG_ALL.csv')$Pathway%>%unique()
+#单细胞代谢绘制
+DotPlot.metabolism(kk,pathway=input_pathway,phenotype = "seurat_clusters", norm = "y")
+dev.off()
+#单细胞代谢绘制
+DotPlot.metabolism(kk,pathway=input_pathway,phenotype = "seurat_clusters", norm = "y")
+dev.off()
+devtools::build("D:/NAR/scMetabolismplus/")
+library(scMetabolismplus)
+#单细胞代谢绘制
+DotPlot.metabolism(kk,pathway=input_pathway,phenotype = "seurat_clusters", norm = "y")
+devtools::build("D:/NAR/scMetabolismplus/")
+devtools::check("D:/NAR/scMetabolismplus/")
+library(scMetabolismplus)
+#单细胞加载
+kk <- scMetabolismplus::sc.metabolism.Seurat(Singlecell2, method = "AUCell",metabolism.type = "KEGG",Cancer = "KIRC")
+#单细胞代谢绘制
+DotPlot.metabolism(kk,pathway=input_pathway,phenotype = "seurat_clusters", norm = "y")
+devtools::build("D:/NAR/scMetabolismplus/")
+library(scMetabolismplus)
+#单细胞加载
+kk <- scMetabolismplus::sc.metabolism.Seurat(Singlecell2, method = "AUCell",metabolism.type = "KEGG",Cancer = "KIRC")
+#单细胞代谢绘制
+DotPlot.metabolism(kk,pathway=input_pathway,phenotype = "seurat_clusters", norm = "y")
+dev.off()
+#单细胞代谢绘制
+DotPlot.metabolism(kk,pathway=input_pathway,phenotype = "seurat_clusters", norm = "y")
+devtools::build("D:/NAR/scMetabolismplus/")
+devtools::build("D:/NAR/scMetabolismplus/")
+devtools::check("D:/NAR/scMetabolismplus/")
+library(scMetabolismplus)
+#单细胞加载
+kk <- scMetabolismplus::sc.metabolism.Seurat(Singlecell2, method = "AUCell",metabolism.type = "KEGG",Cancer = "KIRC")
+#单细胞代谢绘制
+DotPlot.metabolism(kk,pathway=input_pathway,phenotype = "seurat_clusters", norm = "y")
+devtools::build("D:/NAR/scMetabolismplus/")
+#单细胞加载
+kk <- scMetabolismplus::sc.metabolism.Seurat(Singlecell2, method = "AUCell",metabolism.type = "KEGG",Cancer = "KIRC")
+#单细胞代谢绘制
+DotPlot.metabolism(kk,pathway=input_pathway,phenotype = "seurat_clusters", norm = "y")
+devtools::install("jarrett204/scMetabolismplus",force = TRUE)
+devtools::install("Jarrett204/scMetabolismplus",force = TRUE)
+devtools::install_github("Jarrett204/scMetabolismplus",force = TRUE)
+library(scMetabolismplus)
+devtools::build("D:/NAR/scMetabolismplus/")
+library(scMetabolismplus)
+Singlecell <- readRDS('../AB.rds')
+Singlecell2 <- Singlecell[,1:1000]
+input_pathway=read.csv('./data/KEGG_ALL.csv')$Pathway%>%unique()
+library(tibble)
+input_pathway=read.csv('./data/KEGG_ALL.csv')$Pathway%>%unique()
+#单细胞加载
+kk <- scMetabolismplus::sc.metabolism.Seurat(Singlecell2, method = "AUCell",metabolism.type = "KEGG",Cancer = "KIRC")
+#单细胞代谢绘制
+DotPlot.metabolism(kk,pathway=input_pathway,phenotype = "seurat_clusters", norm = "y")
+library(ggplot2)
+#单细胞代谢绘制
+DotPlot.metabolism(kk,pathway=input_pathway,phenotype = "seurat_clusters", norm = "y")
+devtools::install_github("Jarrett204/scMetabolismplus",force = TRUE)
+library(ggplo2)
+devtools::install_github("Jarrett204/scMetabolismplus",force = TRUE)
+devtools::install_github("Jarrett204/scMetabolismplus",force = TRUE)
+library(scMetabolismplus)
+library(ggplo2)
+devtools::install_github("Jarrett204/scMetabolismplus",force = TRUE)

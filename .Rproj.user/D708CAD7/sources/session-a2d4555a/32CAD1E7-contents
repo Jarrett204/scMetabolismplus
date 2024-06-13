@@ -1,0 +1,39 @@
+usethis::create_package("D:/NAR/scMetabolismplus/")
+devtools::document("D:/NAR/scMetabolismplus/")
+#file_path <- system.file("data", "KEGG_metabolism_nc.gmt", package = "scMetabolismplus")
+devtools::build("D:/NAR/scMetabolismplus/")
+devtools::check("D:/NAR/scMetabolismplus/")
+
+#devtools::install_github("Jarrett204/scMetabolismplus",force = TRUE)
+library(scMetabolismplus)
+library("Matrix")
+library(Seurat)
+library(rsvd)
+library(ggplot2)
+library(tibble)
+library(igraph)
+library(Seurat)
+library(ggsci)
+library(dplyr)
+library(tidyr)
+library(ggraph)
+Singlecell <- readRDS('../AB.rds')
+Singlecell2 <- Singlecell
+database= "GO"
+Cancer="BRCA"
+phenotype="seurat_clusters"
+method="AUCell"
+
+TT <- system.file("data/", paste0(database,"_ALL.csv"), package = "scMetabolismplus")#手动找一下通路
+input_pathway=read.csv(TT)%>%dplyr::filter(Cancer_type==Cancer)%>%.$Pathway%>%unique()#加载所有的pathway，方便统一展示
+
+#单细胞加载#phenotype是用什么metadata比如注释后的结果
+kk <- scMetabolismplus::sc.metabolism.Seurat.pathway(Singlecell2,imputation=F, method =method,metabolism.type = database,Cancer =Cancer)
+#DotPlot绘制某个癌的某个算法，结果会出现在同一个文件夹里
+tt <- DotPlot.metabolism(kk,pathway=input_pathway,phenotype =phenotype, norm = "y")
+#DimPlot绘制某个癌的某个算法，结果会出现在同一个文件夹里
+DimPlot.metabolism(kk,pathway=input_pathway,dimention.reduction.run = F)
+#BoxPlot绘制某个癌的某个算法，结果会出现在同一个文件夹里
+BoxPlot.metabolism(obj = kk, pathway =tt$pathway, phenotype =phenotype)
+#通路的UMAP降维图，某个癌的某个算法，结果会出现在同一个文件夹里，附带所有通路评分
+PathUmp.metabolism(kk, threshold = 0.5, top_n = floor(length(input_pathway)/6),phenotype =phenotype)
