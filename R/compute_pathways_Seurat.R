@@ -3,12 +3,11 @@
 #' scMetabolism
 #' @param obj seruat 对象
 #' @param Cancer 数据属于的癌种 对象
+#' @param ncore 使用的核心数量，默认为 20
 #' @keywords scMetabolismplus
 #' @examples
 #' sc.metabolism.Seurat.pathway()
-#' @export
-sc.metabolism.Seurat.pathway
-
+#' @export sc.metabolism.Seurat.pathway
 
 sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,Cancer="BRCA", metabolism.type = "KEGG",ncore=20) {
   library(GSEABase)
