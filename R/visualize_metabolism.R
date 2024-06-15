@@ -470,7 +470,7 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
                         aes(x = UMAP_1, y = UMAP_2), expand = unit(0.5, "cm"), label.fill = NA) +  # 画圈
       geom_text_repel(data = umap_df %>% filter(is_selected == "selected"),
                       aes(label = pathway), size = 2*size/3, color = "black", alpha = 0.7) +
-      annotate("text", x = center_x, y = center_y, label = paste("UMAP - Cluster", selelct_cluster),
+      annotate("text", x = center_x, y = center_y, label = paste(selelct_cluster),
                size = size, color = scales::alpha("#4DBBD5FF", 0.4), fontface = "bold") +  # 中心标签
       scale_color_manual(values = c("selected" = "#E64B35FF", "not_selected" = "grey")) +
       theme_bw() +
