@@ -77,7 +77,7 @@ sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,
     library(GSVA)
     library(GSEABase)
     # 设置并行计算参数
-    bpparam <- MulticoreParam(workers = 20)
+    bpparam <- MulticoreParam(workers = ncores)
     geneSets <- getGmt(gmtFile) #signature read
     # 创建 ssgseaParam 参数对象
     ssgsea_param <- ssgseaParam(expr = as.matrix(countexp2), geneSets = geneSets)
