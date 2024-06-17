@@ -19,7 +19,7 @@ library(data.table)
 library(rsvd)
 library(dplyr)
 
-DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", dimention.reduction.run = T, size= 1.5,Width=6,Height=5){
+DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", dimention.reduction.run = T, size= 0.01,Width=6,Height=5){
 
   cat("Establishing connection\n\n")
   library(wesanderson)
@@ -315,7 +315,7 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype,Width=6,Height=4){
       theme(axis.text.x = element_text(angle = 45, hjust = 1),
             panel.grid.minor = element_line(),
             panel.grid.major = element_line()) +
-      labs(fill = "Input Parameter") +
+      labs(fill = "Cell type") +
       scale_fill_manual(values = colors)
     # Calculate dynamic height based on the number of pathways
 
