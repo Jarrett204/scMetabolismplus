@@ -1,0 +1,217 @@
+"","cluster","Pathway","mean_score"
+"1","0","Asparagine N-linked glycosylation",0.0952300872904479
+"2","0","Association of TriC_CCT with target proteins during biosynthesis",0.085070631645001
+"3","0","Chaperonin-mediated protein folding",0.0825170285295549
+"4","0","Deubiquitination",0.0876908181776428
+"5","0","Eukaryotic Translation Elongation",0.0852314541957742
+"6","0","Glycosaminoglycan metabolism",0.0896728774971689
+"7","0","Metabolism",0.094859293703345
+"8","0","Metabolism of carbohydrates",0.0828945204240239
+"9","0","Metabolism of lipids",0.0784694824121736
+"10","0","Metabolism of proteins",0.0918807881999222
+"11","0","Metabolism of steroids",0.112166764227945
+"12","0","Neddylation",0.0803836744222642
+"13","0","PI Metabolism",0.0828592770267276
+"14","0","PPARA activates gene expression",0.0935741637715261
+"15","0","Peptide hormone metabolism",0.100274092037511
+"16","0","Post-translational protein modification",0.0773262837284553
+"17","0","Regulation of Insulin-like Growth Factor  transport and uptake by Insulin-like Growth Factor Binding Proteins ",0.0874642035137589
+"18","0","Regulation of cholesterol biosynthesis by SREBP ",0.0881273786952152
+"19","0","Regulation of insulin secretion",0.0985751201866846
+"20","0","SUMO E3 ligases SUMOylate target proteins",0.0998259179189854
+"21","0","SUMOylation of DNA damage response and repair proteins",0.0886514438458887
+"22","0","SUMOylation of transcription cofactors",0.0849745208865661
+"23","0","Synthesis of IP3 and IP4 in the cytosol",0.0904118914949028
+"24","0","Transport to the Golgi and subsequent modification",0.0935119834970033
+"25","1","Asparagine N-linked glycosylation",0.139575428454392
+"26","1","Association of TriC_CCT with target proteins during biosynthesis",0.127070223579708
+"27","1","Chaperonin-mediated protein folding",0.140832795463686
+"28","1","Deubiquitination",0.143831777405435
+"29","1","Eukaryotic Translation Elongation",0.0839526605008219
+"30","1","Glycosaminoglycan metabolism",0.118407739606503
+"31","1","Metabolism",0.140508646652841
+"32","1","Metabolism of carbohydrates",0.139066399277577
+"33","1","Metabolism of lipids",0.0931947432872324
+"34","1","Metabolism of proteins",0.0842210401599641
+"35","1","Metabolism of steroids",0.0751459264413115
+"36","1","Neddylation",0.1123336732205
+"37","1","PI Metabolism",0.120166311559958
+"38","1","PPARA activates gene expression",0.0910742300234975
+"39","1","Peptide hormone metabolism",0.124029893884027
+"40","1","Post-translational protein modification",0.102968925597939
+"41","1","Regulation of Insulin-like Growth Factor  transport and uptake by Insulin-like Growth Factor Binding Proteins ",0.128510542485713
+"42","1","Regulation of cholesterol biosynthesis by SREBP ",0.131988080007131
+"43","1","Regulation of insulin secretion",0.0913280548677348
+"44","1","SUMO E3 ligases SUMOylate target proteins",0.11347699567416
+"45","1","SUMOylation of DNA damage response and repair proteins",0.1226236380162
+"46","1","SUMOylation of transcription cofactors",0.108897293981896
+"47","1","Synthesis of IP3 and IP4 in the cytosol",0.0992705223194763
+"48","1","Transport to the Golgi and subsequent modification",0.104870743203624
+"49","2","Asparagine N-linked glycosylation",0.084685479060084
+"50","2","Association of TriC_CCT with target proteins during biosynthesis",0.0578212596864376
+"51","2","Chaperonin-mediated protein folding",0.0850962059344781
+"52","2","Deubiquitination",0.074664581134605
+"53","2","Eukaryotic Translation Elongation",0.074504448259257
+"54","2","Glycosaminoglycan metabolism",0.0516416106983423
+"55","2","Metabolism",0.0681862009719874
+"56","2","Metabolism of carbohydrates",0.0686288074240924
+"57","2","Metabolism of lipids",0.0629960069338198
+"58","2","Metabolism of proteins",0.061001531163221
+"59","2","Metabolism of steroids",0.0606345382241935
+"60","2","Neddylation",0.0458377438351245
+"61","2","PI Metabolism",0.0642893515327252
+"62","2","PPARA activates gene expression",0.0604852094512286
+"63","2","Peptide hormone metabolism",0.0824045510687256
+"64","2","Post-translational protein modification",0.0686000242129404
+"65","2","Regulation of Insulin-like Growth Factor  transport and uptake by Insulin-like Growth Factor Binding Proteins ",0.0850445532960814
+"66","2","Regulation of cholesterol biosynthesis by SREBP ",0.0524267354854792
+"67","2","Regulation of insulin secretion",0.0604473731865785
+"68","2","SUMO E3 ligases SUMOylate target proteins",0.0425605483026983
+"69","2","SUMOylation of DNA damage response and repair proteins",0.0654425997563727
+"70","2","SUMOylation of transcription cofactors",0.0662838702424394
+"71","2","Synthesis of IP3 and IP4 in the cytosol",0.0866725338842694
+"72","2","Transport to the Golgi and subsequent modification",0.0455008031554865
+"73","4","Asparagine N-linked glycosylation",0.0574062851228195
+"74","4","Association of TriC_CCT with target proteins during biosynthesis",0.0469452207962365
+"75","4","Chaperonin-mediated protein folding",0.0729018010515874
+"76","4","Deubiquitination",0.045477944921273
+"77","4","Eukaryotic Translation Elongation",0.0547786989425493
+"78","4","Glycosaminoglycan metabolism",0.0426858010197374
+"79","4","Metabolism",0.0364495846220426
+"80","4","Metabolism of carbohydrates",0.0616782381736093
+"81","4","Metabolism of lipids",0.0529786257057601
+"82","4","Metabolism of proteins",0.0314804963740927
+"83","4","Metabolism of steroids",0.0593339333109757
+"84","4","Neddylation",0.0288080365523271
+"85","4","PI Metabolism",0.0620311120620044
+"86","4","PPARA activates gene expression",0.018078508583172
+"87","4","Peptide hormone metabolism",0.0650018785947276
+"88","4","Post-translational protein modification",0.025548754665896
+"89","4","Regulation of Insulin-like Growth Factor  transport and uptake by Insulin-like Growth Factor Binding Proteins ",0.0448094253482535
+"90","4","Regulation of cholesterol biosynthesis by SREBP ",0.0526890690213362
+"91","4","Regulation of insulin secretion",0.0559317300589174
+"92","4","SUMO E3 ligases SUMOylate target proteins",0.0429983788423112
+"93","4","SUMOylation of DNA damage response and repair proteins",0.0529489721642233
+"94","4","SUMOylation of transcription cofactors",0.0506108760220197
+"95","4","Synthesis of IP3 and IP4 in the cytosol",0.0598164369237829
+"96","4","Transport to the Golgi and subsequent modification",0.0771901835030104
+"97","5","Asparagine N-linked glycosylation",-0.00672621511571234
+"98","5","Association of TriC_CCT with target proteins during biosynthesis",0.159394807991198
+"99","5","Chaperonin-mediated protein folding",0.159938312346588
+"100","5","Deubiquitination",0.207784481909058
+"101","5","Eukaryotic Translation Elongation",0.0220224525826274
+"102","5","Glycosaminoglycan metabolism",0.0760387672989188
+"103","5","Metabolism",0.0159610643099432
+"104","5","Metabolism of carbohydrates",0.184716063449282
+"105","5","Metabolism of lipids",0.0507761716575115
+"106","5","Metabolism of proteins",0.0161288321984424
+"107","5","Metabolism of steroids",0.185130487169414
+"108","5","Neddylation",0.0486399850934999
+"109","5","PI Metabolism",0.0491116134980879
+"110","5","PPARA activates gene expression",0.199735364738801
+"111","5","Peptide hormone metabolism",0.0285306454255401
+"112","5","Post-translational protein modification",0.149127892960238
+"113","5","Regulation of Insulin-like Growth Factor  transport and uptake by Insulin-like Growth Factor Binding Proteins ",0.105049581786808
+"114","5","Regulation of cholesterol biosynthesis by SREBP ",0.0811559655771967
+"115","5","Regulation of insulin secretion",0.117311206909542
+"116","5","SUMO E3 ligases SUMOylate target proteins",0.0998727700209391
+"117","5","SUMOylation of DNA damage response and repair proteins",0.0395020997334586
+"118","5","SUMOylation of transcription cofactors",0.0686210386589789
+"119","5","Synthesis of IP3 and IP4 in the cytosol",0.133079172164555
+"120","5","Transport to the Golgi and subsequent modification",0.123110282681014
+"121","6","Asparagine N-linked glycosylation",0.0246852689194583
+"122","6","Association of TriC_CCT with target proteins during biosynthesis",0.0136807379074003
+"123","6","Chaperonin-mediated protein folding",-0.00260634286919442
+"124","6","Deubiquitination",0.024747726625838
+"125","6","Eukaryotic Translation Elongation",0.063738868284023
+"126","6","Glycosaminoglycan metabolism",0.0119768350419506
+"127","6","Metabolism",0.03977017771717
+"128","6","Metabolism of carbohydrates",-0.0107384082730192
+"129","6","Metabolism of lipids",0.044566648509723
+"130","6","Metabolism of proteins",0.00301302954024388
+"131","6","Metabolism of steroids",-0.0101165176862362
+"132","6","Neddylation",-0.00181502795844987
+"133","6","PI Metabolism",-0.0270785882513339
+"134","6","PPARA activates gene expression",-0.0164827161296695
+"135","6","Peptide hormone metabolism",-0.011508381906799
+"136","6","Post-translational protein modification",0.0187545677366315
+"137","6","Regulation of Insulin-like Growth Factor  transport and uptake by Insulin-like Growth Factor Binding Proteins ",0.0129803873564242
+"138","6","Regulation of cholesterol biosynthesis by SREBP ",-0.0160673617747833
+"139","6","Regulation of insulin secretion",0.0080515241494083
+"140","6","SUMO E3 ligases SUMOylate target proteins",0.0127494183577549
+"141","6","SUMOylation of DNA damage response and repair proteins",0.0645486336697437
+"142","6","SUMOylation of transcription cofactors",0.0194595556414862
+"143","6","Synthesis of IP3 and IP4 in the cytosol",0.00206689025197591
+"144","6","Transport to the Golgi and subsequent modification",0.00931942731481727
+"145","7","Asparagine N-linked glycosylation",0.00220028569714462
+"146","7","Association of TriC_CCT with target proteins during biosynthesis",0.056549826071089
+"147","7","Chaperonin-mediated protein folding",0.043716578882472
+"148","7","Deubiquitination",-0.0210374303289762
+"149","7","Eukaryotic Translation Elongation",0.0387241230830719
+"150","7","Glycosaminoglycan metabolism",0.0816221257874333
+"151","7","Metabolism",0.102881643504529
+"152","7","Metabolism of carbohydrates",0.0785045793662076
+"153","7","Metabolism of lipids",0.173639744111743
+"154","7","Metabolism of proteins",0.072208275651511
+"155","7","Metabolism of steroids",0.0504539373250842
+"156","7","Neddylation",0.148184929670416
+"157","7","PI Metabolism",0.0413982067101461
+"158","7","PPARA activates gene expression",0.0713244438206225
+"159","7","Peptide hormone metabolism",0.0227751316845572
+"160","7","Post-translational protein modification",0.0408481109775061
+"161","7","Regulation of Insulin-like Growth Factor  transport and uptake by Insulin-like Growth Factor Binding Proteins ",0.0233859282619477
+"162","7","Regulation of cholesterol biosynthesis by SREBP ",0.0337733295119943
+"163","7","Regulation of insulin secretion",0.0610741474840854
+"164","7","SUMO E3 ligases SUMOylate target proteins",0.0995903946944149
+"165","7","SUMOylation of DNA damage response and repair proteins",0.0961995701591799
+"166","7","SUMOylation of transcription cofactors",0.127197190605265
+"167","7","Synthesis of IP3 and IP4 in the cytosol",0.0982693087853743
+"168","7","Transport to the Golgi and subsequent modification",0.136278130482605
+"169","8","Asparagine N-linked glycosylation",-0.133901775268295
+"170","8","Association of TriC_CCT with target proteins during biosynthesis",-0.00029939686820657
+"171","8","Chaperonin-mediated protein folding",0.0226584635276002
+"172","8","Deubiquitination",-0.116985799710895
+"173","8","Eukaryotic Translation Elongation",0.0792597068399946
+"174","8","Glycosaminoglycan metabolism",-0.15854999248388
+"175","8","Metabolism",0.0515802235392895
+"176","8","Metabolism of carbohydrates",-0.0842231100344117
+"177","8","Metabolism of lipids",0.0509085182716682
+"178","8","Metabolism of proteins",-0.103024856482139
+"179","8","Metabolism of steroids",-0.143919183781398
+"180","8","Neddylation",0.0102310678890513
+"181","8","PI Metabolism",-0.154493156856882
+"182","8","PPARA activates gene expression",0.0366328338770265
+"183","8","Peptide hormone metabolism",0.0626294808674994
+"184","8","Post-translational protein modification",0.112662232335583
+"185","8","Regulation of Insulin-like Growth Factor  transport and uptake by Insulin-like Growth Factor Binding Proteins ",-0.172848869943009
+"186","8","Regulation of cholesterol biosynthesis by SREBP ",0.0501180727476226
+"187","8","Regulation of insulin secretion",-0.0129912596807844
+"188","8","SUMO E3 ligases SUMOylate target proteins",-0.101509419102608
+"189","8","SUMOylation of DNA damage response and repair proteins",0.0504349358215269
+"190","8","SUMOylation of transcription cofactors",-0.147607083115607
+"191","8","Synthesis of IP3 and IP4 in the cytosol",-0.132261335647129
+"192","8","Transport to the Golgi and subsequent modification",-0.0979021831509945
+"193","9","Asparagine N-linked glycosylation",0.291082086815821
+"194","9","Association of TriC_CCT with target proteins during biosynthesis",0.288949617315339
+"195","9","Chaperonin-mediated protein folding",0.425427665346201
+"196","9","Deubiquitination",0.352923702329806
+"197","9","Eukaryotic Translation Elongation",0.455282238352951
+"198","9","Glycosaminoglycan metabolism",0.190856020293158
+"199","9","Metabolism",0.455282238352951
+"200","9","Metabolism of carbohydrates",0.367850988833181
+"201","9","Metabolism of lipids",0.252697635807142
+"202","9","Metabolism of proteins",0.363586049832217
+"203","9","Metabolism of steroids",0.465944585855363
+"204","9","Neddylation",0.476606933357774
+"205","9","PI Metabolism",0.342261354827394
+"206","9","PPARA activates gene expression",0.350791232829323
+"207","9","Peptide hormone metabolism",0.446752360351023
+"208","9","Post-translational protein modification",0.384910744837039
+"209","9","Regulation of Insulin-like Growth Factor  transport and uptake by Insulin-like Growth Factor Binding Proteins ",0.35718864133077
+"210","9","Regulation of cholesterol biosynthesis by SREBP ",0.29961196481775
+"211","9","Regulation of insulin secretion",0.391308153338485
+"212","9","SUMO E3 ligases SUMOylate target proteins",0.416897787344272
+"213","9","SUMOylation of DNA damage response and repair proteins",0.265492452810035
+"214","9","SUMOylation of transcription cofactors",0.301744434318233
+"215","9","Synthesis of IP3 and IP4 in the cytosol",0.491534219861149
+"216","9","Transport to the Golgi and subsequent modification",0.453149768852469

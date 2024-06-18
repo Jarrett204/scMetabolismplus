@@ -243,13 +243,14 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y",Width=6,Heigh
     ggsave(filename = paste0(output_dir, "/", "plot_Dot", ".pdf"), plot = plot_dot, width =Width, height = Height,limitsize = FALSE)
     result <- list(
       plot = plot_dot,
-      pathway = gg_table_median_norm$X2 %>% unique()
+      pathway = gg_table_median_norm$X2 %>% unique(),
+      level=levels(gg_table_median_norm[,1])
     )
     return(result)
   }
 }
 
-BoxPlot.metabolism <- function(obj, pathway, phenotype,Width=6,Height=4){
+BoxPlot.metabolism <- function(obj, pathway, phenotype,levels,Width=6,Height=4){
   library(wesanderson)
   library(RColorBrewer)
   library(ggsci)
@@ -305,11 +306,11 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype,Width=6,Height=4){
         ymax = max(Score)
       )
     print(head(stats))
-
+    pathway_data$cluster=factor(pathway_data$cluster,levels = levels)
     plot_box <- ggplot(data = pathway_data, aes(x = cluster, y = Score, fill = cluster)) +
       geom_boxplot(outlier.shape = NA, alpha = 0.4) +
       ylab("Metabolic Pathway") +
-      xlab("Input Parameter") +
+      xlab("Cell type") +
       theme_bw() +
       ggtitle(paste("Pathway:", select.pathway)) +
       theme(axis.text.x = element_text(angle = 45, hjust = 1),
@@ -450,7 +451,7 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
 
   print(total_plot)
   # 保存总的 UMAP 图
-  ggsave(filename = file.path(output_dir, "total_umap_plot.pdf"), plot = total_plot, width = Width, height = Height)
+  ggsave(filename = file.path(output_dir, "total_umap_plot.png"), plot = total_plot, width = Width, height = Height)
   write.csv(cluster_pathway_means, file.path(output_dir, "Pathscore.csv"))
   write.csv(umap_df, file.path(output_dir, "Pathloc.csv"))
 
@@ -471,7 +472,7 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
       geom_text_repel(data = umap_df %>% filter(is_selected == "selected"),
                       aes(label = pathway), size = 2*size/3, color = "black", alpha = 0.7) +
       annotate("text", x = center_x, y = center_y, label = paste(selelct_cluster),
-               size = size, color = scales::alpha("#4DBBD5FF", 0.4), fontface = "bold") +  # 中心标签
+               size = size, color = scales::alpha("#4DBBD5FF", 0.7), fontface = "bold") +  # 中心标签
       scale_color_manual(values = c("selected" = "#E64B35FF", "not_selected" = "grey")) +
       theme_bw() +
       theme(
