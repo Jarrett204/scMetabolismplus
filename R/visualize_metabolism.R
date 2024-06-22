@@ -202,24 +202,31 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y",Width=6,Heigh
   gg_table_median_norm[,3] <- as.numeric(as.character(gg_table_median_norm[,3]))
   gg_table_median_norm <- dplyr::filter(gg_table_median_norm, !is.na(X3))
   library(pheatmap)
+
+  output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Dotplot")
+  if (!dir.exists(output_dir)) {
+    dir.create(output_dir)
+  }
   # 使用 pheatmap 进行行聚类
   # 将长格式数据转换为宽格式
   wide_format <- gg_table_median_norm%>%
     pivot_wider(names_from = X2, values_from = X3)%>%t()
   colnames(wide_format) <- wide_format[1,]
-  wide_format <- wide_format[-1,]
+  wide_format <- wide_format[-1,,drop=F]
+  if(dim(wide_format)[1]==1){
+  row_order <- rownames(wide_format)
+  write.csv(wide_format,paste0(output_dir, "/", "wide_matrix", ".csv"),row.names = T)}else{
   wide_matirx <- apply(wide_format, 2, as.numeric)%>%as.data.frame()
   rownames(wide_matirx) <- rownames(wide_format)
   clustering <- pheatmap(as.matrix(wide_matirx), silent = TRUE)
   row_order <- rownames(wide_matirx)[clustering$tree_row$order]
-  gg_table_median_norm$X2 <- factor(gg_table_median_norm$X2,levels=row_order)
-  gg_table_median_norm$X1 <- as.factor(gg_table_median_norm$X1)
-  output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Dotplot")
-  if (!dir.exists(output_dir)) {
-    dir.create(output_dir)
+  write.csv(wide_matirx,paste0(output_dir, "/", "wide_matrix", ".csv"),row.names = T)
   }
 
-  write.csv(wide_matirx,paste0(output_dir, "/", "wide_matrix", ".csv"),row.names = T)
+  gg_table_median_norm$X2 <- factor(gg_table_median_norm$X2,levels=row_order)
+  gg_table_median_norm$X1 <- as.factor(gg_table_median_norm$X1)
+
+
 
    if(length(gg_table_median_norm$X1) == 0){
     cat("No pathway qualified\n\n")
