@@ -347,6 +347,49 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
     dir.create(output_dir)
   }
 
+  if(length(rownames(kk@assays$METABOLISM$score))==1){
+  print("only 1 pathway in the dataset detected")
+  umap_df=data.frame(UMAP_1=0,UMAP_2=0,pathway=rownames(kk@assays$METABOLISM$score))
+  total_plot <- ggplot(umap_df, aes(x = UMAP_1, y = UMAP_2)) +
+    geom_point(alpha = 0.4, size = size, color = "4DBBD5FF",stroke = 1.5) +
+    geom_text_repel(aes(label = pathway), size = size/2, color = "black", alpha = 0.6,
+                    box.padding = 0.5, point.padding = 0.5,
+                    min.segment.length = 0, max.overlaps = Inf) +
+    scale_color_viridis(discrete = TRUE) +  # 使用 viridis 调色板
+    theme_bw() +
+    theme(
+      legend.position = "none",  # 移除图例
+      panel.grid.major = element_blank(),  # 移除主网格线
+      panel.grid.minor = element_blank(),  # 移除次网格线
+      panel.border = element_blank(),  # 移除面板边框
+      axis.line = element_blank(),  # 移除坐标轴线
+      axis.ticks = element_blank(),  # 移除坐标轴刻度
+      axis.text = element_blank(),  # 移除坐标轴文字
+      axis.title = element_blank()  # 移除坐标轴标题
+    )
+  print(total_plot)
+  sep_plot <- ggplot(umap_df, aes(x = UMAP_1, y = UMAP_2)) +
+    geom_point(alpha = 0.4, size = size, color = "grey",stroke = 1.5) +
+    scale_color_viridis(discrete = TRUE) +  # 使用 viridis 调色板
+    theme_bw() +
+    theme(
+      legend.position = "none",  # 移除图例
+      panel.grid.major = element_blank(),  # 移除主网格线
+      panel.grid.minor = element_blank(),  # 移除次网格线
+      panel.border = element_blank(),  # 移除面板边框
+      axis.line = element_blank(),  # 移除坐标轴线
+      axis.ticks = element_blank(),  # 移除坐标轴刻度
+      axis.text = element_blank(),  # 移除坐标轴文字
+      axis.title = element_blank()  # 移除坐标轴标题
+    )
+  # 保存总的 UMAP 图
+  ggsave(filename = file.path(output_dir, "total_umap_plot.png"), plot = total_plot, width = Width, height = Height)
+  cluster_present=levels(kk@meta.data[,phenotype])
+  for(selelct_cluster in cluster_present){
+  ggsave(filename = file.path(output_dir, paste0(selelct_cluster,".png")), plot = sep_plot, width = Width, height = Height)
+  }
+  write.csv(umap_df, file.path(output_dir, "Pathloc.csv"))
+  }else{
   # 提取通路得分矩阵
   pathway_scores <- obj@assays$METABOLISM$score %>% t()
   seurat_path <- CreateSeuratObject(counts = pathway_scores)
@@ -501,5 +544,5 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
     pb$tick()  # Update progress bar after plotting
   }
 }
-
+}
 
