@@ -10,7 +10,7 @@
 #' sc.metabolism.customized()
 #' @export sc.metabolism.customized
 
-sc.metabolism.customized <- function(obj, method = "AUCell", imputation = F,ncores=20) {
+sc.metabolism.customized <- function(obj, method = "AUCell",input_pathway, imputation = F,ncores=20) {
   library(GSEABase)
   library(dplyr)
   countexp<-obj@assays$RNA@counts
