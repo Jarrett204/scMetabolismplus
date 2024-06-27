@@ -34,7 +34,7 @@ sc.metabolism.customized <- function(obj, method = "AUCell",input_pathway, imput
   # 可选：将结果写入文件
   writeLines(gmt_lines, paste0(input_dir,"pathways_select.gmt"))
   gmtFile=paste0(input_dir,"pathways_select.gmt")
-if (!file.exists("./pathways_select.gmt")) {
+if (!file.exists(paste0(input_dir,"pathways_select.gmt"))) {
   # 如果文件不存在，停止执行并返回错误信息
   stop("Error: The file './pathways_select.gmt' does not exist. Please check the file path.")
 }
