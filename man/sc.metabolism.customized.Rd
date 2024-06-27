@@ -4,7 +4,13 @@
 \alias{sc.metabolism.customized}
 \title{scMetabolismplus}
 \usage{
-sc.metabolism.customized(obj, method = "AUCell", imputation = F, ncores = 20)
+sc.metabolism.customized(
+  obj,
+  method = "AUCell",
+  input_pathway,
+  imputation = F,
+  ncores = 20
+)
 }
 \arguments{
 \item{obj}{seruat 对象}
