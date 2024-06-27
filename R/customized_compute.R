@@ -10,7 +10,7 @@
 #' sc.metabolism.customized()
 #' @export sc.metabolism.customized
 
-sc.metabolism.customized <- function(obj, method = "AUCell",input_pathway, imputation = F,ncores=20) {
+sc.metabolism.customized <- function(obj, method = "AUCell",input_pathway, imputation = F,ncores=20,input_dir) {
   library(GSEABase)
   library(dplyr)
   countexp<-obj@assays$RNA@counts
@@ -32,8 +32,8 @@ sc.metabolism.customized <- function(obj, method = "AUCell",input_pathway, imput
   # 输出到控制台，或写入到文件
   #cat(gmt_lines, sep = "\n")
   # 可选：将结果写入文件
-  writeLines(gmt_lines, "./pathways_select.gmt")
-  gmtFile="./pathways_select.gmt"
+  writeLines(gmt_lines, paste0(input_dir,"pathways_select.gmt"))
+  gmtFile=paste0(input_dir,"pathways_select.gmt")
 if (!file.exists("./pathways_select.gmt")) {
   # 如果文件不存在，停止执行并返回错误信息
   stop("Error: The file './pathways_select.gmt' does not exist. Please check the file path.")
