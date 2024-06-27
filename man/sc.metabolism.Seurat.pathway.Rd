@@ -8,7 +8,7 @@ sc.metabolism.Seurat.pathway(
   obj,
   method = "AUCell",
   imputation = F,
-  Cancer = "BRCA",
+  Cancer,
   metabolism.type = "KEGG",
   ncores = 20
 )

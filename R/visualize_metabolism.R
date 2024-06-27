@@ -19,7 +19,7 @@ library(data.table)
 library(rsvd)
 library(dplyr)
 
-DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", dimention.reduction.run = T, size= 0.01,Width=6,Height=5){
+DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", dimention.reduction.run = T, size= 0.01,Width=6,Height=5,dynamic=F){
 
   cat("Establishing connection\n\n")
   library(wesanderson)
@@ -56,21 +56,26 @@ DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", 
       }
       pb$tick()  # Update progress bar after data processing
     }
+
+    if(!dynamic){
     output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Dimplot")
     if (!dir.exists(output_dir)) {
       dir.create(output_dir)
     }
-
+    }
+    Dimplot_all <- list()
     for (input.pathway in pathway) {
       pathway_data <- subset(signature_ggplot2, Pathway == input.pathway)
       plot <- ggplot(data = pathway_data, aes(x = UMAP_1, y = UMAP_2, color = Score)) +
         geom_point(size = size) +
         scale_color_gradientn(colours = pal) +
         xlab("UMAP 1") + ylab("UMAP 2") +
-        ggtitle(paste("Pathway:", input.pathway)) +
+        ggtitle(input.pathway) +
         theme_bw()
-      ggsave(filename = paste0(output_dir,"/",input.pathway, ".png"), plot = plot, width = Width, height = Height)
+      if(!dynamic){
+      ggsave(filename = paste0(output_dir,"/",input.pathway, ".png"), plot = plot, width = Width, height = Height)}
       pb$tick()  # Update progress bar after plotting
+      Dimplot_all[[input.pathway]]=plot
     }
     print(plot)  # 打印或保存plot
   }
@@ -93,9 +98,11 @@ DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", 
       }
       pb$tick()  # Update progress bar after data processing
     }
+    if(!dynamic){
     output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Dimplot")
     if (!dir.exists(output_dir)) {
       dir.create(output_dir)
+    }
     }
     for (input.pathway in pathway) {
       pathway_data <- subset(signature_ggplot2, Pathway == input.pathway)
@@ -110,9 +117,10 @@ DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", 
     }
   }
   plot
+  return(Dimplot_all)
 }
 
-DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y",Width=6,Height=4){
+DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y",Width=6,Height=4,dynamic=F){
   library(viridis)
   library(progress)
   library(dplyr)
@@ -202,10 +210,11 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y",Width=6,Heigh
   gg_table_median_norm[,3] <- as.numeric(as.character(gg_table_median_norm[,3]))
   gg_table_median_norm <- dplyr::filter(gg_table_median_norm, !is.na(X3))
   library(pheatmap)
-
+  if(!dynamic){
   output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Dotplot")
   if (!dir.exists(output_dir)) {
     dir.create(output_dir)
+  }
   }
   # 使用 pheatmap 进行行聚类
   # 将长格式数据转换为宽格式
@@ -220,7 +229,6 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y",Width=6,Heigh
   rownames(wide_matirx) <- rownames(wide_format)
   clustering <- pheatmap(as.matrix(wide_matirx), silent = TRUE)
   row_order <- rownames(wide_matirx)[clustering$tree_row$order]
-  write.csv(wide_matirx,paste0(output_dir, "/", "wide_matrix", ".csv"),row.names = T)
   }
 
   gg_table_median_norm$X2 <- factor(gg_table_median_norm$X2,levels=row_order)
@@ -247,7 +255,9 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y",Width=6,Heigh
     print(plot_dot)
 
     # Create output directory and save plot
-    ggsave(filename = paste0(output_dir, "/", "plot_Dot", ".pdf"), plot = plot_dot, width =Width, height = Height,limitsize = FALSE)
+    if(!dynamic){
+    ggsave(filename = paste0(output_dir, "/", "plot_Dot", ".png"), plot = plot_dot, width =Width, height = Height,limitsize = FALSE)
+    write.csv(wide_matirx,paste0(output_dir, "/", "wide_matrix", ".csv"),row.names = T)}
     result <- list(
       plot = plot_dot,
       pathway = gg_table_median_norm$X2 %>% unique(),
@@ -257,7 +267,7 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y",Width=6,Heigh
   }
 }
 
-BoxPlot.metabolism <- function(obj, pathway, phenotype,levels,Width=6,Height=4){
+BoxPlot.metabolism <- function(obj, pathway, phenotype,levels,Width=6,Height=4,dynamic=F){
   library(wesanderson)
   library(RColorBrewer)
   library(ggsci)
@@ -294,11 +304,13 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype,levels,Width=6,Height=4){
 
   # Combine multiple color palettes manually
   colors <- c(pal_jama()(4),pal_npg()(5),pal_jco()(5),pal_aaas()(5),pal_lancet()(5))
+  if(!dynamic){
   output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Boxplot")
   if (!dir.exists(output_dir)) {
     dir.create(output_dir)
   }
-
+  }
+  result <- list()
   for (select.pathway in input.pathway) {
     pathway_data <- subset(gg_table, Pathway == select.pathway)
     print(head(pathway_data))
@@ -319,27 +331,35 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype,levels,Width=6,Height=4){
       ylab("Metabolic Pathway") +
       xlab("Cell type") +
       theme_bw() +
-      ggtitle(paste("Pathway:", select.pathway)) +
+      ggtitle(select.pathway) +
       theme(axis.text.x = element_text(angle = 45, hjust = 1),
             panel.grid.minor = element_line(),
+            plot.title = element_text(size = 3, face = "bold") ,
             panel.grid.major = element_line()) +
       labs(fill = "Cell type") +
       scale_fill_manual(values = colors)
+      result[[select.pathway]] = plot_box
     # Calculate dynamic height based on the number of pathways
-
+    if(!dynamic){
     ggsave(filename = paste0(output_dir, "/",select.pathway, ".png"), plot = plot_box, width = Width, height = Height)
+    }
     pb$tick()  # Update p rogress bar after plotting
+
   }
   plot_box
+  return(result)
 }
 
-PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n = 5,size=5,Width=5,Height=5) {
+PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n = 5,size=5,Width=5,Height=5,dynamic=T) {
   library(progress)
   library(dplyr)
   library(ggplot2)
   library(Seurat)
   library(ggrepel)
   library(ggforce)
+  if (n.neighbors < 2) {
+    stop("Error: 'n.neighbors' must be at least 2.")
+  }
   t_test_t_score <- function(data, cluster_id, pathway_id) {
     current_cluster_scores <- data %>%
       filter(cluster == cluster_id & Pathway == pathway_id) %>%
@@ -365,9 +385,11 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
   }
 
   # 检查并创建输出目录
+  if(!dynamic){
   output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Path_Umap")
   if (!dir.exists(output_dir)) {
     dir.create(output_dir)
+  }
   }
 
   if(length(rownames(kk@assays$METABOLISM$score))<=3){
@@ -405,9 +427,14 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
 
   print(total_plot)
   # 保存总的 UMAP 图
+  result <- list()
+  if(!dynamic){
   ggsave(filename = file.path(output_dir, "total_umap_plot.png"), plot = total_plot, width = Width, height = Height)
-  cluster_present=levels(kk@meta.data[,phenotype])
   write.csv(umap_df, file.path(output_dir, "Pathloc.csv"))
+    }
+  result[["total_umap_plot"]] <- total_plot
+  result[["total_umap_df"]] <- umap_df
+  cluster_present=levels(kk@meta.data[,phenotype])
 
   # 保存分的UMAP图
   if(lens==1){
@@ -428,8 +455,11 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
                     y = c(y_limits[1] - y_range * expand_factor, y_limits[2] + y_range * expand_factor))  # 扩展网格边界
 
   for(selelct_cluster in cluster_present){
+  if(!dynamic){
   ggsave(filename = file.path(output_dir, paste0(selelct_cluster,".png")), plot = sep_plot, width = Width, height = Height)
-  }}else
+  }
+  result[[selelct_cluster]] <- sep_plot
+    }}else
     { # 获取 cluster 信息
     phenotype = phenotype
     metadata <- obj@meta.data
@@ -455,7 +485,10 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
       group_by(cluster) %>%
       arrange(desc(t_score)) %>%
       slice_head(n = top_n)
+    if(!dynamic){
     write.csv(cluster_pathway_means, file.path(output_dir, "Pathscore.csv"))
+    }
+
     for (selelct_cluster in cluster_present) {
       Pathway_vari <- filter(top_pathways, cluster == selelct_cluster) %>% .$Pathway
 
@@ -489,8 +522,10 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
 
       print(p)
       # 保存每个 cluster 的 UMAP 图
+      if(!dynamic){
       ggsave(filename = file.path(output_dir, paste0(selelct_cluster, ".png")), plot = p, width = Width, height = Height)
-
+      }
+      result[[selelct_cluster]] <- p
     }
       }
 
@@ -587,9 +622,13 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
 
   print(total_plot)
   # 保存总的 UMAP 图
+  if(!dynamic){
   ggsave(filename = file.path(output_dir, "total_umap_plot.png"), plot = total_plot, width = Width, height = Height)
   write.csv(cluster_pathway_means, file.path(output_dir, "Pathscore.csv"))
   write.csv(umap_df, file.path(output_dir, "Pathloc.csv"))
+  }
+  result[["total_umap_plot"]] <- total_plot
+  result[["total_umap_df"]] <- umap_df
 
   # 生成每个 cluster 的 UMAP 图
   for (selelct_cluster in cluster_present) {
@@ -626,9 +665,13 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
 
     print(p)
     # 保存每个 cluster 的 UMAP 图
+    if(!dynamic){
     ggsave(filename = file.path(output_dir, paste0(selelct_cluster, ".png")), plot = p, width = Width, height = Height)
+    }
     pb$tick()  # Update progress bar after plotting
+    result[[selelct_cluster]] <- sep_plot
   }
-}
+  }
+  return(result)
 }
 

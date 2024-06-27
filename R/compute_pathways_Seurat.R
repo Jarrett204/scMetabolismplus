@@ -10,7 +10,7 @@
 #' sc.metabolism.Seurat.pathway()
 #' @export sc.metabolism.Seurat.pathway
 
-sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,Cancer="BRCA", metabolism.type = "KEGG",ncores=20) {
+sc.metabolism.Seurat.pathway <- function(obj, method = "AUCell", imputation = F,Cancer, metabolism.type = "KEGG",ncores=20) {
   library(GSEABase)
   countexp<-obj@assays$RNA@counts
 
