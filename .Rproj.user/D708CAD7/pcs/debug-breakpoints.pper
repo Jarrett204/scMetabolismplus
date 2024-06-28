@@ -105,36 +105,6 @@
                 "type": 1,
                 "is_package_breakpoint": false,
                 "package_name": ""
-            },
-            {
-                "id": 79,
-                "path": "D:/NAR/scMetabolismplus/R/customized_compute.R",
-                "line_number": 14,
-                "function_steps": "",
-                "function_name": "sc.metabolism.customized",
-                "state": 2,
-                "editor_state": 2,
-                "editor_line_number": 14,
-                "is_pending_debug_completion": false,
-                "needs_updated_steps": false,
-                "type": 0,
-                "is_package_breakpoint": true,
-                "package_name": "scMetabolismplus"
-            },
-            {
-                "id": 80,
-                "path": "D:/NAR/scMetabolismplus/R/customized_compute.R",
-                "line_number": 35,
-                "function_steps": "",
-                "function_name": "sc.metabolism.customized",
-                "state": 2,
-                "editor_state": 2,
-                "editor_line_number": 35,
-                "is_pending_debug_completion": false,
-                "needs_updated_steps": false,
-                "type": 0,
-                "is_package_breakpoint": true,
-                "package_name": "scMetabolismplus"
             }
         ]
     }

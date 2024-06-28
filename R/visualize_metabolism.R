@@ -77,7 +77,7 @@ DimPlot.metabolism <- function(obj, pathway, dimention.reduction.type = "umap", 
       pb$tick()  # Update progress bar after plotting
       Dimplot_all[[input.pathway]]=plot
     }
-    print(plot)  # 打印或保存plot
+    #print(plot)  # 打印或保存plot
   }
 
   # tsne
@@ -391,10 +391,10 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
     dir.create(output_dir)
   }
   }
-
-  if(length(rownames(kk@assays$METABOLISM$score))<=3){
-  print("few pathways in the dataset detected")
   lens=length(rownames(kk@assays$METABOLISM$score))
+  if(lens<=3){
+  print("few pathways in the dataset detected")
+
   umap_df=data.frame(pathway=rownames(kk@assays$METABOLISM$score))
   umap_df$UMAP_1=c(0,-1,1)[1:nrow(umap_df)]
   umap_df$UMAP_2=c(0,0,0)[1:nrow(umap_df)]
@@ -528,7 +528,6 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
       result[[selelct_cluster]] <- p
     }
       }
-
   }
 
 
@@ -621,6 +620,7 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
                   y = c(y_limits[1] - y_range * expand_factor, y_limits[2] + y_range * expand_factor))  # 扩展网格边界
 
   print(total_plot)
+  result=list()
   # 保存总的 UMAP 图
   if(!dynamic){
   ggsave(filename = file.path(output_dir, "total_umap_plot.png"), plot = total_plot, width = Width, height = Height)
@@ -669,7 +669,7 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
     ggsave(filename = file.path(output_dir, paste0(selelct_cluster, ".png")), plot = p, width = Width, height = Height)
     }
     pb$tick()  # Update progress bar after plotting
-    result[[selelct_cluster]] <- sep_plot
+    result[[selelct_cluster]] <- p
   }
   }
   return(result)
