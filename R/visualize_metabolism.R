@@ -260,7 +260,7 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y",Width=6,Heigh
     write.csv(wide_matirx,paste0(output_dir, "/", "wide_matrix", ".csv"),row.names = T)}
     result <- list(
       plot = plot_dot,
-      pathway = gg_table_median_norm$X2 %>% unique(),
+      pathway = row_order,
       level=levels(gg_table_median_norm[,1])
     )
     return(result)
