@@ -350,7 +350,7 @@ BoxPlot.metabolism <- function(obj, pathway, phenotype,levels,Width=6,Height=4,d
   return(result)
 }
 
-PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n = 5,size=5,Width=5,Height=5,dynamic=T) {
+PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n = 5,size=5,Width=5,Height=5,dynamic=F) {
   library(progress)
   library(dplyr)
   library(ggplot2)
