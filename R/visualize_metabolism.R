@@ -224,7 +224,7 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y",Width=6,Heigh
   wide_format <- wide_format[-1,,drop=F]
   if(dim(wide_format)[1]==1){
   row_order <- rownames(wide_format)
-  write.csv(wide_format,paste0(output_dir, "/", "wide_matrix", ".csv"),row.names = T)}else{
+  }else{
   wide_matirx <- apply(wide_format, 2, as.numeric)%>%as.data.frame()
   rownames(wide_matirx) <- rownames(wide_format)
   clustering <- pheatmap(as.matrix(wide_matirx), silent = TRUE)
