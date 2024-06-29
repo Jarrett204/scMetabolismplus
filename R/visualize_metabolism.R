@@ -391,11 +391,11 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
     dir.create(output_dir)
   }
   }
-  lens=length(rownames(kk@assays$METABOLISM$score))
+  lens=length(rownames(obj@assays$METABOLISM$score))
   if(lens<=3){
   print("few pathways in the dataset detected")
 
-  umap_df=data.frame(pathway=rownames(kk@assays$METABOLISM$score))
+  umap_df=data.frame(pathway=rownames(obj@assays$METABOLISM$score))
   umap_df$UMAP_1=c(0,-1,1)[1:nrow(umap_df)]
   umap_df$UMAP_2=c(0,0,0)[1:nrow(umap_df)]
 
@@ -434,7 +434,7 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
     }
   result[["total_umap_plot"]] <- total_plot
   result[["total_umap_df"]] <- umap_df
-  cluster_present=levels(kk@meta.data[,phenotype])
+  cluster_present=levels(obj@meta.data[,phenotype])
 
   # 保存分的UMAP图
   if(lens==1){
