@@ -1,5 +1,0 @@
-These pathways' genes do not meet the optimal range of the VISION algorithm. Please change the algorithm or pathway for calculation:
-GO_collagen metabolic process
-Reactome_Phospholipid metabolism
-GO_phosphorylation
-Reactome_PI Metabolism
