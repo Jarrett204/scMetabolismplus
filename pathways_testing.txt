@@ -1,0 +1,2 @@
+These pathways' genes do not meet the optimal range of the AUCell algorithm:
+GO_collagen metabolic process
