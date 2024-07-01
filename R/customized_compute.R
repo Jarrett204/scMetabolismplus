@@ -72,7 +72,7 @@ if (!file.exists(paste0(input_dir,"pathways_select.gmt"))) {
 
     # 检查每个基因集的基因是否存在于 genes_used 向量中
     gene_existence_check <- lapply(geneSets_list, function(gene_list) {
-      all(gene_list %in% genes_used)
+      all(!gene_list %in% genes_used)
     })
     # 打印所有基因都不在 genes_used 中的基因集的名称
     all_false_gene_set_names <- names(geneSets_list)[unlist(gene_existence_check)]
@@ -163,7 +163,7 @@ if (!file.exists(paste0(input_dir,"pathways_select.gmt"))) {
     genes_used <-rownames(countexp2)
     # 检查每个基因集的基因是否存在于 genes_used 向量中
     gene_existence_check <- lapply(geneSets_list, function(gene_list) {
-      all(gene_list %in% genes_used)
+      all(!gene_list %in% genes_used)
     })
     # 打印所有基因都不在 genes_used 中的基因集的名称
     all_false_gene_set_names <- names(geneSets_list)[unlist(gene_existence_check)]
@@ -181,7 +181,7 @@ if (!file.exists(paste0(input_dir,"pathways_select.gmt"))) {
         return(F)
       } else {
         # 如果 all_false_gene_set_names 的长度大于 0 但不等于 geneSets_list 的名称数量，则输出另一条消息
-        message <- "These pathways' genes do not meet the optimal range of the AUCell algorithm:\n"
+        message <- "These pathways' genes do not meet the optimal range of the ssGSEA algorithm:\n"
         message <- paste0(message, paste(all_false_gene_set_names, collapse = "\n"))
         writeLines(message, "pathways_testing.txt")
       }
@@ -198,6 +198,7 @@ if (!file.exists(paste0(input_dir,"pathways_select.gmt"))) {
 
     # 计算 GSVA 富集分数
     gsva_es <- gsva(ssgsea_param, BPPARAM = bpparam)
+
     signature_exp<-data.frame(gsva_es)
   }
 
