@@ -1,0 +1,45 @@
+"","cluster","Pathway","mean_score"
+"1","B cells","Ether lipid metabolism",0.00919050199882135
+"2","B cells","One carbon pool by folate",0.00940800237988993
+"3","B cells","Oxidative phosphorylation",0.0104863900044623
+"4","B cells","Propanoate metabolism",0.0093085282655117
+"5","CD4+ T cells","Ether lipid metabolism",0.0123952600525559
+"6","CD4+ T cells","One carbon pool by folate",0.0126927462938172
+"7","CD4+ T cells","Oxidative phosphorylation",0.0124944221329764
+"8","CD4+ T cells","Propanoate metabolism",0.0124944221329764
+"9","CD8+ T cells","Ether lipid metabolism",0.011081362486985
+"10","CD8+ T cells","One carbon pool by folate",0.0108477108815572
+"11","CD8+ T cells","Oxidative phosphorylation",0.0112053150875105
+"12","CD8+ T cells","Propanoate metabolism",0.0111556744706165
+"13","Endothelial cells","Ether lipid metabolism",0.035973891114078
+"14","Endothelial cells","One carbon pool by folate",0.0338228749443703
+"15","Endothelial cells","Oxidative phosphorylation",0.0365572149082272
+"16","Endothelial cells","Propanoate metabolism",0.0375732298338422
+"17","Epithelial cells","Ether lipid metabolism",0.00889489373971332
+"18","Epithelial cells","One carbon pool by folate",0.00965590758094105
+"19","Epithelial cells","Oxidative phosphorylation",0.00828658700606143
+"20","Epithelial cells","Propanoate metabolism",0.0119615524978215
+"21","Fibroblasts","Ether lipid metabolism",0.0583592938733126
+"22","Fibroblasts","One carbon pool by folate",0.0566088117489987
+"23","Fibroblasts","Oxidative phosphorylation",0.0578549176680018
+"24","Fibroblasts","Propanoate metabolism",0.0593087079068387
+"25","Macrophages","Ether lipid metabolism",0.025336500694631
+"26","Macrophages","One carbon pool by folate",0.0254551298994015
+"27","Macrophages","Oxidative phosphorylation",0.0246508756680284
+"28","Macrophages","Propanoate metabolism",0.0217346433319359
+"29","Melanoma cells","Ether lipid metabolism",0.0829402165850764
+"30","Melanoma cells","One carbon pool by folate",0.0811303960836671
+"31","Melanoma cells","Oxidative phosphorylation",0.0822429906542056
+"32","Melanoma cells","Propanoate metabolism",0.0823616674083964
+"33","NK cells","Ether lipid metabolism",0.00970720076303443
+"34","NK cells","One carbon pool by folate",0.0110277134485103
+"35","NK cells","Oxidative phosphorylation",0.0100029748624126
+"36","NK cells","Propanoate metabolism",0.00970548862115127
+"37","SMCs","Ether lipid metabolism",0.0429183359907458
+"38","SMCs","One carbon pool by folate",0.0481975967957276
+"39","SMCs","Oxidative phosphorylation",0.0431686693368936
+"40","SMCs","Propanoate metabolism",0.0486129654353953
+"41","Tregs","Ether lipid metabolism",0.0166122377744338
+"42","Tregs","One carbon pool by folate",0.0153289108691156
+"43","Tregs","Oxidative phosphorylation",0.0151222172641182
+"44","Tregs","Propanoate metabolism",0.0155103950195275

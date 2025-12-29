@@ -9,7 +9,8 @@ sc.metabolism.customized(
   method = "AUCell",
   input_pathway,
   imputation = F,
-  ncores = 20
+  ncores = 20,
+  input_dir
 )
 }
 \arguments{

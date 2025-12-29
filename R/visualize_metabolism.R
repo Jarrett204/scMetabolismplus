@@ -563,7 +563,7 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
   # Initialize progress bar with total steps
   cluster_pathway_means <- gg_table %>%
     group_by(cluster, Pathway) %>%
-    summarise(mean_score = mean(Score, na.rm = TRUE))
+    summarise(mean_score = median(Score, na.rm = TRUE)) #########重点改变
   t_test_results_rows <- nrow(cluster_pathway_means)
   cluster_present <- unique(cluster_pathway_means$cluster)
   total_steps <- 1 + 1 + t_test_results_rows + length(cluster_present)  # 数据表 + 平均分数 + t-score + UMAP图
