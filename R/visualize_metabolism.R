@@ -218,22 +218,40 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y",Width=6,Heigh
   }
   # 使用 pheatmap 进行行聚类
   # 将长格式数据转换为宽格式
-  wide_format <- gg_table_median_norm%>%
-    pivot_wider(names_from = X2, values_from = X3)%>%t()
-  colnames(wide_format) <- wide_format[1,]
-  wide_format <- wide_format[-1,,drop=F]
+  # --- 修复后的代码段 ---
+  # 将长格式数据转换为宽格式
+  wide_temp <- gg_table_median_norm %>%
+    pivot_wider(names_from = X2, values_from = X3)
 
+  # 提取表头（通路名）和数据
+  row_names_vec <- colnames(wide_temp)[-1] # 第一列是分组，后面是通路
+  group_names_vec <- wide_temp$X1
 
-  # 统一先转换矩阵，确保变量存在
-  wide_matirx <- apply(wide_format, 2, as.numeric) %>% as.data.frame()
-  rownames(wide_matirx) <- rownames(wide_format)
+  # 转置并转换为纯数值矩阵
+  wide_matirx <- as.data.frame(t(wide_temp[,-1]))
+  colnames(wide_matirx) <- group_names_vec
+  rownames(wide_matirx) <- row_names_vec
 
-  if(dim(wide_format)[1] == 1){
-    row_order <- rownames(wide_matirx) # 只有一个通路不需要聚类
+  # 确保数值类型
+  wide_matirx <- apply(wide_matirx, 2, as.numeric) %>% as.data.frame()
+  rownames(wide_matirx) <- row_names_vec
+
+  # 判断通路数量进行聚类
+  if(nrow(wide_matirx) == 1){
+    row_order <- rownames(wide_matirx)
+    cat("Only one pathway detected, skipping clustering.\n")
   } else {
     clustering <- pheatmap(as.matrix(wide_matirx), silent = TRUE)
     row_order <- rownames(wide_matirx)[clustering$tree_row$order]
   }
+  # --- 修复结束 ---
+
+
+
+
+
+
+
   gg_table_median_norm$X2 <- factor(gg_table_median_norm$X2,levels=row_order)
   gg_table_median_norm$X1 <- as.factor(gg_table_median_norm$X1)
 
