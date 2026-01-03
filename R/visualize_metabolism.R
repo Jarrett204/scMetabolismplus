@@ -222,15 +222,18 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y",Width=6,Heigh
     pivot_wider(names_from = X2, values_from = X3)%>%t()
   colnames(wide_format) <- wide_format[1,]
   wide_format <- wide_format[-1,,drop=F]
-  if(dim(wide_format)[1]==1){
-  row_order <- rownames(wide_format)
-  }else{
-  wide_matirx <- apply(wide_format, 2, as.numeric)%>%as.data.frame()
-  rownames(wide_matirx) <- rownames(wide_format)
-  clustering <- pheatmap(as.matrix(wide_matirx), silent = TRUE)
-  row_order <- rownames(wide_matirx)[clustering$tree_row$order]
-  }
 
+
+  # 统一先转换矩阵，确保变量存在
+  wide_matirx <- apply(wide_format, 2, as.numeric) %>% as.data.frame()
+  rownames(wide_matirx) <- rownames(wide_format)
+
+  if(dim(wide_format)[1] == 1){
+    row_order <- rownames(wide_matirx) # 只有一个通路不需要聚类
+  } else {
+    clustering <- pheatmap(as.matrix(wide_matirx), silent = TRUE)
+    row_order <- rownames(wide_matirx)[clustering$tree_row$order]
+  }
   gg_table_median_norm$X2 <- factor(gg_table_median_norm$X2,levels=row_order)
   gg_table_median_norm$X1 <- as.factor(gg_table_median_norm$X1)
 
