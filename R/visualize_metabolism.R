@@ -220,7 +220,7 @@ DotPlot.metabolism <- function(obj, pathway, phenotype, norm = "y",Width=6,Heigh
   # 将长格式数据转换为宽格式
   wide_df <- gg_table_median_norm %>%
     ungroup() %>%
-    select(X1, X2, X3) %>%
+    dplyr::select(X1, X2, X3) %>%
     tidyr::pivot_wider(names_from = X1, values_from = X3) %>%
     as.data.frame()
 
