@@ -813,7 +813,7 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
   library(tidyr)
   library(progress)
 
-  cat("=== Start Pathway PCA Analysis (Version 7 - Safe PCA) ===\n")
+  cat("=== Start Pathway PCA Analysis (Version 8 - Smart Limit) ===\n")
 
   # --- 1. 数据准备 ---
   if (!phenotype %in% colnames(obj@meta.data)) {
@@ -832,7 +832,7 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
   # 提取矩阵
   metabolism.matrix_sub <- metabolism.matrix[valid_pathways, , drop = FALSE]
 
-  # 剔除方差为 0 的通路 (死通路)
+  # 剔除方差为 0 的通路
   row_vars <- apply(metabolism.matrix_sub, 1, var)
   metabolism.matrix_sub <- metabolism.matrix_sub[row_vars > 0, , drop = FALSE]
 
@@ -841,19 +841,34 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
 
   if(n_pathways == 0) stop("错误: 没有有效通路可供分析。")
 
-  # --- 2. 坐标计算 (带错误保护) ---
+  # ==========================================
+  # [新增] 智能限制 top_n 逻辑
+  # ==========================================
+  original_top_n <- top_n
+
+  if (n_pathways <= 3) {
+    top_n <- 1
+    if(original_top_n != 1) cat(sprintf("Note: Pathways <= 3, top_n force adjusted from %d to 1.\n", original_top_n))
+  } else if (n_pathways < 10) {
+    if (top_n > 3) {
+      top_n <- 3
+      cat(sprintf("Note: Pathways < 10, top_n force adjusted from %d to 3.\n", original_top_n))
+    }
+  }
+  # ==========================================
+
+  # --- 2. 坐标计算 ---
   pca_success <- FALSE
   pca_coords <- NULL
   pc1_var <- "NA"; pc2_var <- "NA"
 
   if (n_pathways >= 3) {
     tryCatch({
-      # [核心修复]：手动对通路(行)进行 Z-score 标准化
-      # 这样我们可以安全地关闭 prcomp 内部的 scale.=TRUE，避免列方差为0导致的报错
+      # 行归一化 (Z-score)
       mat_scaled <- t(scale(t(metabolism.matrix_sub)))
-      mat_scaled[is.na(mat_scaled)] <- 0 # 防止极端情况
+      mat_scaled[is.na(mat_scaled)] <- 0
 
-      # [核心修复]：scale. = FALSE 避免除以零错误
+      # PCA (scale. = FALSE)
       pca_result <- prcomp(mat_scaled, scale. = FALSE, center = FALSE)
 
       pca_coords <- as.data.frame(pca_result$x)
@@ -863,12 +878,11 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
       pca_success <- TRUE
 
     }, error = function(e) {
-      cat("PCA Calculation Failed (likely due to sparse data). Switching to manual layout.\n")
-      cat("Error message:", e$message, "\n")
+      cat("PCA Calculation Failed. Switching to manual layout.\n")
     })
   }
 
-  # 如果 PCA 失败或者通路太少，使用手动坐标
+  # 手动坐标兜底
   if (!pca_success) {
     cat("Using manual coordinates layout.\n")
     pca_coords <- data.frame(pathway = rownames(metabolism.matrix_sub))
@@ -877,7 +891,6 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
     } else if (n_pathways == 1) {
       pca_coords$PC1 <- c(0); pca_coords$PC2 <- c(0)
     } else {
-      # 如果 >=3 个通路但 PCA 挂了，随机给点位置避免画不出图
       pca_coords$PC1 <- runif(n_pathways, -2, 2)
       pca_coords$PC2 <- runif(n_pathways, -2, 2)
     }
@@ -912,26 +925,22 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
   df_long <- as.data.frame(t(metabolism.matrix_sub), check.names = FALSE)
   df_long$CellType_For_Group <- metadata[, phenotype]
 
-  # 聚合
   cluster_means <- df_long %>%
     dplyr::group_by(CellType_For_Group) %>%
     dplyr::summarise(dplyr::across(where(is.numeric), median)) %>%
     as.data.frame()
 
-  # 保存列名
   saved_group_names <- as.character(cluster_means$CellType_For_Group)
   cluster_means_numeric <- cluster_means[, colnames(cluster_means) != "CellType_For_Group", drop = FALSE]
 
   heatmap_matrix <- t(cluster_means_numeric)
 
-  # 强制赋名
   if(ncol(heatmap_matrix) == length(saved_group_names)) {
     colnames(heatmap_matrix) <- saved_group_names
   }
 
   # 对齐行名
   if(any(!rownames(heatmap_matrix) %in% rownames(pca_coords))){
-    # 如果顺序一致，强制覆盖
     if(nrow(heatmap_matrix) == nrow(pca_coords)) rownames(heatmap_matrix) <- rownames(pca_coords)
   }
 
@@ -953,12 +962,10 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
 
   for (ctype in clusters) {
     plot_df <- pca_coords
-
-    # 取值
     plot_df$val <- heatmap_matrix_norm[match(plot_df$pathway, rownames(heatmap_matrix_norm)), ctype]
     plot_df$val[is.na(plot_df$val)] <- 0
 
-    # Top N
+    # 严格排序选 Top N (此时 top_n 已经被前面的逻辑修正过了)
     top_genes_df <- plot_df %>%
       arrange(desc(val)) %>%
       slice_head(n = top_n)
