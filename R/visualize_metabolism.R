@@ -12,6 +12,8 @@
 #' @export DotPlot.metabolism
 #' @export BoxPlot.metabolism
 #' @export PathUmp.metabolism
+#' @export VlnPlot.metabolism
+#' @export PathPCA.metabolism
 
 library(ggplot2)
 library(wesanderson)
@@ -690,3 +692,303 @@ PathUmp.metabolism <- function(obj, phenotype,n.neighbors=3,threshold = 3, top_n
   return(result)
 }
 
+VlnPlot.metabolism <- function(obj, pathway, phenotype, levels=NULL, Width=6, Height=4, dynamic=F){
+  library(wesanderson)
+  library(RColorBrewer)
+  library(ggsci)
+  library(progress)
+  library(ggplot2)
+  library(dplyr)
+
+  input.pathway <- pathway
+  input.parameter <- phenotype
+
+  cat("Start VlnPlot\n\n")
+
+  metadata <- obj@meta.data
+  metabolism.matrix <- obj@assays$METABOLISM$score
+  metadata[,input.parameter] <- as.character(metadata[,input.parameter])
+
+  # 关键修正：drop=FALSE 防止单通路时矩阵变成向量导致报错
+  metabolism.matrix_sub <- t(metabolism.matrix[input.pathway, , drop=FALSE])
+
+  # Initialize progress bar
+  total_steps <- length(input.pathway) * 2
+  pb <- progress_bar$new(
+    format = "  Processing [:bar] :percent eta: :eta",
+    total = total_steps, clear = FALSE, width = 60
+  )
+
+  # 1. 构建绘图数据 (沿用 BoxPlot 的逻辑)
+  gg_table <- c()
+  input.pathway <- as.character(input.pathway)
+  for (i in 1:length(input.pathway)){
+    gg_table <- rbind(gg_table, cbind(metadata[,input.parameter], input.pathway[i], metabolism.matrix_sub[,i]))
+    pb$tick()
+  }
+  gg_table <- data.frame(gg_table)
+  colnames(gg_table) <- c("cluster", "Pathway", "Score")
+  gg_table$Score <- as.numeric(as.character(gg_table$Score))
+
+  # 2. 处理 Levels (细胞顺序)
+  if(!is.null(levels)){
+    gg_table$cluster <- factor(gg_table$cluster, levels = levels)
+  }
+
+  # 3. 定义超级色板 (你要求的配色)
+  # 这里必须把色板定义在函数里，否则函数找不到变量
+  my_super_palette <- c(
+    "#E64B35", "#4DBBD5", "#00A087", "#3C5488", "#F39B7F", "#8491B4", "#91D1C2", "#DC0000", "#7E6148", "#B09C85",
+    "#BC3C29", "#0072B5", "#E18727", "#20854E", "#7876B1", "#6F99AD", "#FFDC91", "#EE4C97",
+    "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf",
+    "#374E55", "#DF8F44", "#00A1D5", "#B24745", "#79AF97", "#6A6599", "#80796B",
+    "#f0b98d", "#ef9708", "#0fcfc0", "#9cded6", "#d5eae7", "#f3e1eb", "#f6c4e1"
+  )
+
+  # 自动扩展颜色以防止不够用
+  n_groups <- length(unique(gg_table$cluster))
+  if(n_groups > length(my_super_palette)){
+    colors <- colorRampPalette(my_super_palette)(n_groups)
+  } else {
+    colors <- my_super_palette
+  }
+
+  # 创建输出文件夹
+  if(!dynamic){
+    output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "VlnPlot")
+    if (!dir.exists(output_dir)) {
+      dir.create(output_dir)
+    }
+  }
+
+  result <- list()
+
+  # 4. 循环绘图
+  for (select.pathway in input.pathway) {
+    pathway_data <- subset(gg_table, Pathway == select.pathway)
+
+    # --- 核心绘图部分 (复刻你的 VlnPlot 样式) ---
+    plot_box <- ggplot(data = pathway_data, aes(x = cluster, y = Score, fill = cluster)) +
+      # 1. 小提琴图层 (去掉了边框色 color=NA，更干净)
+      geom_violin(scale = "width", trim = FALSE, alpha = 0.6, color = NA) +
+
+      # 2. 散点图层 (你要求的参数：微小、半透明)
+      geom_jitter(width = 0.25, alpha = 0.2, size = 0.05, color = "black") +
+
+      # 3. 样式调整
+      theme_bw() +
+      ylab("Metabolism Score") +
+      ggtitle(select.pathway) +
+      theme(
+        legend.position = "none",                 # 移除图例
+        axis.title.x = element_blank(),           # 移除X轴标题
+        axis.text.x = element_text(angle = 45, hjust = 1), # X轴文字倾斜
+        plot.title = element_text(size = 10, face = "bold", hjust = 0.5), # 标题居中
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_line(size = 0.2, color = "gray90")
+      ) +
+
+      # 4. 应用超级色板
+      scale_fill_manual(values = colors)
+
+    result[[select.pathway]] = plot_box
+
+    # 5. 保存
+    if(!dynamic){
+      # 清洗文件名，防止斜杠报错
+      safe_name <- gsub("/", "_", select.pathway)
+      safe_name <- gsub(" ", "_", safe_name)
+      ggsave(filename = paste0(output_dir, "/", safe_name, ".png"), plot = plot_box, width = Width, height = Height)
+    }
+    pb$tick()
+  }
+
+  return(result)
+}
+
+PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, Height = 5, dynamic = F) {
+  library(ggplot2)
+  library(ggrepel)
+  library(dplyr)
+  library(tidyr)
+  library(progress)
+
+  cat("=== Start Pathway PCA Analysis (Version 7 - Safe PCA) ===\n")
+
+  # --- 1. 数据准备 ---
+  if (!phenotype %in% colnames(obj@meta.data)) {
+    stop(paste0("错误: metadata 中找不到列名 '", phenotype, "'"))
+  }
+
+  metadata <- obj@meta.data
+  metabolism.matrix <- as.matrix(obj@assays$METABOLISM$score)
+  metadata[, phenotype] <- as.character(metadata[, phenotype])
+
+  # 去重与存在性检查
+  pathway_unique <- unique(pathway)
+  valid_pathways <- pathway_unique[pathway_unique %in% rownames(metabolism.matrix)]
+  if(length(valid_pathways) == 0) stop("错误: 输入的通路都不在代谢矩阵中！")
+
+  # 提取矩阵
+  metabolism.matrix_sub <- metabolism.matrix[valid_pathways, , drop = FALSE]
+
+  # 剔除方差为 0 的通路 (死通路)
+  row_vars <- apply(metabolism.matrix_sub, 1, var)
+  metabolism.matrix_sub <- metabolism.matrix_sub[row_vars > 0, , drop = FALSE]
+
+  n_pathways <- nrow(metabolism.matrix_sub)
+  cat(sprintf("Valid Analysis Matrix: %d pathways x %d cells\n", n_pathways, ncol(metabolism.matrix_sub)))
+
+  if(n_pathways == 0) stop("错误: 没有有效通路可供分析。")
+
+  # --- 2. 坐标计算 (带错误保护) ---
+  pca_success <- FALSE
+  pca_coords <- NULL
+  pc1_var <- "NA"; pc2_var <- "NA"
+
+  if (n_pathways >= 3) {
+    tryCatch({
+      # [核心修复]：手动对通路(行)进行 Z-score 标准化
+      # 这样我们可以安全地关闭 prcomp 内部的 scale.=TRUE，避免列方差为0导致的报错
+      mat_scaled <- t(scale(t(metabolism.matrix_sub)))
+      mat_scaled[is.na(mat_scaled)] <- 0 # 防止极端情况
+
+      # [核心修复]：scale. = FALSE 避免除以零错误
+      pca_result <- prcomp(mat_scaled, scale. = FALSE, center = FALSE)
+
+      pca_coords <- as.data.frame(pca_result$x)
+      pca_coords$pathway <- rownames(pca_coords)
+      pc1_var <- round(summary(pca_result)$importance[2, 1] * 100, 1)
+      pc2_var <- round(summary(pca_result)$importance[2, 2] * 100, 1)
+      pca_success <- TRUE
+
+    }, error = function(e) {
+      cat("PCA Calculation Failed (likely due to sparse data). Switching to manual layout.\n")
+      cat("Error message:", e$message, "\n")
+    })
+  }
+
+  # 如果 PCA 失败或者通路太少，使用手动坐标
+  if (!pca_success) {
+    cat("Using manual coordinates layout.\n")
+    pca_coords <- data.frame(pathway = rownames(metabolism.matrix_sub))
+    if (n_pathways == 2) {
+      pca_coords$PC1 <- c(-2, 2); pca_coords$PC2 <- c(0, 0)
+    } else if (n_pathways == 1) {
+      pca_coords$PC1 <- c(0); pca_coords$PC2 <- c(0)
+    } else {
+      # 如果 >=3 个通路但 PCA 挂了，随机给点位置避免画不出图
+      pca_coords$PC1 <- runif(n_pathways, -2, 2)
+      pca_coords$PC2 <- runif(n_pathways, -2, 2)
+    }
+    pc1_var <- "NA"; pc2_var <- "NA"
+  }
+
+  # --- 3. 输出目录 ---
+  if (!dynamic) {
+    output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Path_PCA")
+    if (!dir.exists(output_dir)) dir.create(output_dir)
+  }
+
+  result <- list()
+
+  # --- 4. 绘制总图 ---
+  total_plot <- ggplot(pca_coords, aes(x = PC1, y = PC2, label = pathway)) +
+    geom_point(aes(color = PC1), size = 3, alpha = 0.8) +
+    geom_text_repel(size = 3, max.overlaps = 50) +
+    scale_color_gradient(low = "blue", high = "red") +
+    theme_bw() +
+    labs(title = "Metabolic Pathway Co-regulation Map", x = paste0("PC1 (", pc1_var, "%)"), y = paste0("PC2 (", pc2_var, "%)")) +
+    theme(legend.position = "none")
+
+  if (n_pathways < 3) total_plot <- total_plot + expand_limits(x = c(-3, 3), y = c(-1, 1))
+
+  result[["Total_PCA"]] <- total_plot
+  if (!dynamic) ggsave(file.path(output_dir, "Total_PCA.png"), total_plot, width = Width, height = Height)
+
+  # --- 5. 计算活性 ---
+  cat("Calculating cluster-specific activities...\n")
+
+  df_long <- as.data.frame(t(metabolism.matrix_sub), check.names = FALSE)
+  df_long$CellType_For_Group <- metadata[, phenotype]
+
+  # 聚合
+  cluster_means <- df_long %>%
+    dplyr::group_by(CellType_For_Group) %>%
+    dplyr::summarise(dplyr::across(where(is.numeric), median)) %>%
+    as.data.frame()
+
+  # 保存列名
+  saved_group_names <- as.character(cluster_means$CellType_For_Group)
+  cluster_means_numeric <- cluster_means[, colnames(cluster_means) != "CellType_For_Group", drop = FALSE]
+
+  heatmap_matrix <- t(cluster_means_numeric)
+
+  # 强制赋名
+  if(ncol(heatmap_matrix) == length(saved_group_names)) {
+    colnames(heatmap_matrix) <- saved_group_names
+  }
+
+  # 对齐行名
+  if(any(!rownames(heatmap_matrix) %in% rownames(pca_coords))){
+    # 如果顺序一致，强制覆盖
+    if(nrow(heatmap_matrix) == nrow(pca_coords)) rownames(heatmap_matrix) <- rownames(pca_coords)
+  }
+
+  # 归一化
+  range01 <- function(x) { if(max(x) == min(x)) return(rep(0.5, length(x))); (x - min(x)) / (max(x) - min(x)) }
+  if(ncol(heatmap_matrix) > 1) {
+    heatmap_matrix_norm <- t(apply(heatmap_matrix, 1, range01))
+  } else {
+    heatmap_matrix_norm <- heatmap_matrix
+  }
+  heatmap_matrix_norm[is.na(heatmap_matrix_norm)] <- 0
+  colnames(heatmap_matrix_norm) <- saved_group_names
+
+  # --- 6. 循环绘图 ---
+  clusters <- saved_group_names
+  cat(paste("Generating plots for:", paste(clusters, collapse=", "), "\n"))
+
+  pb <- progress_bar$new(total = length(clusters), format = "Plotting [:bar] :percent :eta")
+
+  for (ctype in clusters) {
+    plot_df <- pca_coords
+
+    # 取值
+    plot_df$val <- heatmap_matrix_norm[match(plot_df$pathway, rownames(heatmap_matrix_norm)), ctype]
+    plot_df$val[is.na(plot_df$val)] <- 0
+
+    # Top N
+    top_genes_df <- plot_df %>%
+      arrange(desc(val)) %>%
+      slice_head(n = top_n)
+    top_genes_list <- top_genes_df$pathway
+
+    # 绘图
+    p <- ggplot(plot_df, aes(x = PC1, y = PC2, label = pathway)) +
+      geom_point(data = plot_df %>% arrange(val),
+                 aes(fill = val), shape = 21, color = "black", stroke = 0.2, size = 3.5, alpha = 0.8) +
+      scale_fill_gradient(low = "#006400", high = "#FFFF00", limits = c(0, 1)) +
+      geom_text_repel(
+        data = subset(plot_df, pathway %in% top_genes_list),
+        size = 3, max.overlaps = Inf, box.padding = 0.5,
+        segment.color = "grey50", fontface = "bold", min.segment.length = 0
+      ) +
+      theme_bw() +
+      labs(title = ctype, x = paste0("PC1 (", pc1_var, "%)"), y = paste0("PC2 (", pc2_var, "%)"), fill = "Score") +
+      theme(plot.title = element_text(hjust = 0.5, face = "bold"), legend.position = "right")
+
+    if (n_pathways < 3) p <- p + expand_limits(x = c(-3, 3), y = c(-1, 1))
+
+    result[[ctype]] <- p
+
+    if (!dynamic) {
+      safe_name <- gsub("[/ :]", "_", ctype)
+      ggsave(file.path(output_dir, paste0(safe_name, ".png")), p, width = Width, height = Height)
+    }
+    pb$tick()
+  }
+
+  cat("\n=== Finished Successfully ===\n")
+  return(result)
+}
