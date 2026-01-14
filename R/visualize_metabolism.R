@@ -812,10 +812,11 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
   library(dplyr)
   library(tidyr)
   library(progress)
+  library(viridis) # 1. 引入 viridis 包
 
-  cat("=== Start Pathway PCA Analysis (Version 8 - Smart Limit) ===\n")
+  cat("=== Start Pathway PCA Analysis (Version 8 - Smart Limit - DotPlot Style) ===\n")
 
-  # --- 1. 数据准备 ---
+  # --- 1. 数据准备 (保持不变) ---
   if (!phenotype %in% colnames(obj@meta.data)) {
     stop(paste0("错误: metadata 中找不到列名 '", phenotype, "'"))
   }
@@ -824,15 +825,11 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
   metabolism.matrix <- as.matrix(obj@assays$METABOLISM$score)
   metadata[, phenotype] <- as.character(metadata[, phenotype])
 
-  # 去重与存在性检查
   pathway_unique <- unique(pathway)
   valid_pathways <- pathway_unique[pathway_unique %in% rownames(metabolism.matrix)]
   if(length(valid_pathways) == 0) stop("错误: 输入的通路都不在代谢矩阵中！")
 
-  # 提取矩阵
   metabolism.matrix_sub <- metabolism.matrix[valid_pathways, , drop = FALSE]
-
-  # 剔除方差为 0 的通路
   row_vars <- apply(metabolism.matrix_sub, 1, var)
   metabolism.matrix_sub <- metabolism.matrix_sub[row_vars > 0, , drop = FALSE]
 
@@ -841,11 +838,8 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
 
   if(n_pathways == 0) stop("错误: 没有有效通路可供分析。")
 
-  # ==========================================
-  # [新增] 智能限制 top_n 逻辑
-  # ==========================================
+  # --- 智能限制 top_n 逻辑 (保持不变) ---
   original_top_n <- top_n
-
   if (n_pathways <= 3) {
     top_n <- 1
     if(original_top_n != 1) cat(sprintf("Note: Pathways <= 3, top_n force adjusted from %d to 1.\n", original_top_n))
@@ -855,34 +849,27 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
       cat(sprintf("Note: Pathways < 10, top_n force adjusted from %d to 3.\n", original_top_n))
     }
   }
-  # ==========================================
 
-  # --- 2. 坐标计算 ---
+  # --- 2. 坐标计算 (保持不变) ---
   pca_success <- FALSE
   pca_coords <- NULL
   pc1_var <- "NA"; pc2_var <- "NA"
 
   if (n_pathways >= 3) {
     tryCatch({
-      # 行归一化 (Z-score)
       mat_scaled <- t(scale(t(metabolism.matrix_sub)))
       mat_scaled[is.na(mat_scaled)] <- 0
-
-      # PCA (scale. = FALSE)
       pca_result <- prcomp(mat_scaled, scale. = FALSE, center = FALSE)
-
       pca_coords <- as.data.frame(pca_result$x)
       pca_coords$pathway <- rownames(pca_coords)
       pc1_var <- round(summary(pca_result)$importance[2, 1] * 100, 1)
       pc2_var <- round(summary(pca_result)$importance[2, 2] * 100, 1)
       pca_success <- TRUE
-
     }, error = function(e) {
       cat("PCA Calculation Failed. Switching to manual layout.\n")
     })
   }
 
-  # 手动坐标兜底
   if (!pca_success) {
     cat("Using manual coordinates layout.\n")
     pca_coords <- data.frame(pathway = rownames(metabolism.matrix_sub))
@@ -897,7 +884,7 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
     pc1_var <- "NA"; pc2_var <- "NA"
   }
 
-  # --- 3. 输出目录 ---
+  # --- 3. 输出目录 (保持不变) ---
   if (!dynamic) {
     output_dir <- paste0("./", unique(obj@meta.data$Cancer), "_", unique(obj@meta.data$dataset), "Path_PCA")
     if (!dir.exists(output_dir)) dir.create(output_dir)
@@ -905,11 +892,12 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
 
   result <- list()
 
-  # --- 4. 绘制总图 ---
+  # --- 4. 绘制总图 (略微调整以匹配风格，也可以保持不变) ---
+  # 这里为了保持一致性，把总图的配色也改为了 viridis
   total_plot <- ggplot(pca_coords, aes(x = PC1, y = PC2, label = pathway)) +
     geom_point(aes(color = PC1), size = 3, alpha = 0.8) +
     geom_text_repel(size = 3, max.overlaps = 50) +
-    scale_color_gradient(low = "blue", high = "red") +
+    scale_color_viridis(option = "D") + # 使用 viridis
     theme_bw() +
     labs(title = "Metabolic Pathway Co-regulation Map", x = paste0("PC1 (", pc1_var, "%)"), y = paste0("PC2 (", pc2_var, "%)")) +
     theme(legend.position = "none")
@@ -919,7 +907,7 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
   result[["Total_PCA"]] <- total_plot
   if (!dynamic) ggsave(file.path(output_dir, "Total_PCA.png"), total_plot, width = Width, height = Height)
 
-  # --- 5. 计算活性 ---
+  # --- 5. 计算活性 (保持不变) ---
   cat("Calculating cluster-specific activities...\n")
 
   df_long <- as.data.frame(t(metabolism.matrix_sub), check.names = FALSE)
@@ -939,12 +927,10 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
     colnames(heatmap_matrix) <- saved_group_names
   }
 
-  # 对齐行名
   if(any(!rownames(heatmap_matrix) %in% rownames(pca_coords))){
     if(nrow(heatmap_matrix) == nrow(pca_coords)) rownames(heatmap_matrix) <- rownames(pca_coords)
   }
 
-  # 归一化
   range01 <- function(x) { if(max(x) == min(x)) return(rep(0.5, length(x))); (x - min(x)) / (max(x) - min(x)) }
   if(ncol(heatmap_matrix) > 1) {
     heatmap_matrix_norm <- t(apply(heatmap_matrix, 1, range01))
@@ -954,9 +940,12 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
   heatmap_matrix_norm[is.na(heatmap_matrix_norm)] <- 0
   colnames(heatmap_matrix_norm) <- saved_group_names
 
-  # --- 6. 循环绘图 ---
+  # --- 6. 循环绘图 (核心修改区域) ---
   clusters <- saved_group_names
   cat(paste("Generating plots for:", paste(clusters, collapse=", "), "\n"))
+  
+  # 定义 viridis 色板
+  pal <- viridis::viridis(100)
 
   pb <- progress_bar$new(total = length(clusters), format = "Plotting [:bar] :percent :eta")
 
@@ -965,25 +954,41 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
     plot_df$val <- heatmap_matrix_norm[match(plot_df$pathway, rownames(heatmap_matrix_norm)), ctype]
     plot_df$val[is.na(plot_df$val)] <- 0
 
-    # 严格排序选 Top N (此时 top_n 已经被前面的逻辑修正过了)
     top_genes_df <- plot_df %>%
       arrange(desc(val)) %>%
       slice_head(n = top_n)
     top_genes_list <- top_genes_df$pathway
 
-    # 绘图
+    # *** 修改开始 ***
     p <- ggplot(plot_df, aes(x = PC1, y = PC2, label = pathway)) +
+      # 2. 修改 geom_point：加入 size = val 映射
       geom_point(data = plot_df %>% arrange(val),
-                 aes(fill = val), shape = 21, color = "black", stroke = 0.2, size = 3.5, alpha = 0.8) +
-      scale_fill_gradient(low = "#006400", high = "#FFFF00", limits = c(0, 1)) +
+                 aes(fill = val, size = val), # 点大小映射到值
+                 shape = 21,       # 使用实心带边框的圆
+                 color = "black",  # 边框黑色
+                 stroke = 0.2,     # 边框粗细
+                 alpha = 0.8) +    # 透明度
+      
+      # 1. 修改色板：使用 viridis 梯度
+      scale_fill_gradientn(colours = pal, limits = c(0, 1)) +
+      
+      # 2.1 新增：控制点大小的范围 (推荐 range 2-6 或 1-5，根据喜好调整)
+      scale_size_continuous(range = c(1.5, 6)) + 
+
       geom_text_repel(
         data = subset(plot_df, pathway %in% top_genes_list),
         size = 3, max.overlaps = Inf, box.padding = 0.5,
         segment.color = "grey50", fontface = "bold", min.segment.length = 0
       ) +
       theme_bw() +
-      labs(title = ctype, x = paste0("PC1 (", pc1_var, "%)"), y = paste0("PC2 (", pc2_var, "%)"), fill = "Score") +
+      # 3. 修改 Legend 名称：fill 和 size 都叫 "Value"
+      labs(title = ctype, 
+           x = paste0("PC1 (", pc1_var, "%)"), 
+           y = paste0("PC2 (", pc2_var, "%)"), 
+           fill = "Value", 
+           size = "Value") +
       theme(plot.title = element_text(hjust = 0.5, face = "bold"), legend.position = "right")
+    # *** 修改结束 ***
 
     if (n_pathways < 3) p <- p + expand_limits(x = c(-3, 3), y = c(-1, 1))
 
