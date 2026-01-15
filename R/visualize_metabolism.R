@@ -812,9 +812,9 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
   library(dplyr)
   library(tidyr)
   library(progress)
-  library(viridis) # 1. 引入 viridis 包
+  library(viridis)
 
-  cat("=== Start Pathway PCA Analysis (Version 8 - Smart Limit - DotPlot Style) ===\n")
+  cat("=== Start Pathway PCA Analysis (Version 9 - High Contrast Top) ===\n")
 
   # --- 1. 数据准备 (保持不变) ---
   if (!phenotype %in% colnames(obj@meta.data)) {
@@ -892,12 +892,11 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
 
   result <- list()
 
-  # --- 4. 绘制总图 (略微调整以匹配风格，也可以保持不变) ---
-  # 这里为了保持一致性，把总图的配色也改为了 viridis
+  # --- 4. 绘制总图 (保持不变) ---
   total_plot <- ggplot(pca_coords, aes(x = PC1, y = PC2, label = pathway)) +
     geom_point(aes(color = PC1), size = 3, alpha = 0.8) +
     geom_text_repel(size = 3, max.overlaps = 50) +
-    scale_color_viridis(option = "D") + # 使用 viridis
+    scale_color_viridis(option = "D") + 
     theme_bw() +
     labs(title = "Metabolic Pathway Co-regulation Map", x = paste0("PC1 (", pc1_var, "%)"), y = paste0("PC2 (", pc2_var, "%)")) +
     theme(legend.position = "none")
@@ -940,11 +939,10 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
   heatmap_matrix_norm[is.na(heatmap_matrix_norm)] <- 0
   colnames(heatmap_matrix_norm) <- saved_group_names
 
-  # --- 6. 循环绘图 (核心修改区域) ---
+  # --- 6. 循环绘图 (增强高亮逻辑) ---
   clusters <- saved_group_names
   cat(paste("Generating plots for:", paste(clusters, collapse=", "), "\n"))
   
-  # 定义 viridis 色板
   pal <- viridis::viridis(100)
 
   pb <- progress_bar$new(total = length(clusters), format = "Plotting [:bar] :percent :eta")
@@ -954,40 +952,61 @@ PathPCA.metabolism <- function(obj, pathway, phenotype, top_n = 5, Width = 6, He
     plot_df$val <- heatmap_matrix_norm[match(plot_df$pathway, rownames(heatmap_matrix_norm)), ctype]
     plot_df$val[is.na(plot_df$val)] <- 0
 
+    # 提取 Top 数据
     top_genes_df <- plot_df %>%
       arrange(desc(val)) %>%
       slice_head(n = top_n)
     top_genes_list <- top_genes_df$pathway
 
-    # *** 修改开始 ***
+    # *** 修改开始：三层结构 ***
     p <- ggplot(plot_df, aes(x = PC1, y = PC2, label = pathway)) +
-      # 2. 修改 geom_point：加入 size = val 映射
+      
+      # 第一层：背景点（普通点）
+      # 使用黑色细边框，看起来比较精致但低调
       geom_point(data = plot_df %>% arrange(val),
-                 aes(fill = val, size = val), # 点大小映射到值
-                 shape = 21,       # 使用实心带边框的圆
-                 color = "black",  # 边框黑色
-                 stroke = 0.2,     # 边框粗细
-                 alpha = 0.8) +    # 透明度
+                 aes(fill = val, size = val), 
+                 shape = 21,       
+                 color = "black",  # 普通点的边框是黑色
+                 stroke = 0.2,     # 普通点的边框很细
+                 alpha = 0.8) +    
       
-      # 1. 修改色板：使用 viridis 梯度
+      # 第二层：高亮层（只画 Top N 的点）
+      # 在普通点上面再叠加一层，用粗红色边框
+      geom_point(data = top_genes_df,
+                 aes(fill = val, size = val), # 保持同样的 fill 和 size
+                 shape = 21,
+                 color = "#D62728", # 【关键】使用醒目的红色 (D62728 是 NEJM 红)
+                 stroke = 1.5,      # 【关键】加粗边框
+                 alpha = 1) +       # 完全不透明
+      
+      # 颜色和大小映射
       scale_fill_gradientn(colours = pal, limits = c(0, 1)) +
-      
-      # 2.1 新增：控制点大小的范围 (推荐 range 2-6 或 1-5，根据喜好调整)
       scale_size_continuous(range = c(1.5, 6)) + 
 
+      # 第三层：文字标签
+      # 这里的 segment.color 也改成了红色，指向性更强
       geom_text_repel(
         data = subset(plot_df, pathway %in% top_genes_list),
-        size = 3, max.overlaps = Inf, box.padding = 0.5,
-        segment.color = "grey50", fontface = "bold", min.segment.length = 0
+        size = 3.5,                 # 字体稍微加大一点
+        max.overlaps = Inf, 
+        box.padding = 0.6,
+        color = "black",            # 文字保持黑色清晰度
+        segment.color = "#D62728",  # 【关键】连线也是红色
+        segment.size = 0.5,         # 连线稍微加粗
+        fontface = "bold", 
+        min.segment.length = 0
       ) +
+      
       theme_bw() +
-      # 3. 修改 Legend 名称：fill 和 size 都叫 "Value"
       labs(title = ctype, 
            x = paste0("PC1 (", pc1_var, "%)"), 
            y = paste0("PC2 (", pc2_var, "%)"), 
            fill = "Value", 
            size = "Value") +
-      theme(plot.title = element_text(hjust = 0.5, face = "bold"), legend.position = "right")
+      theme(
+        plot.title = element_text(hjust = 0.5, face = "bold", size = 14), 
+        legend.position = "right"
+      )
     # *** 修改结束 ***
 
     if (n_pathways < 3) p <- p + expand_limits(x = c(-3, 3), y = c(-1, 1))
